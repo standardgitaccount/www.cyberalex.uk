@@ -47,7 +47,7 @@
         <div class="col-lg-12" id="pdf-viewer" style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;"></div>
     </div>
     
-    <br><br><br><br><br>
+    <br><br><br>
 
     <!--Footer-->
     <footer class="footer" style="background-color: black; padding: 20px 0; position: relative; bottom: 0; width: 100%;">
@@ -87,7 +87,7 @@
     const container = document.getElementById('pdf-viewer');
 
     pdfjsLib.getDocument(url).promise.then((pdf) => {
-        const scale = 1.5; // Adjust this scale to fit the page width
+        const scale = 1.7; // Adjust this scale to fit the page width
 
         for (let i = 1; i <= pdf.numPages; i++) {
             pdf.getPage(i).then((page) => {
@@ -97,7 +97,7 @@
                 const pageWrapper = document.createElement('div');
                 pageWrapper.style.margin = '20px 0'; // Space between pages
                 pageWrapper.style.borderBottom = '1px solid #ccc'; // Optional visual page break
-                pageWrapper.style.paddingBottom = '20px';
+                pageWrapper.style.paddingBottom = '10px';
 
                 const canvas = document.createElement('canvas');
                 canvas.style.display = 'block';
