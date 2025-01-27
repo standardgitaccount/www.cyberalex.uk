@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +16,17 @@
             pointer-events: none; /* Prevent any click events */
             text-decoration: none; /* Remove underline */
             cursor: default; /* Change cursor to default */
-        }  
+        }
+        .audio-controls {
+            display: none; /* Initially hide audio controls */
+            margin-top: 10px; /* Add some space above the audio controls */
+        }
+        .dropdown-toggle {
+            cursor: pointer; /* Change cursor to pointer for dropdown */
+        }
+        audio {
+            width: 100%; /* Set audio player width to fill the container */
+        }
     </style>
 </head>
 
@@ -76,8 +84,18 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading"><h3 class="panel-title">Options</h3></div>
                     <div class="panel-body" id="formats-container"><br>
-                        > <a download="testdoc.pdf" href="testdoc.pdf" target="_blank">Download</a><br>
-                        <a class="disabled" href="testdoc.pdf" target="_blank">> <s>Audio Version</s></a>
+                        > <a download="testdoc.pdf" href="testdoc.pdf" target="_blank">Download Document</a><br>
+                    <!--Comment out as appropriate-->
+                    <!-- --> <a class="dropdown-toggle" id="audio-toggle">> Audio Version</a><br> <!--enabled version -->
+                    <!-- --><span class="dissabled">> <s>Audio Version</s></span><br> <!--dissabled version-->
+                        <div class="audio-controls" id="audio-controls">
+                            <audio controls>
+                                <source src="testfile.mp3" type="audio/mpeg"><!--Change path here-->
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        > <a download="testfile.mp3" href="testfile.mp3" >Download Audio Version</a><br><!--Change path here-->
+                        <!-- --><span class="dissabled">> <s>Download Audio Version</s></span><br> <!--dissabled version-->
                     </div>
                 </div>
             </div>
@@ -98,6 +116,16 @@
                     formatsContainer.prepend(pdfViewerLink);
                     formatsContainer.insertAdjacentHTML('afterbegin', '> ');
                 }
+
+                // Dropdown functionality for audio version
+                const audioToggle = document.getElementById('audio-toggle');
+                const audioControls = document.getElementById('audio-controls');
+
+                audioToggle.addEventListener('click', function() {
+                    const isExpanded = audioControls.style.display === 'block';
+                    audioControls.style.display = isExpanded ? 'none' : 'block';
+                    audioToggle.innerHTML = isExpanded ? '> Audio Version' : '▼ Audio Version'; // Change to down arrow when expanded
+                });
             </script>
         </div>
 
@@ -109,7 +137,7 @@
    <!--Footer-->
    <footer class="footer" style="background-color: black; padding: 20px 0;">
     <div class="container">
-        <p style="text-align: center">Page last updated: 8 Jan 2024</p>
+        <p style="text-align: center">Page last updated: 27 Jan 2024</p>
         <p style="text-align: center">Email me securely using <a href="https://tuta.com/">Tuta.com</a>!</p>
         <br>
         <p style="text-align: center"> 
@@ -126,7 +154,7 @@
                 by Tobin Brown, licensed under the <a href="https://opensource.org/license/MIT">MIT Licence</a>.
                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a>
                  <br>
-                © 2024 www.cyberalex.uk - All rights reserved.
+                © 2025 www.cyberalex.uk - All rights reserved.
             </p>
         <p style="text-align: center; color:black" >Safe | Legal | Ethical</p>
     </div>
@@ -152,7 +180,6 @@
         if (!isMobile()) {
             pdfjsLib.getDocument(url).promise.then((pdf) => {
                 const scale = 1.85; // Adjust this scale to fit the page width
-
                 for (let i = 1; i <= pdf.numPages; i++) {
                     pdf.getPage(i).then((page) => {
                         const viewport = page.getViewport({ scale });
