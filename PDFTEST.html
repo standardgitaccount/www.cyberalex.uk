@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +12,14 @@
     <link href="hacker.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+    <style>
+        .disabled {
+            color: green; /* Change color to indicate it's disabled */
+            pointer-events: none; /* Prevent any click events */
+            text-decoration: none; /* Remove underline */
+            cursor: default; /* Change cursor to default */
+        }  
+    </style>
 </head>
 
 <body>
@@ -64,9 +74,10 @@
 
             <div class="col-md-4">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h3 class="panel-title">Formats</h3></div>
+                    <div class="panel-heading"><h3 class="panel-title">Document Options</h3></div>
                     <div class="panel-body" id="formats-container"><br>
-                        > <a download="testdoc.pdf" href="testdoc.pdf" target="_blank">Download Document</a>
+                        > <a download="testdoc.pdf" href="testdoc.pdf" target="_blank">Download</a><br>
+                        <a class="disabled" href="testdoc.pdf" target="_blank">> <s>Audio Version</s></a>
                     </div>
                 </div>
             </div>
@@ -83,7 +94,7 @@
                     const pdfViewerLink = document.createElement('a');
                     pdfViewerLink.href = 'testdoc.pdf';
                     pdfViewerLink.target = '_blank'; // Open in a new tab
-                    pdfViewerLink.textContent = 'Use Desktop Browsers PDF Viewer';
+                    pdfViewerLink.textContent = 'Open in New Tab';
                     formatsContainer.prepend(pdfViewerLink);
                     formatsContainer.insertAdjacentHTML('afterbegin', '> ');
                 }
