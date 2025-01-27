@@ -113,7 +113,7 @@
     const container = document.getElementById('pdf-viewer');
 
     pdfjsLib.getDocument(url).promise.then((pdf) => {
-        const scale = 2; // Adjust this scale to fit the page width
+        const scale = 1.85; // Adjust this scale to fit the page width
 
         for (let i = 1; i <= pdf.numPages; i++) {
             pdf.getPage(i).then((page) => {
