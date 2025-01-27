@@ -72,45 +72,47 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script>
-        const url = 'testdoc.pdf'; // Path to PDF file
+    const url = 'testdoc.pdf'; // Path to PDF file
 
-        const pdfjsLib = window['pdfjs-dist/build/pdf'];
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
 
-        const container = document.getElementById('pdf-viewer');
+    const container = document.getElementById('pdf-viewer');
 
-        pdfjsLib.getDocument(url).promise.then((pdf) => {
-            const scale = 1.5; // Adjust this scale to fit the page width
-            pdf.getPage(1).then((firstPage) => {
-                const viewport = firstPage.getViewport({ scale });
+    pdfjsLib.getDocument(url).promise.then((pdf) => {
+        const scale = 1.5; // Adjust this scale to fit the page width
 
-                // Set container height to match PDF
-                container.style.height = `${viewport.height * pdf.numPages}px`;
+        for (let i = 1; i <= pdf.numPages; i++) {
+            pdf.getPage(i).then((page) => {
+                const viewport = page.getViewport({ scale });
 
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    pdf.getPage(i).then((page) => {
-                        const canvas = document.createElement('canvas');
-                        canvas.style.display = 'block';
-                        const context = canvas.getContext('2d');
+                // Create a wrapper for each page
+                const pageWrapper = document.createElement('div');
+                pageWrapper.style.margin = '20px 0'; // Space between pages
+                pageWrapper.style.borderBottom = '1px solid #ccc'; // Optional visual page break
+                pageWrapper.style.paddingBottom = '20px';
 
-                        const viewport = page.getViewport({ scale });
-                        canvas.width = viewport.width;
-                        canvas.height = viewport.height;
+                const canvas = document.createElement('canvas');
+                canvas.style.display = 'block';
+                const context = canvas.getContext('2d');
 
-                        container.appendChild(canvas);
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
 
-                        const renderContext = {
-                            canvasContext: context,
-                            viewport: viewport,
-                        };
+                pageWrapper.appendChild(canvas);
+                container.appendChild(pageWrapper);
 
-                        page.render(renderContext);
-                    });
-                }
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport,
+                };
+
+                page.render(renderContext);
             });
-        }).catch((error) => {
-            container.innerHTML = `<p>Error loading PDF: ${error.message}</p>`;
-        });
-    </script>
+        }
+    }).catch((error) => {
+        container.innerHTML = `<p>Error loading PDF: ${error.message}</p>`;
+    });
+</script>
 </body>
 </html>
