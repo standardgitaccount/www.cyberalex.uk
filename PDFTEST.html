@@ -1,124 +1,181 @@
-<!-- 
-Thank you Tobin Brown for making this theme available for reuse under the MIT licence! 
-
-The following licence is apicable ONLY to the webpage template available here https://github.com/Brobin/hacker-bootstrap 
-It does not apply to the content within the page. All content including text and images is copyright.
-
-The MIT License (MIT)
-
-Copyright (c) 2015 Tobin Brown
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
--->
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="hacker.css">
 
     <title>CyberAlex</title>
     <link href="hacker.css" rel="stylesheet">
 
-    <style>
-    .tall-row {
-        margin-top: 40px;
-    }
-    .modal {
-        position: relative;
-        top: auto;
-        right: auto;
-        left: auto;
-        bottom: auto;
-        z-index: 1;
-        display: block;
-    }
-    </style>
-
-    <script src="pdfjs-4.10.38-dist/build/pdf.mjs"></script>
-    <script src="pdfjs-4.10.38-dist/build/pdf.worker.mjs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
 </head>
 
 <body>
-
-
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="index.html">CyberAlex</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#About">About</a>
-                    </li>
-                    <li>
-                        <a href="#Ongoing-Projects">Ongoing Projects</a>
-                    </li>
-                    <li>
-                        <a href="#Past-Projects">Past Projects</a>
-                    </li>
-                    <li>
-                        <a href="#Contact">Contact</a>
-                    </li>
+                    <li><a href="#About">About</a></li>
+                    <li><a href="#Ongoing-Projects">Ongoing Projects</a></li>
+                    <li><a href="#Past-Projects">Past Projects</a></li>
+                    <li><a href="#Contact">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
+   <div class="container">
+       <div class="row">
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                      <li><a href="index.html">Home</a></li>
+                    <li><a href="documents.html">Documents</a></li>
+                      <li class="DocViewTest.html">TestDoc</li>
+                </ul>
+            </div>
+       </div>
 
-    <div class="container">
-        <div id="viewerContainer">Test</div>
-        <script src="pdf.js"></script>
-    </div>
-
-        <br><br><br>
-
-        <!--Footer-->
-    <footer class="footer" style="background-color: black; padding: 20px 0;">
-        <div class="container">
-            <p style="text-align: center">Page last updated: 8 Jan 2024</p>
-            <p style="text-align: center">Email me securely using <a href="https://tuta.com/">Tuta.com</a>!</p>
-            <br>
-            <p style="text-align: center"> 
-                <a href="#About">About</a> | 
-                <a href="#Work" >Work</a> | 
-                <a href="#Ongoing-Projects">Ongoing Projects</a> | 
-                <a href="#Past-Projects">Past Projects</a> | 
-                <a href="#Contact">Contact</a>
-            </p>
-            <br>
-                <p style="text-align: center">
-                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a> 
-                    <a href="https://github.com/brobin/hacker-bootstrap" target="_blank">Hacker Theme </a>
-                    by Tobin Brown, licensed under the <a href="https://opensource.org/license/MIT">MIT Licence</a>.
-                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a>
-                     <br>
-                    © 2024 www.cyberalex.uk - All rights reserved.
-                </p>
-            <p style="text-align: center; color:black" >Safe | Legal | Ethical</p>
+         <!--Boxes-->
+         <div class="row">
+            <div class="col-lg-12">
+                <hr id="PDF">
+                <h1>Document Title</h1>
+            </div>
         </div>
-    </footer>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h3 class="panel-title">Abstract</h3></div>
+                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum neque libero, vitae feugiat neque ullamcorper eget. 
+                                                Morbi pellentesque, orci sollicitudin congue lacinia, massa risus mollis nisl, eget maximus quam elit eu ante.</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h3 class="panel-title">Formats</h3></div>
+                    <div class="panel-body" id="formats-container"><br>
+                        > <a download="testdoc.pdf" href="testdoc.pdf" target="_blank">Download Document</a>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                // Function to check if the device is mobile
+                function isMobile() {
+                    return /Mobi|Android/i.test(navigator.userAgent);
+                }
+            
+                // Check if the device is mobile and set the content accordingly
+                if (!isMobile()) {
+                    const formatsContainer = document.getElementById('formats-container');
+                    const pdfViewerLink = document.createElement('a');
+                    pdfViewerLink.href = 'testdoc.pdf';
+                    pdfViewerLink.target = '_blank'; // Open in a new tab
+                    pdfViewerLink.textContent = 'Use Desktop Browsers PDF Viewer';
+                    formatsContainer.prepend(pdfViewerLink);
+                    formatsContainer.insertAdjacentHTML('afterbegin', '> ');
+                }
+            </script>
+        </div>
+
+        <div class="col-lg-12" id="pdf-viewer" style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;"></div>
+    </div>
+    
+    <br><br><br>
+
+   <!--Footer-->
+   <footer class="footer" style="background-color: black; padding: 20px 0;">
+    <div class="container">
+        <p style="text-align: center">Page last updated: 8 Jan 2024</p>
+        <p style="text-align: center">Email me securely using <a href="https://tuta.com/">Tuta.com</a>!</p>
+        <br>
+        <p style="text-align: center"> 
+            <a href="privacypolicy.html">Privacy Policy</a> | 
+            <a href="termsandconditions.html" >Terms and Conditions</a> | 
+            <a href="copyright.html">Copyright Notice</a> | 
+            <a href="licences.html">Licenses</a> | 
+            <a href="contact.html">Contact</a>
+        </p>
+        <br>
+            <p style="text-align: center">
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a> 
+                <a href="https://github.com/brobin/hacker-bootstrap" target="_blank">Hacker Theme </a>
+                by Tobin Brown, licensed under the <a href="https://opensource.org/license/MIT">MIT Licence</a>.
+                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a>
+                 <br>
+                © 2024 www.cyberalex.uk - All rights reserved.
+            </p>
+        <p style="text-align: center; color:black" >Safe | Legal | Ethical</p>
+    </div>
+</footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const url = 'testdoc.pdf'; // Path to PDF file
+
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
+
+        const container = document.getElementById('pdf-viewer');
+
+        // Function to check if the device is mobile
+        function isMobile() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        }
+
+        // Load PDF only if not on mobile
+        if (!isMobile()) {
+            pdfjsLib.getDocument(url).promise.then((pdf) => {
+                const scale = 1.85; // Adjust this scale to fit the page width
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    pdf.getPage(i).then((page) => {
+                        const viewport = page.getViewport({ scale });
+
+                        // Create a wrapper for each page
+                        const pageWrapper = document.createElement('div');
+                        pageWrapper.style.margin = '10px 0'; // Space between pages
+                        pageWrapper.style.borderBottom = '1px solid #ccc'; // Optional visual page break
+                        pageWrapper.style.paddingBottom = '20px';
+
+                        const canvas = document.createElement('canvas');
+                        canvas.style.display = 'block';
+                        const context = canvas.getContext('2d');
+
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+
+                        pageWrapper.appendChild(canvas);
+                        container.appendChild(pageWrapper);
+
+                        const renderContext = {
+                            canvasContext: context,
+                            viewport: viewport,
+                        };
+
+                        page.render(renderContext);
+                    });
+                }
+            }).catch((error) => {
+                container.innerHTML = `<p>Error loading PDF: ${error.message}</p>`;
+            });
+        } else {
+            container.innerHTML = `<p>Sorry, the integrated document viewer is only available for desktops.</p>`;
+        }
+    </script>
 </body>
 </html>
