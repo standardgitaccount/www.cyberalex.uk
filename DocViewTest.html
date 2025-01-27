@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="hacker.css">
+
+    <title>CyberAlex</title>
+    <link href="hacker.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">CyberAlex</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#About">About</a></li>
+                    <li><a href="#Ongoing-Projects">Ongoing Projects</a></li>
+                    <li><a href="#Past-Projects">Past Projects</a></li>
+                    <li><a href="#Contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>View PDF</h2>
+        <div id="pdf-viewer" style="border: 1px solid #ccc; height: 600px; overflow: auto;"></div>
+    </div>
+
+    <br><br><br><br><br>
+
+    <!--Footer-->
+    <footer class="footer" style="background-color: black; padding: 20px 0;">
+        <div class="container">
+            <p style="text-align: center">Page last updated: 8 Jan 2024</p>
+            <p style="text-align: center">Email me securely using <a href="https://tuta.com/">Tuta.com</a>!</p>
+            <br>
+            <p style="text-align: center"> 
+                <a href="#About">About</a> | 
+                <a href="#Work" >Work</a> | 
+                <a href="#Ongoing-Projects">Ongoing Projects</a> | 
+                <a href="#Past-Projects">Past Projects</a> | 
+                <a href="#Contact">Contact</a>
+            </p>
+            <br>
+                <p style="text-align: center">
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a> 
+                    <a href="https://github.com/brobin/hacker-bootstrap" target="_blank">Hacker Theme </a>
+                    by Tobin Brown, licensed under the <a href="https://opensource.org/license/MIT">MIT Licence</a>.
+                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a>
+                     <br>
+                    © 2024 www.cyberalex.uk - All rights reserved.
+                </p>
+            <p style="text-align: center; color:black" >Safe | Legal | Ethical</p>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+        const url = 'testdoc.pdf'; // Path to PDF file
+        
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
+
+        const container = document.getElementById('pdf-viewer');
+
+        pdfjsLib.getDocument(url).promise.then((pdf) => {
+            for (let i = 1; i <= pdf.numPages; i++) {
+                pdf.getPage(i).then((page) => {
+                    const viewport = page.getViewport({ scale: 1.5 });
+
+                    const canvas = document.createElement('canvas');
+                    canvas.style.display = 'block';
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    container.appendChild(canvas);
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                    };
+
+                    page.render(renderContext);
+                });
+            }
+        }).catch((error) => {
+            container.innerHTML = `<p>Error loading PDF: ${error.message}</p>`;
+        });
+    </script>
+</body>
+</html>
