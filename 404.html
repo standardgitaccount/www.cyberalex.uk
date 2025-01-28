@@ -8,17 +8,18 @@
     <title>CyberAlex</title>
     <link href="hacker.css" rel="stylesheet">
     <style>
-        .tall-row {
-            margin-top: 40px;
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
         }
-        .modal {
-            position: relative;
-            top: auto;
-            right: auto;
-            left: auto;
-            bottom: auto;
-            z-index: 1;
-            display: block;
+        .container {
+            flex: 1; /* Allows the content to expand and push the footer down */
+        }
+        .footer {
+            background-color: black;
+            padding: 20px 0;
         }
     </style>
 </head>
@@ -48,7 +49,6 @@
     </nav>
 
     <div class="container">
-
         <!-- Jumbotron -->
         <div class="jumbotron">
             <h1>Error 404</h1>
@@ -57,8 +57,8 @@
         </div>
     </div>
         
-        <!--Footer-->
-    <footer class="footer" style="background-color: black; padding: 20px 0;">
+    <!--Footer-->
+    <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -67,7 +67,7 @@
                         <li>> <a href="privacypolicy.html">Privacy Policy</a></li>
                         <li>> <a href="termsandconditions.html">Terms and Conditions</a></li>
                         <li>> <a href="copyright.html">Copyright</a></li>
-                        <li>> <a href="licences.html">licences</a></li>
+                        <li>> <a href="licences.html">Licences</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -91,7 +91,8 @@
             </div>
         </div>
     </footer>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
