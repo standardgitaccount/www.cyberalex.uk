@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sectionCount++;
         const sectionDiv = document.createElement("div");
         sectionDiv.classList.add("form-group", "section");
-        sectionDiv.innerHTML = 
+        sectionDiv.innerHTML = `
             <div style="display: flex; gap: 5px; align-items: center;">
                 <input type="text" class="form-control section-heading" placeholder="Enter Section Heading" required>
                 <input type="number" class="form-control weight" placeholder="Weight (%)" required>
@@ -111,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <button type="button" class="btn btn-success add-subsection">> Add Subsection</button>
             <div class="subsections"></div>
-        ;
+        `;
         sectionsDiv.appendChild(sectionDiv);
 
         sectionDiv.querySelector(".add-subsection").addEventListener("click", () => addSubsection(sectionDiv, 1));
@@ -126,9 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const subsectionsDiv = parentDiv.querySelector(".subsections");
         const subsectionDiv = document.createElement("div");
         subsectionDiv.classList.add("form-group", "subsection");
-        subsectionDiv.style.marginLeft = ${depth * 20}px;
+        subsectionDiv.style.marginLeft = `${depth * 20}px`;
 
-        subsectionDiv.innerHTML = 
+        subsectionDiv.innerHTML = `
             <div style="display: flex; gap: 5px; align-items: center;">
                 <input type="text" class="form-control sub-heading" placeholder="Subsection Heading" required>
                 <input type="number" class="form-control weight" placeholder="Weight (%)" required>
@@ -136,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add Subsection</button>
             <div class="subsections"></div>
-        ;
+        `;
         subsectionsDiv.appendChild(subsectionDiv);
 
         subsectionDiv.querySelector(".add-sub-subsection").addEventListener("click", () => addSubsection(subsectionDiv, depth + 1));
@@ -167,14 +168,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const sectionWords = ((totalWords * weight) / 100);
-            resultsArray.push({ level: 1, title: sectionTitle, words: sectionWords, index: ${sIndex + 1} });
+            resultsArray.push({ level: 1, title: sectionTitle, words: sectionWords, index: `${sIndex + 1}` });
 
             const subsections = section.querySelectorAll(":scope > .subsections > .subsection");
-            distributeWords(sectionWords, subsections, 1, ${sIndex + 1}, resultsArray);
+            distributeWords(sectionWords, subsections, 1, `${sIndex + 1}`, resultsArray);
         });
 
         resultsArray.forEach(item => {
-            output += <li class='list-group-item'><strong>${item.index} ${item.title}</strong>: ${item.words.toFixed(2)} words</li>;
+            output += `<li class='list-group-item'><strong>${item.index} ${item.title}</strong>: ${item.words.toFixed(2)} words</li>`;
         });
 
         resultsList.innerHTML = output;
@@ -196,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let weight = parseFloat(sub.querySelector(".weight").value) || (100 / subsections.length);
             let subWords = (parentWords * (weight / totalWeight)); // Ensure proper weight scaling
 
-            let index = ${parentIndex}.${subIndex + 1};
+            let index = `${parentIndex}.${subIndex + 1}`;
             resultsArray.push({
                 level: depth + 1,
                 title: subTitle,
@@ -228,8 +229,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const wordCount = parseFloat(match[4]);
                 
                 const headingLevel = sectionNumber ? sectionNumber.split(".").length : 1;
-                markdownText += ${"#".repeat(headingLevel)} ${headingTitle}\n;
-                markdownText += ${wordCount} words\n\n;
+                markdownText += `${"#".repeat(headingLevel)} ${headingTitle}\n`;
+                markdownText += `${wordCount} words\n\n`;
             }
         });
 
