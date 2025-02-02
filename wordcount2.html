@@ -181,34 +181,29 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsList.innerHTML = output;
     }
 
-    function distributeWords(parentWords, subsections, depth, parentIndex, resultsArray) {
-        if (subsections.length === 0) return;
+function distributeWordsEqually(parentWords, subsections, depth, parentIndex, resultsArray) {
+    if (subsections.length === 0) return;
 
-        let totalWeight = 0;
-        subsections.forEach(sub => {
-            let weight = parseFloat(sub.querySelector(".weight").value) || (100 / subsections.length);
-            totalWeight += weight;
+    let numSubsections = subsections.length;
+    let wordsPerSubsection = parentWords / numSubsections; // Equal split
+
+    subsections.forEach((sub, subIndex) => {
+        let subTitle = sub.querySelector(".sub-heading").value;
+        if (!subTitle) return;
+
+        let index = `${parentIndex}.${subIndex + 1}`;
+        resultsArray.push({
+            level: depth + 1,
+            title: subTitle,
+            words: wordsPerSubsection,
+            index: index
         });
 
-        subsections.forEach((sub, subIndex) => {
-            let subTitle = sub.querySelector(".sub-heading").value;
-            if (!subTitle) return;
+        let nestedSubsections = sub.querySelectorAll(":scope > .subsections > .subsection");
+        distributeWordsEqually(wordsPerSubsection, nestedSubsections, depth + 1, index, resultsArray);
+    });
+}
 
-            let weight = parseFloat(sub.querySelector(".weight").value) || (100 / subsections.length);
-            let subWords = (parentWords * (weight / totalWeight)); // Ensure proper weight scaling
-
-            let index = `${parentIndex}.${subIndex + 1}`;
-            resultsArray.push({
-                level: depth + 1,
-                title: subTitle,
-                words: subWords,
-                index: index
-            });
-
-            let nestedSubsections = sub.querySelectorAll(":scope > .subsections > .subsection");
-            distributeWords(subWords, nestedSubsections, depth + 1, index, resultsArray);
-        });
-    }
 
     document.getElementById("copyMarkdown").addEventListener("click", function () {
         let markdownText = "";
