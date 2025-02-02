@@ -91,7 +91,6 @@
             </div>
         </div>
     </div>
-    
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("wordCountForm");
@@ -167,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const sectionWords = ((totalWords * weight) / 100);
+            const sectionWords = (totalWords * weight) / 100;
             resultsArray.push({ level: 1, title: sectionTitle, words: sectionWords, index: `${sIndex + 1}` });
 
             const subsections = section.querySelectorAll(":scope > .subsections > .subsection");
@@ -261,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addSection();
 });
 </script>
-        <!--Footer-->
+<!--Footer-->
     <footer class="footer">
         <div class="container">
             <div class="row">
