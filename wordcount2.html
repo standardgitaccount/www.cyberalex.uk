@@ -92,6 +92,17 @@
         </div>
     </div>
     
+**Modifications to Normalize Total Word Count**
+
+To normalize the total word count based on the weights assigned to each section and subsection, we need to ensure that the weights sum up to 100% for each section and its subsections. Here’s how to modify the code:
+
+1. **Adjust Weight Calculation**: Ensure that the weights for sections and subsections are normalized to sum up to 100%.
+
+2. **Update the `calculateWords` and `distributeWords` Functions**: Modify these functions to handle the normalization of weights.
+
+Here’s the modified JavaScript code:
+
+```javascript
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("wordCountForm");
@@ -181,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsList.innerHTML = output;
     }
 
-    function distributeWords(parentWords, subsections, depth, parentIndex, resultsArray) {
+    function distributeWords(parentWords, subse sections, depth, parentIndex, resultsArray) {
         if (subsections.length === 0) return;
 
         let totalWeight = 0;
