@@ -231,9 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addSection();
 });
 
-</script>
-
-<!-- Copy to Markdown -->
 <script>
 document.getElementById("copyMarkdown").addEventListener("click", function () {
     let markdownText = "";
@@ -242,25 +239,25 @@ document.getElementById("copyMarkdown").addEventListener("click", function () {
     document.querySelectorAll("#results li").forEach((item) => {
         const text = item.textContent.trim();
 
-        // Updated regex to capture all levels correctly
-        const match = text.match(/^(\d+(\.\d+)*)\s(.+?):\s([\d.]+)\swords\s\(([\d.]+)%\)/);
+        // Updated regex to capture all valid formats
+        const match = text.match(/^(\d+(\.\d+)*)\s(.+?):\s([\d.]+)\swords(?:\s\(([\d.]+)%\))?/);
         
         if (match) {
-            const sectionNumber = match[1]; // "2.1", "2.2.1", etc.
-            const headingTitle = match[3]; // "Body Section 1", etc.
+            const sectionNumber = match[1]; // "1", "2.1", etc.
+            const headingTitle = match[3]; // "main", "Body Section 1", etc.
             const wordCount = parseFloat(match[4]); // Extracts word count
-            const adjustedPercentage = match[5]; // Extracts the adjusted percentage
+            const adjustedPercentage = match[5] ? match[5] + "%" : ""; // Optional adjusted percentage
             
             // Determine heading level based on depth (split by ".")
             const headingLevel = sectionNumber.split(".").length;
 
             // Create Markdown heading
             markdownText += `${"#".repeat(headingLevel)} ${sectionNumber} ${headingTitle}\n`;
-            markdownText += `${wordCount} words (${adjustedPercentage}%)\n\n`;
+            markdownText += `${wordCount} words${adjustedPercentage ? ` (${adjustedPercentage})` : ""}\n\n`;
         }
     });
 
-    if (markdownText) {
+    if (markdownText.trim()) {
         navigator.clipboard.writeText(markdownText).then(() => {
             alert("Markdown copied to clipboard!");
         });
@@ -269,6 +266,7 @@ document.getElementById("copyMarkdown").addEventListener("click", function () {
     }
 });
 </script>
+
 
         <!--Footer-->
     <footer class="footer">
