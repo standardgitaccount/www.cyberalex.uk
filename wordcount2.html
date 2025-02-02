@@ -166,7 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         let output = "";
+        let totalSelectedWords = 0;
         let sections = document.querySelectorAll(".section");
+
+        let resultsArray = [];
 
         sections.forEach((section, sIndex) => {
             const sectionTitle = section.querySelector(".section-heading").value;
@@ -177,30 +180,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const sectionWords = ((totalWords * weight) / 100).toFixed(2);
-            output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${sectionWords} words (${((sectionWords / totalWords) * 100).toFixed(2)}%)</li>`;
+            const sectionWords = ((totalWords * weight) / 100);
+            totalSelectedWords += sectionWords;
+            resultsArray.push({ level: 1, title: `${sIndex + 1}. ${sectionTitle}`, words: sectionWords });
 
             const subsections = section.querySelectorAll(".subsections > .subsection");
-            distributeWords(sectionWords, subsections, 1, `${sIndex + 1}`);
+            distributeWords(sectionWords, subsections, 1, `${sIndex + 1}`, resultsArray);
+        });
+
+        // Adjust percentages based on selected words
+        resultsArray.forEach(item => {
+            const adjustedPercentage = ((item.words / totalSelectedWords) * 100).toFixed(2);
+            output += `<li class='list-group-item'><strong>${item.title}</strong>: ${item.words.toFixed(2)} words (${adjustedPercentage}%)</li>`;
         });
 
         resultsList.innerHTML = output;
+    }
 
-        function distributeWords(parentWords, subsections, depth, parentIndex) {
-            if (subsections.length === 0) return;
+    function distributeWords(parentWords, subsections, depth, parentIndex, resultsArray) {
+        if (subsections.length === 0) return;
 
-            const equalWeight = 100 / subsections.length;
-            subsections.forEach((sub, subIndex) => {
-                const subTitle = sub.querySelector(".sub-heading").value;
-                if (!subTitle) return;
+        const equalWeight = 100 / subsections.length;
+        subsections.forEach((sub, subIndex) => {
+            const subTitle = sub.querySelector(".sub-heading").value;
+            if (!subTitle) return;
 
-                const subWords = ((parentWords * equalWeight) / 100).toFixed(2);
-                output += `<li class='list-group-item' style='margin-left:${depth * 20}px;'>${parentIndex}.${subIndex + 1} ${subTitle}: ${subWords} words (${((subWords / totalWords) * 100).toFixed(2)}%)</li>`;
+            const subWords = ((parentWords * equalWeight) / 100);
+            resultsArray.push({ level: depth + 1, title: `${parentIndex}.${subIndex + 1} ${subTitle}`, words: subWords });
 
-                const nestedSubsections = sub.querySelectorAll(".subsections > .subsection");
-                distributeWords(subWords, nestedSubsections, depth + 1, `${parentIndex}.${subIndex + 1}`);
-            });
-        }
+            const nestedSubsections = sub.querySelectorAll(".subsections > .subsection");
+            distributeWords(subWords, nestedSubsections, depth + 1, `${parentIndex}.${subIndex + 1}`, resultsArray);
+        });
     }
 
     addSectionButton.textContent = "> Add Section";
@@ -222,20 +232,30 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
-    
-<!-- copy section -->
+
+<!-- Copy to Markdown -->
 <script>
 document.getElementById("copyMarkdown").addEventListener("click", function () {
     let markdownText = "";
+    let totalSelectedWords = 0;
+    let markdownArray = [];
+
     document.querySelectorAll("#results li").forEach((item) => {
         const text = item.textContent.trim();
-        const match = text.match(/^(\d+(\.\d+)*)\s(.+?):\s([\d.]+)\swords/);
+        const match = text.match(/^(\d+(\.\d+)*)\s(.+?):\s([\d.]+)\swords\s\(([\d.]+)%\)/);
         if (match) {
             const level = match[1].split(".").length; // Count the depth of the heading
             const heading = match[1] + " " + match[3];
-            const wordCount = match[4] + " words";
-            markdownText += `${"#".repeat(level)} ${heading}\n${wordCount}\n\n`;
+            const wordCount = parseFloat(match[4]);
+            const adjustedPercentage = match[5];
+
+            totalSelectedWords += wordCount;
+            markdownArray.push({ level, heading, wordCount, adjustedPercentage });
         }
+    });
+
+    markdownArray.forEach(item => {
+        markdownText += `${"#".repeat(item.level)} ${item.heading}\n${item.wordCount} words (${item.adjustedPercentage}%)\n\n`;
     });
 
     if (markdownText) {
@@ -247,6 +267,7 @@ document.getElementById("copyMarkdown").addEventListener("click", function () {
     }
 });
 </script>
+
 
 
 
