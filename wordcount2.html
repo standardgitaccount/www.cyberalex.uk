@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
     <title>CyberAlex</title>
     <link href="hacker.css" rel="stylesheet">
 
@@ -25,6 +24,19 @@
     .btn-danger {
         background-color: red;
         border-color: darkred;
+    }
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        flex: 1; /* Allows the content to expand and push the footer down */
+    }
+    .footer {
+        background-color: black;
+        padding: 20px 0;
     }
     </style>
 </head>
@@ -183,11 +195,13 @@
                     <ul class="list-unstyled">
                         <li>Copyright &#169; <script>document.write(/\d{4}/.exec(Date())[0])</script> www.cyberalex.uk - All rights reserved.</li>
                         <br>
-                        <li>Page last updated on: 28 January 2025.</li>
+                        <li>Page last updated on: 2 February 2025.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
