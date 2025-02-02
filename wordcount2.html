@@ -90,110 +90,128 @@
     </div>
     
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("wordCountForm");
-        const addSectionButton = document.getElementById("addSection");
-        const sectionsDiv = document.getElementById("sections");
-        const resultsList = document.getElementById("results");
-        let sectionCount = 0;
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("wordCountForm");
+    const addSectionButton = document.getElementById("addSection");
+    const sectionsDiv = document.getElementById("sections");
+    const resultsList = document.getElementById("results");
+    let sectionCount = 0;
 
-        function addSection() {
-            sectionCount++;
-            const sectionDiv = document.createElement("div");
-            sectionDiv.classList.add("form-group", "section");
-            sectionDiv.innerHTML = `
-                <div style="display: flex; gap: 5px; align-items: center;">
-                    <input type="text" class="form-control section-heading" placeholder="Enter Section Heading" required>
-                    <button type="button" class="btn btn-danger remove-section">Remove</button>
-                </div>
-                <input type="number" class="form-control weight" placeholder="Enter percentage weight (e.g., 10)" required>
-                <button type="button" class="btn btn-success add-subsection">> Add Level 1 Section</button>
-                <div class="subsections"></div>
-            `;
-            sectionsDiv.appendChild(sectionDiv);
+    function addSection() {
+        sectionCount++;
+        const sectionDiv = document.createElement("div");
+        sectionDiv.classList.add("form-group", "section");
+        sectionDiv.innerHTML = `
+            <div style="display: flex; gap: 5px; align-items: center;">
+                <input type="text" class="form-control section-heading" placeholder="Enter Section Heading" required>
+                <input type="number" class="form-control weight" placeholder="Weight (%)" required>
+                <button type="button" class="btn btn-danger remove-section">Remove</button>
+            </div>
+            <button type="button" class="btn btn-success add-subsection">> Add Level 1 Subsection</button>
+            <div class="subsections"></div>
+        `;
+        sectionsDiv.appendChild(sectionDiv);
 
-            sectionDiv.querySelector(".add-subsection").addEventListener("click", () => addSubsection(sectionDiv, 1));
-            sectionDiv.querySelector(".remove-section").addEventListener("click", () => {
-                sectionsDiv.removeChild(sectionDiv);
-            });
+        sectionDiv.querySelector(".add-subsection").addEventListener("click", () => addSubsection(sectionDiv, 1));
+        sectionDiv.querySelector(".remove-section").addEventListener("click", () => {
+            sectionsDiv.removeChild(sectionDiv);
+        });
+    }
+
+    function addSubsection(parentDiv, depth) {
+        if (depth > 5) return alert("Maximum 5 levels of subsections allowed.");
+
+        const subsectionsDiv = parentDiv.querySelector(".subsections");
+        const subsectionDiv = document.createElement("div");
+        subsectionDiv.classList.add("form-group", "subsection");
+        subsectionDiv.style.marginLeft = `${depth * 20}px`;
+
+        subsectionDiv.innerHTML = `
+            <div style="display: flex; gap: 5px; align-items: center;">
+                <input type="text" class="form-control" placeholder="Subsection Heading" required>
+                <input type="number" class="form-control sub-weight" placeholder="Weight (%)" required>
+                <button type="button" class="btn btn-danger remove-subsection">Remove</button>
+            </div>
+            <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add Level ${depth + 1} Subsection</button>
+            <div class="subsections"></div>
+        `;
+        subsectionsDiv.appendChild(subsectionDiv);
+
+        subsectionDiv.querySelector(".add-sub-subsection").addEventListener("click", () => addSubsection(subsectionDiv, depth + 1));
+        subsectionDiv.querySelector(".remove-subsection").addEventListener("click", () => {
+            subsectionsDiv.removeChild(subsectionDiv);
+        });
+    }
+
+    function calculateWords() {
+        resultsList.innerHTML = "";
+        const totalWords = parseFloat(document.getElementById("totalWords").value);
+        if (isNaN(totalWords) || totalWords <= 0) {
+            alert("Please enter a valid total word count.");
+            return;
         }
 
-        function addSubsection(parentDiv, depth) {
-            if (depth > 5) return alert("Maximum 5 levels of subsections allowed.");
+        let output = "";
+        let sections = document.querySelectorAll(".section");
 
-            const subsectionsDiv = parentDiv.querySelector(".subsections");
-            const subsectionDiv = document.createElement("div");
-            subsectionDiv.classList.add("form-group", "subsection");
-            subsectionDiv.style.marginLeft = `${depth * 20}px`; 
+        sections.forEach((section, sIndex) => {
+            const sectionTitle = section.querySelector(".section-heading").value;
+            const weight = parseFloat(section.querySelector(".weight").value);
 
-            subsectionDiv.innerHTML = `
-                <div style="display: flex; gap: 5px; align-items: center;">
-                    <input type="text" class="form-control" placeholder="Enter Subsection Heading" required>
-                    <button type="button" class="btn btn-danger remove-subsection">Remove</button>
-                </div>
-                <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add Level ${depth + 1} Subsection</button>
-                <div class="subsections"></div>
-            `;
-            subsectionsDiv.appendChild(subsectionDiv);
-
-            subsectionDiv.querySelector(".add-sub-subsection").addEventListener("click", () => addSubsection(subsectionDiv, depth + 1));
-            subsectionDiv.querySelector(".remove-subsection").addEventListener("click", () => {
-                subsectionsDiv.removeChild(subsectionDiv);
-            });
-        }
-
-        function distributeWords(totalWords, weight, section) {
-            const sectionWords = ((totalWords * weight) / 100);
-            function assignWords(parent, words) {
-                const subsections = parent.querySelectorAll("> .subsection");
-                if (subsections.length === 0) return [[parent, words]];
-
-                const wordsPerSub = words / subsections.length;
-                let result = [];
-                subsections.forEach(sub => {
-                    result.push(...assignWords(sub.querySelector(".subsections"), wordsPerSub));
-                });
-                return result;
+            if (!sectionTitle || isNaN(weight) || weight <= 0) {
+                alert("Each section must have a valid title and weight.");
+                return;
             }
-            return assignWords(section.querySelector(".subsections"), sectionWords);
-        }
 
-        addSectionButton.textContent = "> Add section";
-        addSectionButton.addEventListener("click", addSection);
+            const sectionWords = ((totalWords * weight) / 100).toFixed(2);
+            output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${sectionWords} words (${weight}%)</li>`;
 
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            resultsList.innerHTML = "";
+            const subsections = section.querySelectorAll(".subsection");
+            distributeWords(sectionWords, subsections, 1, `${sIndex + 1}`);
+        });
 
-            const totalWords = parseFloat(document.getElementById("totalWords").value);
-            const sections = document.querySelectorAll(".section");
+        resultsList.innerHTML = output;
 
-            let output = "";
-            sections.forEach((section, sIndex) => {
-                const sectionTitle = section.querySelector(".section-heading").value;
-                const weight = parseFloat(section.querySelector(".weight").value);
-                const sectionWords = ((totalWords * weight) / 100).toFixed(2);
-                output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${sectionWords} words (${weight}%)</li>`;
-
-                const wordDistribution = distributeWords(totalWords, weight, section);
-                wordDistribution.forEach(([sub, words], subIndex) => {
-                    const subTitle = sub.querySelector("input[type=text]").value;
-                    output += `<li class='list-group-item'>&nbsp;&nbsp;&nbsp;${sIndex + 1}.${subIndex + 1} ${subTitle}: ${words.toFixed(2)} words</li>`;
-                });
+        function distributeWords(parentWords, subsections, depth, parentIndex) {
+            let totalSubWeight = 0;
+            subsections.forEach(sub => {
+                const subWeight = parseFloat(sub.querySelector(".sub-weight").value);
+                if (!isNaN(subWeight) && subWeight > 0) {
+                    totalSubWeight += subWeight;
+                }
             });
 
-            resultsList.innerHTML = output;
-        });
+            subsections.forEach((sub, subIndex) => {
+                const subTitle = sub.querySelector("input[type=text]").value;
+                const subWeight = parseFloat(sub.querySelector(".sub-weight").value);
+                if (!subTitle || isNaN(subWeight) || subWeight <= 0) return;
 
-        form.addEventListener("reset", () => {
-            resultsList.innerHTML = "";
-            sectionsDiv.innerHTML = "";
-            sectionCount = 0;
-            addSection();
-        });
+                const subWords = ((parentWords * subWeight) / totalSubWeight).toFixed(2);
+                output += `<li class='list-group-item' style='margin-left:${depth * 20}px;'>${parentIndex}.${subIndex + 1} ${subTitle}: ${subWords} words (${subWeight}%)</li>`;
 
+                const nestedSubsections = sub.querySelectorAll(".subsection");
+                distributeWords(subWords, nestedSubsections, depth + 1, `${parentIndex}.${subIndex + 1}`);
+            });
+        }
+    }
+
+    addSectionButton.textContent = "> Add Section";
+    addSectionButton.addEventListener("click", addSection);
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        calculateWords();
+    });
+
+    form.addEventListener("reset", () => {
+        resultsList.innerHTML = "";
+        sectionsDiv.innerHTML = "";
+        sectionCount = 0;
         addSection();
     });
+
+    addSection();
+});
 </script>
 
 
