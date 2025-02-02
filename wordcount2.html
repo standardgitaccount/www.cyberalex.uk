@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <title>CyberAlex</title>
+    <link href="hacker.css" rel="stylesheet">
+
+    <style>
+    .tall-row {
+        margin-top: 40px;
+    }
+    .modal {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        z-index: 1;
+        display: block;
+    }
+    .btn-danger {
+        background-color: red;
+        border-color: darkred;
+    }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Academic Weighted Word Count Calculator</h1>
+        <p>Enter the total word count and define sections with headings and sub-sections.</p>
+        
+        <form id="wordCountForm">
+            <div class="form-group">
+                <label for="totalWords">Total Word Count</label>
+                <input type="number" id="totalWords" class="form-control" placeholder="Enter total word count" required>
+            </div>
+            
+            <div id="sections"></div>
+            
+            <button type="button" id="addSection" class="btn btn-primary">+</button>
+            <button type="submit" class="btn btn-success">Calculate</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+        </form>
+        
+        <h3>Results</h3>
+        <ul id="results" class="list-group"></ul>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("wordCountForm");
+            const addSectionButton = document.getElementById("addSection");
+            const sectionsDiv = document.getElementById("sections");
+            const resultsList = document.getElementById("results");
+            
+            addSectionButton.addEventListener("click", () => {
+                const sectionDiv = document.createElement("div");
+                sectionDiv.classList.add("form-group", "section");
+                sectionDiv.innerHTML = `
+                    <input type="text" class="form-control" placeholder="Enter Heading" required>
+                    <input type="text" class="form-control" placeholder="Enter Section Heading" required>
+                    <input type="text" class="form-control" placeholder="Enter Subsection" required>
+                    <input type="number" class="form-control weight" placeholder="Enter percentage weight (e.g., 10)" required>
+                    <button type="button" class="btn btn-danger btn-sm remove-section" style="margin-top: 5px;">Remove</button>
+                `;
+                sectionsDiv.appendChild(sectionDiv);
+                sectionDiv.querySelector(".remove-section").addEventListener("click", () => {
+                    sectionsDiv.removeChild(sectionDiv);
+                });
+            });
+            
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                resultsList.innerHTML = "";
+                
+                const totalWords = parseFloat(document.getElementById("totalWords").value);
+                const weights = Array.from(document.querySelectorAll(".weight"))
+                    .map(input => parseFloat(input.value))
+                    .filter(value => !isNaN(value));
+                
+                const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+                if (totalWeight > 100) {
+                    alert("The total weight cannot exceed 100%.");
+                    return;
+                }
+                
+                const remainingPercentage = 100 - totalWeight;
+                const adjustedTotalWords = (remainingPercentage > 0) 
+                    ? totalWords / (totalWeight / 100) 
+                    : totalWords;
+                
+                weights.forEach((weight, index) => {
+                    const weightedWords = (adjustedTotalWords * (weight / 100)).toFixed(2);
+                    const percentage = ((weightedWords / totalWords) * 100).toFixed(2);
+                    const listItem = document.createElement("li");
+                    listItem.classList.add("list-group-item");
+                    listItem.textContent = `Section ${index + 1}: ${weightedWords} words (${percentage}%)`;
+                    resultsList.appendChild(listItem);
+                });
+                
+                if (remainingPercentage > 0) {
+                    const unusedItem = document.createElement("li");
+                    unusedItem.classList.add("list-group-item", "list-group-item-warning");
+                    unusedItem.textContent = `Unused Percentage: ${remainingPercentage}%. Remaining sections were scaled.`;
+                    resultsList.appendChild(unusedItem);
+                }
+            });
+            
+            form.addEventListener("reset", () => {
+                resultsList.innerHTML = "";
+                sectionsDiv.innerHTML = "";
+            });
+        });
+    </script>
+
+</body>
+</html>
