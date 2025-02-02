@@ -107,7 +107,7 @@
                     <button type="button" class="btn btn-danger remove-section">Remove</button>
                 </div>
                 <input type="number" class="form-control weight" placeholder="Enter percentage weight (e.g., 10)" required>
-                <button type="button" class="btn btn-success add-subsection">> Add another subsection</button>
+                <button type="button" class="btn btn-success add-subsection">> Add Level 1 Section</button>
                 <div class="subsections"></div>
             `;
             sectionsDiv.appendChild(sectionDiv);
@@ -131,7 +131,7 @@
                     <input type="text" class="form-control" placeholder="Enter Subsection Heading" required>
                     <button type="button" class="btn btn-danger remove-subsection">Remove</button>
                 </div>
-                <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add another subsection</button>
+                <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add Level ${depth + 1} Subsection</button>
                 <div class="subsections"></div>
             `;
             subsectionsDiv.appendChild(subsectionDiv);
@@ -140,6 +140,22 @@
             subsectionDiv.querySelector(".remove-subsection").addEventListener("click", () => {
                 subsectionsDiv.removeChild(subsectionDiv);
             });
+        }
+
+        function calculateDistributedWords(totalWords, weight, section) {
+            const weightedWords = ((totalWords * weight) / 100);
+            function distributeWords(parent, availableWords) {
+                const subsections = parent.querySelectorAll("> .subsection");
+                if (subsections.length === 0) return [[parent, availableWords]];
+
+                const wordsPerSubsection = availableWords / subsections.length;
+                let wordDistribution = [];
+                subsections.forEach(subsection => {
+                    wordDistribution.push(...distributeWords(subsection.querySelector(".subsections"), wordsPerSubsection));
+                });
+                return wordDistribution;
+            }
+            return distributeWords(section.querySelector(".subsections"), weightedWords);
         }
 
         addSectionButton.textContent = "> Add section";
@@ -159,15 +175,11 @@
                 const weightedWords = ((totalWords * weight) / 100).toFixed(2);
                 output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${weightedWords} words (${weight}%)</li>`;
 
-                function processSubsections(subsections, prefix) {
-                    subsections.forEach((subsection, subIndex) => {
-                        const subsectionTitle = subsection.querySelector("input[type=text]").value;
-                        output += `<li class='list-group-item'>&nbsp;&nbsp;&nbsp;${prefix}.${subIndex + 1} ${subsectionTitle}</li>`;
-                        processSubsections(subsection.querySelectorAll(".subsection > .subsections > .subsection"), `${prefix}.${subIndex + 1}`);
-                    });
-                }
-
-                processSubsections(section.querySelectorAll(".subsections > .subsection"), sIndex + 1);
+                const distributedWords = calculateDistributedWords(totalWords, weight, section);
+                distributedWords.forEach(([subsection, words], subIndex) => {
+                    const subsectionTitle = subsection.querySelector("input[type=text]").value;
+                    output += `<li class='list-group-item'>&nbsp;&nbsp;&nbsp;${sIndex + 1}.${subIndex + 1} ${subsectionTitle}: ${words.toFixed(2)} words</li>`;
+                });
             });
 
             resultsList.innerHTML = output;
@@ -183,6 +195,7 @@
         addSection();
     });
 </script>
+
 
         <!--Footer-->
     <footer class="footer">
