@@ -183,21 +183,33 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsList.innerHTML = output;
     }
 
-    function distributeWords(parentWords, subsections, depth, resultsArray) {
+    function distributeWords(parentWords, subsections, depth, parentIndex, resultsArray) {
         if (subsections.length === 0) return;
-
-        const equalWeight = 100 / subsections.length;
-        subsections.forEach((sub) => {
-            const subTitle = sub.querySelector(".sub-heading").value;
+    
+        let totalWeight = 0;
+        subsections.forEach(sub => {
+            let weight = parseFloat(sub.dataset.weight) || (100 / subsections.length);
+            totalWeight += weight;
+        });
+    
+        subsections.forEach((sub, subIndex) => {
+            let subTitle = sub.querySelector(".sub-heading").value;
             if (!subTitle) return;
-
-            const subWords = ((parentWords * equalWeight) / 100);
-            resultsArray.push({ level: depth + 1, title: subTitle, words: subWords });
-
-            const nestedSubsections = sub.querySelectorAll(".subsections > .subsection");
-            distributeWords(subWords, nestedSubsections, depth + 1, resultsArray);
+    
+            let weight = parseFloat(sub.dataset.weight) || (100 / subsections.length);
+            let subWords = (parentWords * (weight / totalWeight)); // Ensure proper weight scaling
+    
+            resultsArray.push({
+                level: depth + 1,
+                title: `${parentIndex}.${subIndex + 1} ${subTitle}`,
+                words: subWords
+            });
+    
+            let nestedSubsections = sub.querySelectorAll(".subsections > .subsection");
+            distributeWords(subWords, nestedSubsections, depth + 1, `${parentIndex}.${subIndex + 1}`, resultsArray);
         });
     }
+
 
     document.getElementById("copyMarkdown").addEventListener("click", function () {
         let markdownText = "";
