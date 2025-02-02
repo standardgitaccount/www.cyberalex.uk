@@ -168,14 +168,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const sectionWords = ((totalWords * weight) / 100);
-            resultsArray.push({ level: 1, title: sectionTitle, words: sectionWords });
+            resultsArray.push({ level: 1, title: sectionTitle, words: sectionWords, index: `${sIndex + 1}` });
 
-            const subsections = section.querySelectorAll(".subsections > .subsection");
-            distributeWords(sectionWords, subsections, 1, sIndex + 1, resultsArray);
+            const subsections = section.querySelectorAll(":scope > .subsections > .subsection");
+            distributeWords(sectionWords, subsections, 1, `${sIndex + 1}`, resultsArray);
         });
 
         resultsArray.forEach(item => {
-            output += `<li class='list-group-item'><strong>${item.title}</strong>: ${item.words.toFixed(2)} words</li>`;
+            output += `<li class='list-group-item'><strong>${item.index} ${item.title}</strong>: ${item.words.toFixed(2)} words</li>`;
         });
 
         resultsList.innerHTML = output;
@@ -186,8 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let totalWeight = 0;
         subsections.forEach(sub => {
-            let weightInput = sub.querySelector(".weight");
-            let weight = weightInput ? parseFloat(weightInput.value) : (100 / subsections.length);
+            let weight = parseFloat(sub.querySelector(".weight").value) || (100 / subsections.length);
             totalWeight += weight;
         });
 
@@ -195,18 +194,19 @@ document.addEventListener("DOMContentLoaded", () => {
             let subTitle = sub.querySelector(".sub-heading").value;
             if (!subTitle) return;
 
-            let weightInput = sub.querySelector(".weight");
-            let weight = weightInput ? parseFloat(weightInput.value) : (100 / subsections.length);
-            let subWords = (parentWords * (weight / totalWeight));
+            let weight = parseFloat(sub.querySelector(".weight").value) || (100 / subsections.length);
+            let subWords = (parentWords * (weight / totalWeight)); // Ensure proper weight scaling
 
+            let index = `${parentIndex}.${subIndex + 1}`;
             resultsArray.push({
                 level: depth + 1,
-                title: `${parentIndex}.${subIndex + 1} ${subTitle}`,
-                words: subWords
+                title: subTitle,
+                words: subWords,
+                index: index
             });
 
-            let nestedSubsections = sub.querySelectorAll(".subsections > .subsection");
-            distributeWords(subWords, nestedSubsections, depth + 1, `${parentIndex}.${subIndex + 1}`, resultsArray);
+            let nestedSubsections = sub.querySelectorAll(":scope > .subsections > .subsection");
+            distributeWords(subWords, nestedSubsections, depth + 1, index, resultsArray);
         });
     }
 
@@ -221,17 +221,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         items.forEach((item) => {
             const text = item.textContent.trim();
-            const match = text.match(/^(\d+(\.\d+)*)?\s*(.+?):\s([\d.]+)\swords(?:\s\(([\d.]+)%\))?/);
-
+            const match = text.match(/^(\d+(\.\d+)*)?\s*(.+?):\s([\d.]+)\swords/);
+            
             if (match) {
                 const sectionNumber = match[1] || "";
                 const headingTitle = match[3];
                 const wordCount = parseFloat(match[4]);
-                const adjustedPercentage = match[5] ? ` (${match[5]}%)` : "";
-
+                
                 const headingLevel = sectionNumber ? sectionNumber.split(".").length : 1;
                 markdownText += `${"#".repeat(headingLevel)} ${headingTitle}\n`;
-                markdownText += `${wordCount} words${adjustedPercentage}\n\n`;
+                markdownText += `${wordCount} words\n\n`;
             }
         });
 
