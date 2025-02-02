@@ -125,37 +125,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         let output = "";
-        let sections = document.querySelectorAll(".section");
-
-        sections.forEach((section, sIndex) => {
+        let resultsArray = [];
+        document.querySelectorAll(".section").forEach((section, index) => {
             const sectionTitle = section.querySelector(".section-heading").value;
             const weight = parseFloat(section.querySelector(".weight").value);
-            
-            if (!sectionTitle || isNaN(weight) || weight <= 0) {
-                alert("Each section must have a valid title and weight.");
-                return;
-            }
-
+            if (!sectionTitle || isNaN(weight) || weight <= 0) return;
             const sectionWords = (totalWords * weight) / 100;
-            output += `<li class='list-group-item'><strong>${sectionTitle}</strong>: ${sectionWords.toFixed(2)} words</li>`;
+            resultsArray.push({ index: index + 1, title: sectionTitle, words: sectionWords });
         });
 
+        resultsArray.forEach(item => {
+            output += `<li class='list-group-item'><strong>${item.title}</strong>: ${item.words.toFixed(2)} words</li>`;
+        });
         resultsList.innerHTML = output;
     }
+
+    document.getElementById("copyMarkdown").addEventListener("click", function () {
+        let markdownText = "";
+        document.querySelectorAll("#results li").forEach((item, index) => {
+            const text = item.textContent.trim();
+            markdownText += `# ${index + 1}. ${text}\n\n`;
+        });
+        navigator.clipboard.writeText(markdownText).then(() => {
+            alert("Markdown copied to clipboard!");
+        }).catch(err => {
+            alert("Failed to copy. Please try again.");
+        });
+    });
 
     addSectionButton.addEventListener("click", addSection);
     form.addEventListener("submit", (event) => {
         event.preventDefault();
         calculateWords();
     });
-    form.addEventListener("reset", () => {
-        resultsList.innerHTML = "";
-        sectionsDiv.innerHTML = "";
-        sectionCount = 0;
-        addSection();
-    });
-
-    addSection();
 });
 </script>
 
