@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input type="number" class="form-control weight" placeholder="Weight (%)" required>
                 <button type="button" class="btn btn-danger remove-section">Remove</button>
             </div>
-            <button type="button" class="btn btn-success add-subsection">> Add Level 1 Subsection</button>
+            <button type="button" class="btn btn-success add-subsection">> Add Subsection</button>
             <div class="subsections"></div>
         `;
         sectionsDiv.appendChild(sectionDiv);
@@ -128,11 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         subsectionDiv.innerHTML = `
             <div style="display: flex; gap: 5px; align-items: center;">
-                <input type="text" class="form-control" placeholder="Subsection Heading" required>
-                <input type="number" class="form-control sub-weight" placeholder="Weight (%)" required>
+                <input type="text" class="form-control sub-heading" placeholder="Subsection Heading" required>
                 <button type="button" class="btn btn-danger remove-subsection">Remove</button>
             </div>
-            <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add Level ${depth + 1} Subsection</button>
+            <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add Subsection</button>
             <div class="subsections"></div>
         `;
         subsectionsDiv.appendChild(subsectionDiv);
@@ -140,6 +139,18 @@ document.addEventListener("DOMContentLoaded", () => {
         subsectionDiv.querySelector(".add-sub-subsection").addEventListener("click", () => addSubsection(subsectionDiv, depth + 1));
         subsectionDiv.querySelector(".remove-subsection").addEventListener("click", () => {
             subsectionsDiv.removeChild(subsectionDiv);
+            adjustSubsectionWeights(parentDiv);
+        });
+
+        adjustSubsectionWeights(parentDiv);
+    }
+
+    function adjustSubsectionWeights(parentDiv) {
+        const subsections = parentDiv.querySelectorAll("> .subsections > .subsection");
+        const equalWeight = subsections.length > 0 ? (100 / subsections.length) : 0;
+        
+        subsections.forEach(sub => {
+            sub.dataset.weight = equalWeight; // Store weight in data attribute
         });
     }
 
@@ -164,32 +175,26 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const sectionWords = ((totalWords * weight) / 100).toFixed(2);
-            output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${sectionWords} words (${weight}%)</li>`;
+            output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${sectionWords} words (${((sectionWords / totalWords) * 100).toFixed(2)}%)</li>`;
 
-            const subsections = section.querySelectorAll(".subsection");
+            const subsections = section.querySelectorAll(".subsections > .subsection");
             distributeWords(sectionWords, subsections, 1, `${sIndex + 1}`);
         });
 
         resultsList.innerHTML = output;
 
         function distributeWords(parentWords, subsections, depth, parentIndex) {
-            let totalSubWeight = 0;
-            subsections.forEach(sub => {
-                const subWeight = parseFloat(sub.querySelector(".sub-weight").value);
-                if (!isNaN(subWeight) && subWeight > 0) {
-                    totalSubWeight += subWeight;
-                }
-            });
+            if (subsections.length === 0) return;
 
+            const equalWeight = 100 / subsections.length;
             subsections.forEach((sub, subIndex) => {
-                const subTitle = sub.querySelector("input[type=text]").value;
-                const subWeight = parseFloat(sub.querySelector(".sub-weight").value);
-                if (!subTitle || isNaN(subWeight) || subWeight <= 0) return;
+                const subTitle = sub.querySelector(".sub-heading").value;
+                if (!subTitle) return;
 
-                const subWords = ((parentWords * subWeight) / totalSubWeight).toFixed(2);
-                output += `<li class='list-group-item' style='margin-left:${depth * 20}px;'>${parentIndex}.${subIndex + 1} ${subTitle}: ${subWords} words (${subWeight}%)</li>`;
+                const subWords = ((parentWords * equalWeight) / 100).toFixed(2);
+                output += `<li class='list-group-item' style='margin-left:${depth * 20}px;'>${parentIndex}.${subIndex + 1} ${subTitle}: ${subWords} words (${((subWords / totalWords) * 100).toFixed(2)}%)</li>`;
 
-                const nestedSubsections = sub.querySelectorAll(".subsection");
+                const nestedSubsections = sub.querySelectorAll(".subsections > .subsection");
                 distributeWords(subWords, nestedSubsections, depth + 1, `${parentIndex}.${subIndex + 1}`);
             });
         }
@@ -212,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addSection();
 });
+
 </script>
 
 
