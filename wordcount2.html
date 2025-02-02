@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         subsectionDiv.innerHTML = `
             <div style="display: flex; gap: 5px; align-items: center;">
                 <input type="text" class="form-control sub-heading" placeholder="Subsection Heading" required>
+                <input type="number" class="form-control weight" placeholder="Weight (%)" required>
                 <button type="button" class="btn btn-danger remove-subsection">Remove</button>
             </div>
             <button type="button" class="btn btn-success btn-sm add-sub-subsection">> Add Subsection</button>
@@ -142,10 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         subsectionDiv.querySelector(".add-sub-subsection").addEventListener("click", () => addSubsection(subsectionDiv, depth + 1));
         subsectionDiv.querySelector(".remove-subsection").addEventListener("click", () => {
             subsectionsDiv.removeChild(subsectionDiv);
-            adjustSubsectionWeights(parentDiv);
         });
-
-        adjustSubsectionWeights(parentDiv);
     }
 
     function calculateWords() {
@@ -173,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
             resultsArray.push({ level: 1, title: sectionTitle, words: sectionWords });
 
             const subsections = section.querySelectorAll(".subsections > .subsection");
-            distributeWords(sectionWords, subsections, 1, resultsArray);
+            distributeWords(sectionWords, subsections, 1, sIndex + 1, resultsArray);
         });
 
         resultsArray.forEach(item => {
@@ -185,31 +183,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function distributeWords(parentWords, subsections, depth, parentIndex, resultsArray) {
         if (subsections.length === 0) return;
-    
+
         let totalWeight = 0;
         subsections.forEach(sub => {
-            let weight = parseFloat(sub.dataset.weight) || (100 / subsections.length);
+            let weightInput = sub.querySelector(".weight");
+            let weight = weightInput ? parseFloat(weightInput.value) : (100 / subsections.length);
             totalWeight += weight;
         });
-    
+
         subsections.forEach((sub, subIndex) => {
             let subTitle = sub.querySelector(".sub-heading").value;
             if (!subTitle) return;
-    
-            let weight = parseFloat(sub.dataset.weight) || (100 / subsections.length);
-            let subWords = (parentWords * (weight / totalWeight)); // Ensure proper weight scaling
-    
+
+            let weightInput = sub.querySelector(".weight");
+            let weight = weightInput ? parseFloat(weightInput.value) : (100 / subsections.length);
+            let subWords = (parentWords * (weight / totalWeight));
+
             resultsArray.push({
                 level: depth + 1,
                 title: `${parentIndex}.${subIndex + 1} ${subTitle}`,
                 words: subWords
             });
-    
+
             let nestedSubsections = sub.querySelectorAll(".subsections > .subsection");
             distributeWords(subWords, nestedSubsections, depth + 1, `${parentIndex}.${subIndex + 1}`, resultsArray);
         });
     }
-
 
     document.getElementById("copyMarkdown").addEventListener("click", function () {
         let markdownText = "";
@@ -223,13 +222,13 @@ document.addEventListener("DOMContentLoaded", () => {
         items.forEach((item) => {
             const text = item.textContent.trim();
             const match = text.match(/^(\d+(\.\d+)*)?\s*(.+?):\s([\d.]+)\swords(?:\s\(([\d.]+)%\))?/);
-            
+
             if (match) {
                 const sectionNumber = match[1] || "";
                 const headingTitle = match[3];
                 const wordCount = parseFloat(match[4]);
                 const adjustedPercentage = match[5] ? ` (${match[5]}%)` : "";
-                
+
                 const headingLevel = sectionNumber ? sectionNumber.split(".").length : 1;
                 markdownText += `${"#".repeat(headingLevel)} ${headingTitle}\n`;
                 markdownText += `${wordCount} words${adjustedPercentage}\n\n`;
@@ -259,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sectionCount = 0;
         addSection();
     });
+
     addSection();
 });
 
