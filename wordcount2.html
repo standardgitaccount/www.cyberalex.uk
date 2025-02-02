@@ -237,25 +237,18 @@ document.addEventListener("DOMContentLoaded", () => {
 <script>
 document.getElementById("copyMarkdown").addEventListener("click", function () {
     let markdownText = "";
-    let totalSelectedWords = 0;
-    let markdownArray = [];
-
+    
     document.querySelectorAll("#results li").forEach((item) => {
         const text = item.textContent.trim();
         const match = text.match(/^(\d+(\.\d+)*)\s(.+?):\s([\d.]+)\swords\s\(([\d.]+)%\)/);
         if (match) {
-            const level = match[1].split(".").length; // Count the depth of the heading
-            const heading = match[1] + " " + match[3];
-            const wordCount = parseFloat(match[4]);
-            const adjustedPercentage = match[5];
+            const level = match[1].split(".").length; // Determines heading level (1 = H1, 2 = H2, etc.)
+            const heading = match[1] + " " + match[3]; // Full heading with numbering
+            const wordCount = parseFloat(match[4]); // Extracts word count
+            const adjustedPercentage = match[5]; // Extracts percentage
 
-            totalSelectedWords += wordCount;
-            markdownArray.push({ level, heading, wordCount, adjustedPercentage });
+            markdownText += `${"#".repeat(level)} ${heading}\n${wordCount} words (${adjustedPercentage}%)\n\n`;
         }
-    });
-
-    markdownArray.forEach(item => {
-        markdownText += `${"#".repeat(item.level)} ${item.heading}\n${item.wordCount} words (${item.adjustedPercentage}%)\n\n`;
     });
 
     if (markdownText) {
@@ -267,10 +260,6 @@ document.getElementById("copyMarkdown").addEventListener("click", function () {
     }
 });
 </script>
-
-
-
-
         <!--Footer-->
     <footer class="footer">
         <div class="container">
