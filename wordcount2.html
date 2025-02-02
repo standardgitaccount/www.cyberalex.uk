@@ -230,15 +230,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addSection();
 });
-    
-</script>
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("copyMarkdown").addEventListener("click", function () {
         let markdownText = "";
         
-        // Get all result items
+        // Get all list items inside the results section
         const items = document.querySelectorAll("#results li");
+        
         if (items.length === 0) {
             alert("No results to copy.");
             return;
@@ -247,34 +246,39 @@ document.addEventListener("DOMContentLoaded", function () {
         items.forEach((item) => {
             const text = item.textContent.trim();
 
-            // Updated regex to capture headings, word counts, and percentages correctly
+            // Updated regex to capture section numbers, titles, word counts, and percentages
             const match = text.match(/^(\d+(\.\d+)*)\s(.+?):\s([\d.]+)\swords(?:\s\(([\d.]+)%\))?/);
             
             if (match) {
-                const sectionNumber = match[1]; // "1", "2.1", etc.
-                const headingTitle = match[3]; // "Introduction", "Methodology", etc.
-                const wordCount = parseFloat(match[4]); // Extract word count
-                const adjustedPercentage = match[5] ? ` (${match[5]}%)` : ""; // Optional adjusted percentage
+                const sectionNumber = match[1]; // E.g., "1", "2.1", "3.2.1"
+                const headingTitle = match[3]; // Extracts section title
+                const wordCount = parseFloat(match[4]); // Extracts word count
+                const adjustedPercentage = match[5] ? ` (${match[5]}%)` : ""; // Optional percentage
                 
-                // Determine heading level based on section depth
+                // Determine heading level based on how many "." exist in the number
                 const headingLevel = sectionNumber.split(".").length;
 
-                // Create Markdown heading
-                markdownText += `${"#".repeat(headingLevel)} ${sectionNumber} ${headingTitle}\n`;
+                // Ensure all headings are copied properly
+                markdownText += `${"#".repeat(headingLevel)} ${headingTitle}\n`;
                 markdownText += `${wordCount} words${adjustedPercentage}\n\n`;
             }
         });
 
         // Copy Markdown to clipboard
-        navigator.clipboard.writeText(markdownText).then(() => {
-            alert("Markdown copied to clipboard!");
-        }).catch(err => {
-            console.error("Failed to copy:", err);
-            alert("Failed to copy. Please try again.");
-        });
+        if (markdownText.trim()) {
+            navigator.clipboard.writeText(markdownText).then(() => {
+                alert("Markdown copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy:", err);
+                alert("Failed to copy. Please try again.");
+            });
+        } else {
+            alert("No valid sections found to copy.");
+        }
     });
 });
 </script>
+
 
 
         <!--Footer-->
