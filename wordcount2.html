@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let sections = document.querySelectorAll(".section");
         let resultsArray = [];
 
+        let totalWeight = 0;
         sections.forEach((section, sIndex) => {
             const sectionTitle = section.querySelector(".section-heading").value;
             const weight = parseFloat(section.querySelector(".weight").value);
@@ -166,6 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            totalWeight += weight;
+
             const sectionWords = (totalWords * weight) / 100;
             resultsArray.push({ level: 1, title: sectionTitle, words: sectionWords, index: `${sIndex + 1}` });
 
@@ -173,8 +176,15 @@ document.addEventListener("DOMContentLoaded", () => {
             distributeWords(sectionWords, subsections, 1, `${sIndex + 1}`, resultsArray);
         });
 
+        // Normalize weights to total weight
+        if (totalWeight !== 100) {
+            alert("The total weight does not add up to 100%. Please adjust your section weights.");
+            return;
+        }
+
         resultsArray.forEach(item => {
-            output += `<li class='list-group-item'><strong>${item.index} ${item.title}</strong>: ${item.words.toFixed(2)} words</li>`;
+            const normalizedWords = (item.words * totalWords) / 100;
+            output += `<li class='list-group-item'><strong>${item.index} ${item.title}</strong>: ${normalizedWords.toFixed(2)} words</li>`;
         });
 
         resultsList.innerHTML = output;
@@ -183,10 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function distributeWords(parentWords, subsections, depth, parentIndex, resultsArray) {
         if (subsections.length === 0) return;
 
-        let totalWeight = 0;
+        let totalSubsectionWeight = 0;
         subsections.forEach(sub => {
             let weight = parseFloat(sub.querySelector(".weight").value) || (100 / subsections.length);
-            totalWeight += weight;
+            totalSubsectionWeight += weight;
         });
 
         subsections.forEach((sub, subIndex) => {
@@ -194,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!subTitle) return;
 
             let weight = parseFloat(sub.querySelector(".weight").value) || (100 / subsections.length);
-            let subWords = (parentWords * (weight / totalWeight)); // Ensure proper weight scaling
+            let subWords = (parentWords * (weight / totalSubsectionWeight)); // Ensure proper weight scaling
 
             let index = `${parentIndex}.${subIndex + 1}`;
             resultsArray.push({
@@ -259,6 +269,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addSection();
 });
+
+
 </script>
 <!--Footer-->
     <footer class="footer">
