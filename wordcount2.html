@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,6 +86,8 @@
             <div class="col-lg-5">
                 <h3>Results</h3>
                 <ul id="results" class="list-group"></ul>
+                <h3>Copy</h3>
+                <button id="copyMarkdown" class="btn btn-info">Copy As Markdown</button>
             </div>
         </div>
     </div>
@@ -216,6 +219,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     addSection();
+});
+
+</script>
+<!-- copy section -- >
+<script>
+document.getElementById("copyMarkdown").addEventListener("click", function () {
+    let markdownText = "";
+    document.querySelectorAll("#results li").forEach((item) => {
+        const text = item.textContent.trim();
+        const match = text.match(/^(\d+(\.\d+)*)\s(.+?):\s([\d.]+)\swords/);
+        if (match) {
+            const level = match[1].split(".").length; // Count the depth of the heading
+            const heading = match[1] + " " + match[3];
+            const wordCount = match[4] + " words";
+            markdownText += `${"#".repeat(level)} ${heading}\n${wordCount}\n\n`;
+        }
+    });
+
+    if (markdownText) {
+        navigator.clipboard.writeText(markdownText).then(() => {
+            alert("Markdown copied to clipboard!");
+        });
+    } else {
+        alert("No results to copy.");
+    }
 });
 
 </script>
