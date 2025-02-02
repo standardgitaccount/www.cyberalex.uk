@@ -122,10 +122,10 @@
             if (depth > 5) return alert("Maximum 5 levels of subsections allowed.");
 
             const subsectionsDiv = parentDiv.querySelector(".subsections");
-            const subsectionCount = subsectionsDiv.children.length + 1;
             const subsectionDiv = document.createElement("div");
             subsectionDiv.classList.add("form-group", "subsection");
-            subsectionDiv.style.marginLeft = `${depth * 20}px`;
+            subsectionDiv.style.marginLeft = `${depth * 20}px`; 
+
             subsectionDiv.innerHTML = `
                 <div style="display: flex; gap: 5px; align-items: center;">
                     <input type="text" class="form-control" placeholder="Enter Subsection Heading" required>
@@ -142,20 +142,20 @@
             });
         }
 
-        function calculateDistributedWords(totalWords, weight, section) {
-            const weightedWords = ((totalWords * weight) / 100);
-            function distributeWords(parent, availableWords) {
+        function distributeWords(totalWords, weight, section) {
+            const sectionWords = ((totalWords * weight) / 100);
+            function assignWords(parent, words) {
                 const subsections = parent.querySelectorAll("> .subsection");
-                if (subsections.length === 0) return [[parent, availableWords]];
+                if (subsections.length === 0) return [[parent, words]];
 
-                const wordsPerSubsection = availableWords / subsections.length;
-                let wordDistribution = [];
-                subsections.forEach(subsection => {
-                    wordDistribution.push(...distributeWords(subsection.querySelector(".subsections"), wordsPerSubsection));
+                const wordsPerSub = words / subsections.length;
+                let result = [];
+                subsections.forEach(sub => {
+                    result.push(...assignWords(sub.querySelector(".subsections"), wordsPerSub));
                 });
-                return wordDistribution;
+                return result;
             }
-            return distributeWords(section.querySelector(".subsections"), weightedWords);
+            return assignWords(section.querySelector(".subsections"), sectionWords);
         }
 
         addSectionButton.textContent = "> Add section";
@@ -172,13 +172,13 @@
             sections.forEach((section, sIndex) => {
                 const sectionTitle = section.querySelector(".section-heading").value;
                 const weight = parseFloat(section.querySelector(".weight").value);
-                const weightedWords = ((totalWords * weight) / 100).toFixed(2);
-                output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${weightedWords} words (${weight}%)</li>`;
+                const sectionWords = ((totalWords * weight) / 100).toFixed(2);
+                output += `<li class='list-group-item'><strong>${sIndex + 1}. ${sectionTitle}</strong>: ${sectionWords} words (${weight}%)</li>`;
 
-                const distributedWords = calculateDistributedWords(totalWords, weight, section);
-                distributedWords.forEach(([subsection, words], subIndex) => {
-                    const subsectionTitle = subsection.querySelector("input[type=text]").value;
-                    output += `<li class='list-group-item'>&nbsp;&nbsp;&nbsp;${sIndex + 1}.${subIndex + 1} ${subsectionTitle}: ${words.toFixed(2)} words</li>`;
+                const wordDistribution = distributeWords(totalWords, weight, section);
+                wordDistribution.forEach(([sub, words], subIndex) => {
+                    const subTitle = sub.querySelector("input[type=text]").value;
+                    output += `<li class='list-group-item'>&nbsp;&nbsp;&nbsp;${sIndex + 1}.${subIndex + 1} ${subTitle}: ${words.toFixed(2)} words</li>`;
                 });
             });
 
@@ -195,6 +195,7 @@
         addSection();
     });
 </script>
+
 
 
         <!--Footer-->
