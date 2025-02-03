@@ -81,102 +81,88 @@
             </p>
         
             <form id="wordCountForm">
-                <div class="form-group">
-                    <label for="totalWords">Total Word Count</label>
-                    <input type="number" id="totalWords" class="form-control" placeholder="Enter total word count" required>
-                </div>
-        
-                <div id="sections">
-                    <div class="form-group section">
-                        <label>Section 1</label>
-                        <input type="number" class="form-control weight" placeholder="Enter percentage weight (e.g., 10)" required>
-                        <small class="form-text text-muted">Percentage weight for this section (e.g., 10 for 10%).</small>
-                    </div>
-                </div>
-        
-                <button type="button" id="addSection" class="btn btn-primary">Add Section</button>
-                <button type="submit" class="btn btn-success">Calculate</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
-            </form>
+            <div class="form-group">
+                <label for="totalWords">Total Word Count</label>
+                <input type="number" id="totalWords" class="form-control" placeholder="Enter total word count" required>
+            </div>
+            
+            <div id="chapters"></div>
+            
+            <button type="button" id="addChapter" class="btn btn-primary">Add Chapter</button>
+            <button type="submit" class="btn btn-success">Calculate</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+        </form>
         
             <h3>Results</h3>
             <ul id="results" class="list-group"></ul>
         </div>
         
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const form = document.getElementById("wordCountForm");
-                const addSectionButton = document.getElementById("addSection");
-                const sectionsDiv = document.getElementById("sections");
-                const resultsList = document.getElementById("results");
-        
-                // Add a new section input field
-                addSectionButton.addEventListener("click", () => {
-                    const sectionDiv = document.createElement("div");
-                    sectionDiv.classList.add("form-group", "section");
-                    sectionDiv.innerHTML = `
-                        <label>New Section</label>
-                        <input type="number" class="form-control weight" placeholder="Enter percentage weight (e.g., 10)" required>
-                        <button type="button" class="btn btn-danger btn-sm remove-section" style="margin-top: 5px;">Remove</button>
+          <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("wordCountForm");
+            const addChapterButton = document.getElementById("addChapter");
+            const chaptersDiv = document.getElementById("chapters");
+            const resultsList = document.getElementById("results");
+            
+            addChapterButton.addEventListener("click", () => {
+                const chapterDiv = document.createElement("div");
+                chapterDiv.classList.add("form-group", "chapter-container");
+                chapterDiv.innerHTML = `
+                    <label>New Chapter</label>
+                    <input type="number" class="form-control weight" placeholder="%" required>
+                    <button type="button" class="btn btn-info addSubSection">+ Sub-section</button>
+                    <button type="button" class="btn btn-danger btn-sm remove-btn">Remove</button>
+                    <div class="sub-sections"></div>
+                `;
+                chaptersDiv.appendChild(chapterDiv);
+
+                chapterDiv.querySelector(".remove-btn").addEventListener("click", () => {
+                    chaptersDiv.removeChild(chapterDiv);
+                });
+
+                chapterDiv.querySelector(".addSubSection").addEventListener("click", () => {
+                    const subSectionDiv = document.createElement("div");
+                    subSectionDiv.classList.add("form-group", "chapter-container");
+                    subSectionDiv.innerHTML = `
+                        <input type="number" class="form-control weight" placeholder="Sub-section %" required>
+                        <button type="button" class="btn btn-danger btn-sm remove-btn">Remove</button>
                     `;
-                    sectionsDiv.appendChild(sectionDiv);
-        
-                    // Add remove button functionality
-                    sectionDiv.querySelector(".remove-section").addEventListener("click", () => {
-                        sectionsDiv.removeChild(sectionDiv);
+                    chapterDiv.querySelector(".sub-sections").appendChild(subSectionDiv);
+
+                    subSectionDiv.querySelector(".remove-btn").addEventListener("click", () => {
+                        chapterDiv.querySelector(".sub-sections").removeChild(subSectionDiv);
                     });
-                });
-        
-                // Handle form submission and calculate word counts
-                form.addEventListener("submit", (event) => {
-                    event.preventDefault();
-                    resultsList.innerHTML = "";
-        
-                    const totalWords = parseFloat(document.getElementById("totalWords").value);
-                    const weights = Array.from(document.querySelectorAll(".weight"))
-                        .map(input => parseFloat(input.value))
-                        .filter(value => !isNaN(value));
-        
-                    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-        
-                    if (totalWeight > 100) {
-                        alert("The total weight cannot exceed 100%.");
-                        return;
-                    }
-        
-                    // Calculate the effective word count for the remaining percentage
-                    const remainingPercentage = 100 - totalWeight;
-                    const adjustedTotalWords = (remainingPercentage > 0) 
-                        ? totalWords / (totalWeight / 100) 
-                        : totalWords;
-        
-                    // Display results for each section
-                    weights.forEach((weight, index) => {
-                        const weightedWords = (adjustedTotalWords * (weight / 100)).toFixed(2);
-                        const listItem = document.createElement("li");
-                        listItem.classList.add("list-group-item");
-                        listItem.textContent = `Section ${index + 1}: ${weightedWords} words (${weight}%)`;
-                        resultsList.appendChild(listItem);
-                    });
-        
-                    // Highlight unused percentage
-                    if (remainingPercentage > 0) {
-                        const unusedItem = document.createElement("li");
-                        unusedItem.classList.add("list-group-item", "list-group-item-warning");
-                        unusedItem.textContent = `Unused Percentage: ${remainingPercentage}%. Remaining sections were scaled to make up for it.`;
-                        resultsList.appendChild(unusedItem);
-                    }
-                });
-        
-                // Reset form and clear results
-                form.addEventListener("reset", () => {
-                    resultsList.innerHTML = "";
-                    while (sectionsDiv.children.length > 1) {
-                        sectionsDiv.removeChild(sectionsDiv.lastChild);
-                    }
                 });
             });
-        </script>
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                resultsList.innerHTML = "";
+                
+                const totalWords = parseFloat(document.getElementById("totalWords").value);
+                const weights = Array.from(document.querySelectorAll(".weight"))
+                    .map(input => parseFloat(input.value))
+                    .filter(value => !isNaN(value));
+                
+                const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+                
+                if (totalWeight > 100) {
+                    alert("The total weight cannot exceed 100%.");
+                    return;
+                }
+                
+                const adjustedTotalWords = totalWeight > 0 ? totalWords / (totalWeight / 100) : totalWords;
+                
+                weights.forEach((weight, index) => {
+                    const weightedWords = (adjustedTotalWords * (weight / 100)).toFixed(2);
+                    const listItem = document.createElement("li");
+                    listItem.classList.add("list-group-item");
+                    listItem.textContent = `Chapter ${index + 1}: ${weightedWords} words (${weight}%)`;
+                    resultsList.appendChild(listItem);
+                });
+            });
+        });
+    </script>
     </div>
 
 <!--Footer-->
