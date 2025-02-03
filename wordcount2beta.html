@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <title>CyberAlex</title>
+    <link href="hacker.css" rel="stylesheet">
+
+    <style>
+    .tall-row {
+        margin-top: 40px;
+    }
+    .modal {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        z-index: 1;
+        display: block;
+    }
+    .btn-danger {
+        background-color: red;
+        border-color: darkred;
+    }
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        flex: 1; /* Allows the content to expand and push the footer down */
+    }
+    .footer {
+        background-color: black;
+        padding: 20px 0;
+    }
+    </style>
+</head>
+<body>
+        <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">CyberAlex</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="blog.html">> Blog</a></li>
+                    <li><a href="projects.html">> Projects</a></li>
+                    <li><a href="documents.html">> Documents</a></li>
+                    <li><a href="contact.html">> Contact</a></li>
+                    <li><a href="about.html">> About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">      
+  <!--Content-->
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <h1>Academic Weighted Word Count Calculator with Dynamic Count Allocation (AWWCC-DCA)</h1>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <p>
+                Enter the total word count and percentages for each section below. 
+                Any unused percentage (e.g., styling, references, or appendices) will dynamically adjust 
+                the word count allocation for the remaining sections.
+            </p>
+        
+            <form id="wordCountForm">
+                <div class="form-group">
+                    <label for="totalWords">Total Word Count</label>
+                    <input type="number" id="totalWords" class="form-control" placeholder="Enter total word count" required>
+                </div>
+        
+                <div id="sections">
+                    <div class="form-group section">
+                        <label>Section 1</label>
+                        <input type="number" class="form-control weight" placeholder="Enter percentage weight (e.g., 10)" required>
+                        <small class="form-text text-muted">Percentage weight for this section (e.g., 10 for 10%).</small>
+                    </div>
+                </div>
+        
+                <button type="button" id="addSection" class="btn btn-primary">Add Section</button>
+                <button type="submit" class="btn btn-success">Calculate</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </form>
+        
+            <h3>Results</h3>
+            <ul id="results" class="list-group"></ul>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const form = document.getElementById("wordCountForm");
+                const addSectionButton = document.getElementById("addSection");
+                const sectionsDiv = document.getElementById("sections");
+                const resultsList = document.getElementById("results");
+        
+                // Add a new section input field
+                addSectionButton.addEventListener("click", () => {
+                    const sectionDiv = document.createElement("div");
+                    sectionDiv.classList.add("form-group", "section");
+                    sectionDiv.innerHTML = `
+                        <label>New Section</label>
+                        <input type="number" class="form-control weight" placeholder="Enter percentage weight (e.g., 10)" required>
+                        <button type="button" class="btn btn-danger btn-sm remove-section" style="margin-top: 5px;">Remove</button>
+                    `;
+                    sectionsDiv.appendChild(sectionDiv);
+        
+                    // Add remove button functionality
+                    sectionDiv.querySelector(".remove-section").addEventListener("click", () => {
+                        sectionsDiv.removeChild(sectionDiv);
+                    });
+                });
+        
+                // Handle form submission and calculate word counts
+                form.addEventListener("submit", (event) => {
+                    event.preventDefault();
+                    resultsList.innerHTML = "";
+        
+                    const totalWords = parseFloat(document.getElementById("totalWords").value);
+                    const weights = Array.from(document.querySelectorAll(".weight"))
+                        .map(input => parseFloat(input.value))
+                        .filter(value => !isNaN(value));
+        
+                    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+        
+                    if (totalWeight > 100) {
+                        alert("The total weight cannot exceed 100%.");
+                        return;
+                    }
+        
+                    // Calculate the effective word count for the remaining percentage
+                    const remainingPercentage = 100 - totalWeight;
+                    const adjustedTotalWords = (remainingPercentage > 0) 
+                        ? totalWords / (totalWeight / 100) 
+                        : totalWords;
+        
+                    // Display results for each section
+                    weights.forEach((weight, index) => {
+                        const weightedWords = (adjustedTotalWords * (weight / 100)).toFixed(2);
+                        const listItem = document.createElement("li");
+                        listItem.classList.add("list-group-item");
+                        listItem.textContent = `Section ${index + 1}: ${weightedWords} words (${weight}%)`;
+                        resultsList.appendChild(listItem);
+                    });
+        
+                    // Highlight unused percentage
+                    if (remainingPercentage > 0) {
+                        const unusedItem = document.createElement("li");
+                        unusedItem.classList.add("list-group-item", "list-group-item-warning");
+                        unusedItem.textContent = `Unused Percentage: ${remainingPercentage}%. Remaining sections were scaled to make up for it.`;
+                        resultsList.appendChild(unusedItem);
+                    }
+                });
+        
+                // Reset form and clear results
+                form.addEventListener("reset", () => {
+                    resultsList.innerHTML = "";
+                    while (sectionsDiv.children.length > 1) {
+                        sectionsDiv.removeChild(sectionsDiv.lastChild);
+                    }
+                });
+            });
+        </script>
+    </div>
+
+<!--Footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Legal</h4>
+                    <ul class="list-unstyled">
+                        <li>> <a href="privacypolicy.html">Privacy Policy</a></li>
+                        <li>> <a href="termsandconditions.html">Terms and Conditions</a></li>
+                        <li>> <a href="copyright.html">Copyright</a></li>
+                        <li>> <a href="licences.html">Licences</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li>> <a href="index.html">Home</a></li>
+                        <li>> <a href="blog.html">Blog</a></li>
+                        <li>> <a href="projects.html">Projects</a></li>
+                        <li>> <a href="contact.html">Contact</a></li>
+                        <li>> <a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>Page Information</h4>
+                    <ul class="list-unstyled">
+                        <li>Copyright &#169; <script>document.write(/\d{4}/.exec(Date())[0])</script> www.cyberalex.uk - All rights reserved.</li>
+                        <br>
+                        <li>Page last updated on: 2 February 2025.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</body>
+</html>
