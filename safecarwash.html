@@ -28,6 +28,15 @@
         background-color: black;
         padding: 20px 0;
     }
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .container {
+        flex: 1; /* Allows the content to expand and push the footer down */
+    }
     </style>
 </head>
 
@@ -60,15 +69,15 @@
 
     <div class="container">
             <div class="row">
-                 <div class="col-md-8">
+                 <div class="col-md-6">
                      <ul class="breadcrumb">
                            <li><a href="index.html">Home</a></li>
                            <li><a href="blog.html">Blog</a></li>
                            <li class="blog.html">Safe Car Washing</li>
                      </ul>
                  </div>
-                <div class="col-md-2"><p>Published: 5 February 2024</p></div>
-                <div class="col-md-2">Author: <a href="about.html">Alex</a></div>
+                <div class="col-md-3"><p>Published: 5 February 2024</p></div>
+                <div class="col-md-3">Author: <a href="about.html">Alex</a></div>
             </div>
  <!--Content-->
         <div class="row">
