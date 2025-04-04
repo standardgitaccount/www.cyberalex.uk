@@ -56,7 +56,7 @@ class TheFooter extends HTMLElement {
                   <div class="col-md-4">
                       <h4>Page Information</h4>
                       <ul class="list-unstyled">
-                          <li>Copyright &#169; ${currentYear} www.cyberalex.uk - All rights reserved.</li>
+                          <li>Copyright &#169; <span id="current-year">${currentYear}</span> www.cyberalex.uk - All rights reserved.</li>
                       </ul>
                   </div>
               </div>
