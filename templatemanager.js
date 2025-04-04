@@ -14,9 +14,7 @@ class TheHeader extends HTMLElement {
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="blog.html">> Blog</a></li>
-                    <li><a href="projects.html">> Projects</a></li>
-                    <li><a href="documents.html">> Documents</a></li>
+                    <li><a href="index.html">> Home</a></li>
                     <li><a href="contact.html">> Contact</a></li>
                     <li><a href="about.html">> About</a></li>
                 </ul>
@@ -47,14 +45,16 @@ class TheFooter extends HTMLElement {
                       <h4>Quick Links</h4>
                       <ul class="list-unstyled">
                           <li>> <a href="index.html">Home</a></li>
-                          <li>> <a href="blog.html">Blog</a></li>
                           <li>> <a href="projects.html">Projects</a></li>
+                          <li>> <a href="photography.html">Photography Portfolios</a></li>
+                          <li>> <a href="documents.html">Documents</a></li>
+                          <li>> <a href="blog.html">Blog</a></li>
                           <li>> <a href="contact.html">Contact</a></li>
                           <li>> <a href="about.html">About</a></li>
                       </ul>
                   </div>
                   <div class="col-md-4">
-                      <h4>Page Information</h4>
+                      <h4>Notice</h4>
                       <ul class="list-unstyled">
                           <li>Copyright &#169; <span id="current-year">${currentYear}</span> www.cyberalex.uk - All rights reserved.</li>
                       </ul>
