@@ -1,7 +1,6 @@
-
 class TheHeader extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = '
+    this.innerHTML = `
         <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,14 +23,13 @@ class TheHeader extends HTMLElement {
             </div>
         </div>
     </nav>
-      '
+    `;
   }
 }
 
-
 class TheFooter extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = '
+    this.innerHTML = `
       <footer class="footer">
           <div class="container">
               <div class="row">
@@ -63,9 +61,9 @@ class TheFooter extends HTMLElement {
               </div>
           </div>
       </footer>
-      '
+    `;
   }
 }
 
-customElements.define("the-header", TheHeader)
-customElements.define("the-footer", TheFooter)
+customElements.define("the-header", TheHeader);
+customElements.define("the-footer", TheFooter);
