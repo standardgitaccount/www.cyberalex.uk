@@ -1,4 +1,4 @@
-customElements.define('the-header', TheHeader)
+
 class TheHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = '
@@ -28,7 +28,7 @@ class TheHeader extends HTMLElement {
   }
 }
 
-customElements.define('the-footer', TheFooter)
+
 class TheFooter extends HTMLElement {
   connectedCallback() {
     this.innerHTML = '
@@ -66,3 +66,6 @@ class TheFooter extends HTMLElement {
       '
   }
 }
+
+customElements.define('the-header', TheHeader)
+customElements.define('the-footer', TheFooter)
