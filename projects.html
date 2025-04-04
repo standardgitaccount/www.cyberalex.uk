@@ -2,153 +2,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+ <meta charset="utf-8">
+    <meta name="description" content="All projects, past and present, listed in order of publication date at cyberalex.uk">
+    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex">
+    <meta name="author" content="Alex">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script type="module" src="./templatemanager.js"></script>
+    
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-    <title>CyberAlex</title>
     <link href="hacker.css" rel="stylesheet">
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+   
+    <title>CyberAlex</title>
+    
 
     <style>
-    .tall-row {
-        margin-top: 40px;
-    }
-    .modal {
-        position: relative;
-        top: auto;
-        right: auto;
-        left: auto;
-        bottom: auto;
-        z-index: 1;
-        display: block;
-    }
+    .footer {
+      background-color: black;
+      padding: 20px 0;
+     }
+     .full-width-button {
+       width: 100%; /* Make the button take the full width */
+     }
+     
     </style>
 </head>
 
 <body>
+    
+  <the-header></the-header>
+  <main class="container" id="main">
 
-
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">CyberAlex</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="documents.html">Documents</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="projects.html">Projects</li>
                 </ul>
             </div>
         </div>
-    </nav>
-
-
-    <div class="container">
-        
-            <div class="row">
-                 <div class="col-md-4">
-                     <ul class="breadcrumb">
-                           <li><a href="index.html">Home</a></li>
-                           <li class="projects.html">Projects</li>
-                     </ul>
-                 </div>
-            </div>
 
         <!--Ongoing Projects-->
         <div class="row">
             <div class="col-lg-12">
-                <hr id="Ongoing-Projects">
-                <h1>Projects</h1>
+                <hr id="projects">
+                <h1>All Projects</h1>
+                <p>All projects, past and present, listed in order of publication date at cyberalex.uk</p>
             </div>
         </div>
+            
+      <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading"><h3 class="panel-title">Secure SME | Ongoing</h3></div>
+                <div class="panel-body">SecureSME.co.uk is the end deliverable for the undergraduate cyber dissertation project. Designed to help inform small to medium enterprises in the UK of the requirements around data protection legislation and the importance of good security.</div>
+                <div class="panel-footer"><a href="https://securesme.co.uk">> Visit securesme.co.uk</a></div>
+            </div>
+        </div>
+      
         <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h3 class="panel-title">Integrated Document Viewer</h3></div>
+                    <div class="panel-body">View the test page for the seamless integration of a new document viewer for cyberalex.uk based on PDF.js, a Mozilla project and licensed under Apache 2.0. This project will enable easy viewing on desktops of PDF documents inside the webpage itself.</div>
+                    <div class="panel-footer"><a href="DocViewTest.html">> Test out the PDF viewer</a></div>
+                </div>
+            </div>
+
             <div class="col-md-4">
                 <div class="panel panel-success">
                     <div class="panel-heading"><h3 class="panel-title">AWWC-DCA | January 2025</h3></div>
                     <div class="panel-body">The Academic Weighted Word Count Calculator with Dynamic Count Allocation (AWWC-DCA) is a free-to-use tool that dynamically allocates a word count based on a given percentage that does not need to equal 100%. It is designed for university assignments.</div>
-                    <div class="panel-footer">> <a href="wordcount.html">View Tool</a></div>
+                    <div class="panel-footer"><a href="wordcount.html">> View Tool</a></div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><h3 class="panel-title">Secure SME | Ongoing</h3></div>
-                    <div class="panel-body">SecureSME.co.uk is the end deliverable for the undergraduate cyber dissertation project. Designed to help inform small to medium enterprises in the UK of the requirements around data protection legislation and the importance of strong cyber security.</div>
-                    <div class="panel-footer">> <a href="https://securesme.co.uk">Visit securesme.co.uk</a></div>
-                </div>
-            </div>
 
-            <!--<div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><h3 class="panel-title">Reading</h3></div>
-                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum neque libero, vitae feugiat neque ullamcorper eget. Morbi pellentesque, orci sollicitudin congue lacinia, massa risus mollis nisl, eget maximus quam elit eu ante.</div>
-                    <div class="panel-footer">> <a href="#">Read it</a></div>
-                </div>
-            </div>-->
         </div>
-        <!--<div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><h3 class="panel-title">Reading</h3></div>
-                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum neque libero, vitae feugiat neque ullamcorper eget. Morbi pellentesque, orci sollicitudin congue lacinia, massa risus mollis nisl, eget maximus quam elit eu ante.</div>
-                    <div class="panel-footer">> <a href="#">Read it</a></div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><h3 class="panel-title">Reading</h3></div>
-                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum neque libero, vitae feugiat neque ullamcorper eget. Morbi pellentesque, orci sollicitudin congue lacinia, massa risus mollis nisl, eget maximus quam elit eu ante.</div>
-                    <div class="panel-footer">> <a href="#">Read it</a></div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading"><h3 class="panel-title">Reading</h3></div>
-                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vestibulum neque libero, vitae feugiat neque ullamcorper eget. Morbi pellentesque, orci sollicitudin congue lacinia, massa risus mollis nisl, eget maximus quam elit eu ante.</div>
-                    <div class="panel-footer">> <a href="#">Read it</a></div>
-                </div>
-            </div>
-        </div> -->
-    </div>
-
+  </main>
         <br><br><br>
 
-        <!--Footer-->
-    <footer class="footer" style="background-color: black; padding: 20px 0;">
-        <div class="container">
-            <p style="text-align: center">Page last updated: 28 Jan 2024</p>
-            <p style="text-align: center">Email me securely using <a href="https://tuta.com/">Tuta.com</a>!</p>
-            <br>
-            <p style="text-align: center"> 
-                <a href="privacypolicy.html">Privacy Policy</a> | 
-                <a href="termsandconditions.html" >Terms and Conditions</a> | 
-                <a href="copyright.html">Copyright Notice</a> | 
-                <a href="licences.html">Licenses</a> | 
-                <a href="contact.html">Contact</a>
-            </p>
-            <br>
-                <p style="text-align: center">
-                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a> 
-                    <a href="https://github.com/brobin/hacker-bootstrap" target="_blank">Hacker Theme </a>
-                    by Tobin Brown, licensed under the <a href="https://opensource.org/license/MIT">MIT Licence</a>.
-                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a>
-                     <br>
-                    © 2025 www.cyberalex.uk - All rights reserved.
-                </p>
-            <p style="text-align: center; color:black" >Safe | Legal | Ethical</p>
-        </div>
-    </footer>
+    <the-footer></the-footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
