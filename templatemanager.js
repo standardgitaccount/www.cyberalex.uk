@@ -67,5 +67,5 @@ class TheFooter extends HTMLElement {
   }
 }
 
-customElements.define('the-header', TheHeader)
-customElements.define('the-footer', TheFooter)
+customElements.define("the-header", TheHeader)
+customElements.define("the-footer", TheFooter)
