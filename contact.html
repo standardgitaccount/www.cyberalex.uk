@@ -1,117 +1,74 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="description" content="A Cross-Disciplinary Portfolio of Alex's Work and Interests.">
+    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex">
+    <meta name="author" content="Alex">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script type="module" src="./templatemanager.js"></script>
+    
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-    <title>CyberAlex</title>
     <link href="hacker.css" rel="stylesheet">
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+   
+    <title>CyberAlex</title>
 
     <style>
-    .tall-row {
-        margin-top: 40px;
-    }
-    .modal {
-        position: relative;
-        top: auto;
-        right: auto;
-        left: auto;
-        bottom: auto;
-        z-index: 1;
-        display: block;
+    .footer {
+      background-color: black;
+      padding: 20px 0;
     }
     </style>
 </head>
 
 <body>
+  
+  <the-header></the-header>
 
-
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">CyberAlex</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="documents.html">Documents</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
+  <main class="container" id="main">
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="contact.html">Contact</li>
+            </ul>
         </div>
-    </nav>
-
-
-    <div class="container">
-        
-            <div class="row">
-                 <div class="col-md-4">
-                     <ul class="breadcrumb">
-                           <li><a href="index.html">Home</a></li>
-                           <li class="contact.html">Contact</li>
-                     </ul>
-                 </div>
-            </div>
-
-        <!--Content-->
-        <div class="row">
-            <div class="col-lg-12">
-                <hr id="Contact">
-                <h1>Contact</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <a class="btn btn-lg btn-primary" href="mailto:alex @cyberalex.uk" role="button">> Email: alex @cyberalex.uk</a>
-            </div>
-            <div class="col-md-4">
-                <a class="btn btn-lg btn-primary" href="https://matrix.to/#/@cyberal:matrix.org" role="button">> Matrix: @cyberal:matrix.org</a>
-            </div>
-            <div class="col-md-4">
-                <a class="btn btn-lg btn-primary" href="tel:07000000000" role="button">> Mobile: Redacted due to spam</a>
-            </div>
-        </div>
-
     </div>
 
-        <br><br><br>
+      <div class="row">
+          <div class="col-md-12">
+              <h1>Contact Alex</h1>    
+          </div>
+      </div>
 
-        <!--Footer-->
-    <footer class="footer" style="background-color: black; padding: 20px 0;">
-        <div class="container">
-            <p style="text-align: center">Page last updated: 8 Jan 2024</p>
-            <p style="text-align: center">Email me securely using <a href="https://tuta.com/">Tuta.com</a>!</p>
-            <br>
-            <p style="text-align: center"> 
-                <a href="privacypolicy.html">Privacy Policy</a> | 
-                <a href="termsandconditions.html" >Terms and Conditions</a> | 
-                <a href="copyright.html">Copyright Notice</a> | 
-                <a href="licences.html">Licenses</a> | 
-                <a href="contact.html">Contact</a>
-            </p>
-            <br>
-                <p style="text-align: center">
-                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a> 
-                    <a href="https://github.com/brobin/hacker-bootstrap" target="_blank">Hacker Theme </a>
-                    by Tobin Brown, licensed under the <a href="https://opensource.org/license/MIT">MIT Licence</a>.
-                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">♥</a>
-                     <br>
-                    © 2024 www.cyberalex.uk - All rights reserved.
-                </p>
-            <p style="text-align: center; color:black" >Safe | Legal | Ethical</p>
+    <div class="row">
+        <div class="col-md-7">
+            <p>Contact Alex via email using a free <a href="https://tuta.com">Tuta</a> email account for secure and private communication*.</p>
+            <a class="btn btn-lg btn-primary" href="mailto:alex&#64;cyberalex.uk">> Alex&#64;CyberAlex.uk</a>
+            <small>*Other email addresses may not be private, therefore limiting the information within the communications to what is publicly available.</small>
         </div>
-    </footer>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-7">
+            <p>Contact Alex via [matrix] using a free <a href="https://element.io/">Element</a> (formerly called Riot) instant messaging client for secure and private communication.</p>
+            <a class="btn btn-lg btn-primary" href="https://matrix.to/#/@cyberal:matrix.org">> &#64;cyberal:matrix.org</a>
+        </div>
+    </div>
+
+      
+  </main>
+<br><br><br>
+
+  <the-footer></the-footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </body>
 </html>
