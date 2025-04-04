@@ -65,5 +65,18 @@ class TheFooter extends HTMLElement {
   }
 }
 
+// Apply layout styles to make footer stick to bottom
+document.body.style.display = 'flex';
+document.body.style.flexDirection = 'column';
+document.body.style.minHeight = '100vh';
+
+// Target #main to grow and push footer down
+window.addEventListener('DOMContentLoaded', () => {
+  const main = document.getElementById('main');
+  if (main) {
+    main.style.flex = '1';
+  }
+});
+
 customElements.define("the-header", TheHeader);
 customElements.define("the-footer", TheFooter);
