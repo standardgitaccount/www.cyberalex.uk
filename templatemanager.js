@@ -29,6 +29,7 @@ class TheHeader extends HTMLElement {
 
 class TheFooter extends HTMLElement {
   connectedCallback() {
+  const currentYear = new Date().getFullYear();
     this.innerHTML = `
       <footer class="footer">
           <div class="container">
