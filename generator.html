@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="A Cross-Disciplinary Portfolio of Alex's Work and Interests.">
-    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex">
+    <meta name="description" content="This tool generates secure passwords">
+    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex, password generator, secure, local, free,">
     <meta name="author" content="Alex">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,29 +55,43 @@
                     <div class="panel-heading">
                         <h2 class="panel-title"><b>Password Generator Tool</b></h2>
                     </div>
+                    
                     <div class="panel-body">
                         <div class="form-group">
-                            <label for="lengthSlider">Password Length: <span id="lengthValue">12</span></label>
+                            <label for="lengthSlider">Password Length: <span id="lengthValue">12 Characters</span></label>
                             <input type="range" class="form-control-range" id="lengthSlider" min="1" max="100" value="12">
                         </div>
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="easyTyping" onclick="toggleCheckbox(this)">
-                                <label class="form-check-label" for="easyTyping">Easy typing?</label>
+                                <label class="form-check-label" for="easyTyping">Extra Easy typing?</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="extraStrength" onclick="toggleCheckbox(this)">
-                                <label class="form-check-label" for="extraStrength">Extra strength?</label>
+                                <label class="form-check-label" for="extraStrength">Extra Strong?</label>
                             </div>
                         </div>
                         <button class="btn btn-primary" id="generateBtn">Generate Password</button>
+                    </div>
+                    
+                    <div class="panel-footer">
                         <div class="mt-3">
                             <span class="password-output" id="passwordOutput">[password]</span>
+                                <br>
                             <button class="btn btn-secondary" id="copyBtn">Copy</button>
                         </div>
-                        <button class="btn btn-warning mt-3" id="refreshBtn">Refresh</button>
                     </div>
-              </div> 
+                </div>
+            
+                <h2>Recommendations</h2>
+                <p>Most advise creating a password with certain conditions, for example, with 8 or 10 characters, or 
+                    3 random words, but Alex discovered that most of these recommendations might not be that good. 
+                    To test the strength of your passwords, use the <a href="password.html">> password testing tool</a> 
+                    and adhere to its recommended minimum 100 bits of entropy for the best security.</p>
+
+            <h2>Questions?</h2>
+            <a href="contact.html">> Contact</a>
+        </div> 
         </div>
   </main>
 <br><br><br>
