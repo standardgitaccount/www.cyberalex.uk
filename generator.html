@@ -127,7 +127,7 @@
             const numbers = '0123456789';
             const specialChars = '!@#$%^&*()_+[]{}|;:,.<>?';
             const foreignChars = 'áéíóúñçü';
-
+        
             let characters = '';
             if (easyTyping) {
                 characters += lowerCase + upperCase + numbers + '.';
@@ -136,10 +136,12 @@
             } else {
                 characters += lowerCase + upperCase + numbers + specialChars;
             }
-
+        
             let password = '';
+            const array = new Uint32Array(length);
+            crypto.getRandomValues(array);
             for (let i = 0; i < length; i++) {
-                const randomIndex = Math.floor(Math.random() * characters.length);
+                const randomIndex = array[i] % characters.length;
                 password += characters[randomIndex];
             }
             return password;
