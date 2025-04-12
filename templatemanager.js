@@ -54,10 +54,12 @@ class TheFooter extends HTMLElement {
                       </ul>
                   </div>
                   <div class="col-md-4">
-                      <h4>Notice</h4>
+                      <h4>Info</h4>
                       <ul class="list-unstyled">
                           <li>Copyright &#169; <span id="current-year">${currentYear}</span> www.cyberalex.uk - All rights reserved.</li>
                       </ul>
+                      <div id="wcb" class="carbonbadge wcb-d"></div>
+                      <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
                   </div>
               </div>
           </div>
