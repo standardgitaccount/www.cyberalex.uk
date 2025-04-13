@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="A Free and Secure Local QR Code Generator, No Sign Up Required.">
+    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex, QR code Generator">
+    <meta name="author" content="Alex">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script type="module" src="./templatemanager.js"></script>
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <link href="hacker.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/exifreader@4.12.0/dist/exif-reader.min.js"></script>
+    
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+   
+    <title>CyberAlex</title>
+
+    <style>
+    .footer {
+     background-color: black;
+     padding: 20px 0;
+    }
+    .qr-container {
+      background: #3D3D3C;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+    .form-inline .form-group {
+      margin-right: 15px;
+    }
+    canvas, svg {
+      margin-top: 20px;
+    }
+    #contrast-warning {
+      color: red;
+      margin-top: 10px;
+    }
+    input[type="color"] {
+      border: none;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+    }
+    </style>
+</head>
+
+<body>
+  
+  <the-header></the-header>
+
+<main class="container" id="main">
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li class="active">QR Code Generator</li>
+      </ul>
+    </div>
+    <div class="col-md-3"><p>Published:<br>13 April 2025</p></div>
+    <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-7">
+
+    <h1>QR Code Generator</h1>
+
+    <p>Generate a QR code for any text or URL using your chosen foreground and background colors. The QR code is generated locally and can be downloaded in PNG or SVG formats. The file will be named based on the entered text or URL.</p>
+
+    <div class="form-group">
+      <label for="qr-input">Text or URL</label>
+      <input type="text" id="qr-input" class="form-control" placeholder="Enter text or URL">
+    </div>
+
+    <div class="form-inline" style="gap: 15px; margin-bottom: 15px;">
+      <div class="form-group">
+        <label for="qr-color">QR Color</label><br>
+        <input type="color" id="qr-color" value="#000000" class="form-control" style="width: 50px; height: 35px; padding: 0; border: none;">
+      </div>
+      <div class="form-group">
+        <label for="bg-color">Background Color</label><br>
+        <input type="color" id="bg-color" value="#ffffff" class="form-control" style="width: 50px; height: 35px; padding: 0; border: none;">
+      </div>
+    </div>
+
+    <div id="contrast-warning" class="text-danger mb-3"></div>
+
+    <button class="btn btn-primary" id="generate-qr">Generate QR Code</button>
+    <button class="btn btn-success" id="download-png">Download PNG</button>
+    <button class="btn btn-info" id="download-svg">Download SVG</button>
+
+    <div id="qr-code" class="mt-4 text-center"></div>
+
+      </div></div>
+
+      <h2>Questions?</h2>
+      <a href="contact.html">> Contact</a>
+
+     </div>
+  </div>
+</main>
+
+<br><br><br>
+
+  <the-footer></the-footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+   <script>
+ const input = document.getElementById('qr-input');
+  const qrCodeDiv = document.getElementById('qr-code');
+  const qrColorInput = document.getElementById('qr-color');
+  const bgColorInput = document.getElementById('bg-color');
+  const warning = document.getElementById('contrast-warning');
+
+  function hexToRgb(hex) {
+    let bigint = parseInt(hex.slice(1), 16);
+    return [ (bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255 ];
+  }
+
+  function getLuminance(rgb) {
+    const [r, g, b] = rgb.map(v => {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow(((v + 0.055) / 1.055), 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+
+  function checkContrast(fg, bg) {
+    const L1 = getLuminance(hexToRgb(fg));
+    const L2 = getLuminance(hexToRgb(bg));
+    const contrast = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
+    return contrast < 2.5;
+  }
+
+  function sanitizeFilename(str) {
+    return str.replace(/[^a-z0-9_\-]/gi, '_') || 'qr-code';
+  }
+
+  function generateQR() {
+    const text = input.value.trim();
+    const fgColor = qrColorInput.value;
+    const bgColor = bgColorInput.value;
+
+    qrCodeDiv.innerHTML = ""; // Clear
+
+    if (!text) {
+      warning.textContent = "Please enter text or a URL.";
+      return;
+    }
+
+    // Contrast warning
+    if (checkContrast(fgColor, bgColor)) {
+      warning.textContent = "Warning: Lower contrast may make the QR code unscannable.";
+    } else {
+      warning.textContent = "";
+    }
+
+    QRCode.toString(text, {
+      type: 'svg',
+      color: {
+        dark: fgColor,
+        light: bgColor
+      },
+      width: 400,
+      margin: 0 // removes border
+    }, function (err, svg) {
+      if (err) return console.error(err);
+      qrCodeDiv.innerHTML = svg;
+    });
+  }
+
+  function downloadPNG() {
+    const text = input.value.trim();
+    const filename = sanitizeFilename(text) + ".png";
+
+    const svgElement = qrCodeDiv.querySelector('svg');
+    if (!svgElement) return;
+
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const canvas = document.createElement("canvas");
+    const img = new Image();
+    const blob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+
+    img.onload = function () {
+      canvas.width = 1000;
+      canvas.height = 1000;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const pngUrl = canvas.toDataURL("image/png");
+      const a = document.createElement("a");
+      a.href = pngUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+  }
+
+  function downloadSVG() {
+    const text = input.value.trim();
+    const filename = sanitizeFilename(text) + ".svg";
+
+    const svgElement = qrCodeDiv.querySelector('svg');
+    if (!svgElement) return;
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const blob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('generate-qr').addEventListener('click', generateQR);
+  document.getElementById('download-png').addEventListener('click', downloadPNG);
+  document.getElementById('download-svg').addEventListener('click', downloadSVG);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') generateQR();
+  });
+</script>
+</body>
+</html>
