@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="A Free IP Information Tool, no sign up required.">
+    <meta name="keywords" content="cyberalex, ip tools, geolocation">
+    <meta name="author" content="Alex">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script type="module" src="./templatemanager.js"></script>
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="hacker.css" rel="stylesheet">
+    
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+   
+    <title>CyberAlex</title>
+
+    <style>
+        .footer {
+            background-color: black;
+            padding: 20px 0;
+        }
+
+        .custom-padding {
+            padding: 20px;
+        }
+
+        #metadataOutput {
+            background-color: #3D3D3C; 
+            white-space: pre-wrap; 
+            font-family: monospace;
+            color: #00cc00;
+            padding: 10px;
+            margin: 0; 
+            border-radius: 5px; 
+            text-align: left; 
+        }
+
+        #metadataOutput div {
+            margin: 0;
+            padding: 0; 
+            line-height: 1.4;
+        }
+
+    </style>
+</head>
+
+<body>
+  
+  <the-header></the-header>
+
+ <main class="container" id="main">
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li class="active">IP Information Tool</li>
+            </ul>
+        </div>
+        <div class="col-md-3"><p>Published:<br>14 April 2025</p></div>
+        <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <h1>IP Information Tool Version 1</h1>
+            <p>Enter an IPv4 or IPv6 address to get detailed information about its location and other related data.</p>
+            <div class="md-3">
+                <input type="text" id="ipInput" class="form-control" placeholder="Enter IP Address" style="width: 300px; display: inline-block;">
+                <button id="checkIpButton" class="btn btn-primary">Check IP</button>
+                <button id="getMyIpButton" class="btn btn-primary">Check My IP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metadata Output section -->
+    <div class="row">
+        <div class="col-md-7">
+            <h2>Metadata Output</h2>
+            <div id="flagContainer" style="margin-bottom: 0px;"></div>
+            <div id="metadataOutput" class="custom-padding rounded shadow-sm" style="background-color: #3D3D3C; white-space: pre-wrap; font-family: monospace;">
+                <em>No Output yet.</em>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-5">
+        <div class="col-md-7">
+            <h2>Data Source Information</h2>
+            <p>This tool uses an external API to determine the information associated with the provided IP address. When you enter an IP address and click "Check IP", the following happens:</p>
+            <ul>
+                <li>Your input is sent to an external API that provides geolocation data based on IP addresses.</li>
+                <li>The API processes the request and returns detailed information associated with the IP address.</li>
+                <li>The result is displayed on this webpage.</li>
+            </ul>
+            <p>When you click "Check My IP", a request is made to another API to fetch your public IP address, which is then displayed on the page along with its information.</p>
+        </div>
+    </div>
+</main>
+
+  <br><br><br>
+
+  <the-footer></the-footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // Check the information of IP address
+          function checkCountry(ip) {
+              fetch(`https://ipapi.co/${ip}/json/`)
+                  .then(response => response.json())
+                  .then(data => {
+                      const metadataEl = document.getElementById('metadataOutput');
+          
+                      if (data.error) {
+                          metadataEl.innerText = 'Error: ' + data.reason;
+                      } else {
+                          const flagImg = data.country_code
+                              ? `<img src="https://flagcdn.com/24x18/${data.country_code.toLowerCase()}.png" alt="${data.country_name} flag" title="${data.country_name}" style="vertical-align: text-bottom; margin-left: 6px;">`
+                              : '';
+          
+                          // Build metadata lines
+                          let lines = [
+                              ["IP", data.ip],
+                              ["Country", data.country_name + flagImg],
+                              ["City", data.city],
+                              ["Region", data.region],
+                              ["Region Code", data.region_code],
+                              ["Country Code", data.country_code],
+                              ["Country Capital", data.country_capital],
+                              ["Top-Level Domain ", data.country_tld],
+                              ["Continent Code", data.continent_code],
+                              ["In EU", data.in_eu ? 'Yes' : 'No'],
+                              ["Postal Code", data.postal],
+                              ["Latitude", data.latitude],
+                              ["Longitude", data.longitude],
+                              ["Timezone", data.timezone],
+                              ["UTC Offset", data.utc_offset],
+                              ["Calling Code", data.country_calling_code],
+                              ["Currency", `${data.currency} (${data.currency_name})`],
+                              ["Languages", data.languages],
+                              ["ASN", data.asn],
+                              ["Organization", data.org]
+                          ];
+          
+                          let maxLabelLength = Math.max(...lines.map(([label]) => label.length));
+          
+                          let metadataHTML = lines.map(([label, value]) => {
+                              let paddedLabel = label.padEnd(maxLabelLength, ' ');
+                              return `<div><span>${paddedLabel}:</span> <span>${value || 'N/A'}</span></div>`;
+                          }).join('');
+          
+                          metadataEl.innerHTML = metadataHTML;
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error fetching data:', error);
+                      document.getElementById('metadataOutput').innerText = 'Unable to retrieve information.';
+                  });
+            }
+
+            // Check the country of the entered IP address
+            document.getElementById('checkIpButton').addEventListener('click', function() {
+                const ip = document.getElementById('ipInput').value;
+                if (ip) {
+                    checkCountry(ip);
+                } else {
+                    document.getElementById('metadataOutput').innerText = 'Please enter a valid IP address.';
+                }
+            });
+
+            // Get the user's own IP address
+            document.getElementById('getMyIpButton').addEventListener('click', function() {
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('ipInput').value = data.ip; // Fill the input with the user's IP
+                        checkCountry(data.ip); // Check the country of the user's IP
+                    })
+                    .catch(error => {
+                        console.error('Error fetching IP address:', error);
+                        document.getElementById('metadataOutput').innerText = 'Unable to retrieve your IP address.';
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
