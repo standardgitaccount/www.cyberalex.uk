@@ -1,9 +1,9 @@
-          <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="description" content="A Free and Secure Local File Encryption Tool, No Sign Up Required.">
-    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex">
+    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex, encryption tool, free encryption, no sign up eencryption">
     <meta name="author" content="Alex">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,7 +89,9 @@
             <input type="password" id="decryptKey" class="form-control" placeholder="Enter decryption password">
             <button id="decryptBtn" class="btn btn-primary" style="margin-top:10px">Decrypt</button>
             <br><br>
+            <div id="verificationResult" style="margin-top:10px; font-weight:bold;"></div>
             <a id="downloadDecrypted" class="btn btn-link" style="display:none">> Download Decrypted File</a>
+            <div id="verificationResult" style="margin-top: 10px; color: #ccc; font-family: monospace;"></div>
 
 
     <h2>How It Works</h2>
@@ -119,98 +121,78 @@ const decryptKey = document.getElementById('decryptKey');
 const decryptBtn = document.getElementById('decryptBtn');
 const downloadEncrypted = document.getElementById('downloadEncrypted');
 const downloadDecrypted = document.getElementById('downloadDecrypted');
+const verificationResult = document.getElementById('verificationResult');
 
 let currentEncryptFile = null;
 let currentDecryptFile = null;
 
-// Click on encryption drop zone opens file input
+// Click zones trigger input
 dropZone.addEventListener('click', () => encryptInput.click());
+document.getElementById('decryptDropZone').addEventListener('click', () => decryptInput.click());
 
-// Click on decryption drop zone opens file input
-const decryptDropZone = document.getElementById('decryptDropZone');
-decryptDropZone.addEventListener('click', () => decryptInput.click());
-
-// Handle drag events for encryption drop zone
+// Drag-and-drop styling
 ['dragover', 'dragenter'].forEach(event => {
     dropZone.addEventListener(event, e => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         dropZone.classList.add('dragover');
     });
-});
-
-['dragleave', 'drop'].forEach(event => {
-    dropZone.addEventListener(event, e => {
-        e.preventDefault();
-        e.stopPropagation();
-        dropZone.classList.remove('dragover');
-    });
-});
-
-// Handle file drop for encryption
-dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    currentEncryptFile = e.dataTransfer.files[0];
-    dropZone.textContent = `Selected: ${currentEncryptFile.name}`;
-});
-
-// Handle file select via input for encryption
-encryptInput.addEventListener('change', () => {
-    currentEncryptFile = encryptInput.files[0];
-    dropZone.textContent = `Selected: ${currentEncryptFile.name}`;
-});
-
-// Handle drag events for decryption drop zone
-['dragover', 'dragenter'].forEach(event => {
     decryptDropZone.addEventListener(event, e => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         decryptDropZone.classList.add('dragover');
     });
 });
 
 ['dragleave', 'drop'].forEach(event => {
+    dropZone.addEventListener(event, e => {
+        e.preventDefault(); e.stopPropagation();
+        dropZone.classList.remove('dragover');
+    });
     decryptDropZone.addEventListener(event, e => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         decryptDropZone.classList.remove('dragover');
     });
 });
 
-// Handle file drop for decryption
-decryptDropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    currentDecryptFile = e.dataTransfer.files[0];
-    decryptInput.files = e.dataTransfer.files; // Set the file input
-    decryptDropZone.textContent = `Selected: ${currentDecryptFile.name}`;
+// File selection
+dropZone.addEventListener('drop', e => {
+    e.preventDefault(); e.stopPropagation();
+    currentEncryptFile = e.dataTransfer.files[0];
+    dropZone.textContent = `Selected: ${currentEncryptFile.name}`;
 });
 
-// Handle file select via input for decryption
+encryptInput.addEventListener('change', () => {
+    currentEncryptFile = encryptInput.files[0];
+    dropZone.textContent = `Selected: ${currentEncryptFile.name}`;
+});
+
+decryptDropZone.addEventListener('drop', e => {
+    e.preventDefault(); e.stopPropagation();
+    currentDecryptFile = e.dataTransfer.files[0];
+    decryptInput.files = e.dataTransfer.files;
+    decryptDropZone.textContent = `Selected: ${currentDecryptFile.name}`;
+    verificationResult.innerHTML = '';
+});
+
 decryptInput.addEventListener('change', () => {
     currentDecryptFile = decryptInput.files[0];
     decryptDropZone.textContent = `Selected: ${currentDecryptFile.name}`;
+    verificationResult.innerHTML = '';
 });
 
-// Handle Enter key press for encryption and decryption
-encryptKey.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') encryptBtn.click();
-});
+// Enter key shortcut
+encryptKey.addEventListener('keypress', e => { if (e.key === 'Enter') encryptBtn.click(); });
+decryptKey.addEventListener('keypress', e => { if (e.key === 'Enter') decryptBtn.click(); });
 
-decryptKey.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') decryptBtn.click();
-});
-
-// Encrypt file function
+// Encrypt function
 async function encryptFile(file, password) {
     try {
-        const iv = crypto.getRandomValues(new Uint8Array(12));
-        const salt = crypto.getRandomValues(new Uint8Array(16)); // Save this with the file
+        const fileBuffer = await file.arrayBuffer();
+        const hashBuffer = await crypto.subtle.digest("SHA-256", fileBuffer);
+        const fileHash = new Uint8Array(hashBuffer);
 
-        // Derive a 256-bit AES-GCM key from the password using PBK
-       
- // Derive a 256-bit AES-GCM key from the password using PBKDF2
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const salt = crypto.getRandomValues(new Uint8Array(16));
+
         const baseKey = await crypto.subtle.importKey(
             "raw",
             new TextEncoder().encode(password),
@@ -232,10 +214,16 @@ async function encryptFile(file, password) {
             ["encrypt"]
         );
 
-        const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, encKey, await file.arrayBuffer());
+        const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, encKey, fileBuffer);
 
-        // Combine salt + iv + encrypted data
-        const blob = new Blob([salt, iv, new Uint8Array(encrypted)], { type: "application/octet-stream" });
+        // Combine salt + iv + encrypted + hash
+        const blob = new Blob([
+            salt,
+            iv,
+            new Uint8Array(encrypted),
+            fileHash
+        ], { type: "application/octet-stream" });
+
         const url = URL.createObjectURL(blob);
         downloadEncrypted.href = url;
         downloadEncrypted.download = file.name + ".cyberal";
@@ -246,23 +234,15 @@ async function encryptFile(file, password) {
     }
 }
 
-// Encrypt button click event
-encryptBtn.addEventListener('click', () => {
-    if (!currentEncryptFile || !encryptKey.value) {
-        alert("Please select a file and enter a key.");
-        return;
-    }
-    encryptFile(currentEncryptFile, encryptKey.value);
-});
-
-// Decrypt file function
+// Decrypt function with hash check
 async function decryptFile(file, password) {
-    const buffer = await file.arrayBuffer();
-    const salt = new Uint8Array(buffer.slice(0, 16));
-    const iv = new Uint8Array(buffer.slice(16, 28));
-    const data = buffer.slice(28);
-
     try {
+        const buffer = await file.arrayBuffer();
+        const salt = new Uint8Array(buffer.slice(0, 16));
+        const iv = new Uint8Array(buffer.slice(16, 28));
+        const encrypted = buffer.slice(28, buffer.byteLength - 32);
+        const storedHash = new Uint8Array(buffer.slice(buffer.byteLength - 32));
+
         const baseKey = await crypto.subtle.importKey(
             "raw",
             new TextEncoder().encode(password),
@@ -284,35 +264,69 @@ async function decryptFile(file, password) {
             ["decrypt"]
         );
 
-        const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, decKey, data);
+        const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, decKey, encrypted);
+        const newHash = new Uint8Array(await crypto.subtle.digest("SHA-256", decrypted));
+        const match = storedHash.every((byte, i) => byte === newHash[i]);
+
         const blob = new Blob([decrypted]);
         const url = URL.createObjectURL(blob);
         downloadDecrypted.href = url;
         downloadDecrypted.download = file.name.replace(/\.cyberal$/, '');
         downloadDecrypted.style.display = 'inline-block';
+
+        const actualHash = Array.from(newHash).map(b => b.toString(16).padStart(2, '0')).join('');
+        const expectedHash = Array.from(storedHash).map(b => b.toString(16).padStart(2, '0')).join('');
+
+        if (match) {
+            verificationResult.innerHTML = `✅ <strong>Password Correct / File Verified</strong><br>SHA-256: <code>${actualHash}</code>`;
+            verificationResult.style.color = '#8f8';
+        } else {
+            verificationResult.innerHTML = `
+                ⚠️ <strong style="color: #ff4444;">Warning: File Integrity Check Failed</strong><br>
+                <div style="color: #ff4444; margin-top: 10px;">
+                    You can still download the file, but <strong>proceed with caution</strong>.
+                </div>
+                <div style="margin-top: 10px;">
+                    <strong style="color:#f88;">Actual SHA-256:</strong> <code>${actualHash}</code><br>
+                    <strong style="color:#f88;">Expected SHA-256:</strong> <code>${expectedHash}</code>
+                </div>
+            `;
+            verificationResult.style.color = '#ffbb00';
+        }
     } catch (e) {
-        console.error("Decryption failed:", e);
-        alert("Decryption failed. Wrong key or corrupted file.");
+        console.warn("Decryption error:", e);
+        verificationResult.innerHTML = `❌ <strong>Wrong password. Please try again.</strong>`;
+        verificationResult.style.color = '#f88';
+        downloadDecrypted.style.display = 'none';
     }
 }
 
-// Decrypt button click event
+
+
+
+// Button handlers
+encryptBtn.addEventListener('click', () => {
+    if (!currentEncryptFile || !encryptKey.value) {
+        alert("Please select a file and enter a key.");
+        return;
+    }
+    encryptFile(currentEncryptFile, encryptKey.value);
+});
+
 decryptBtn.addEventListener('click', () => {
     const file = decryptInput.files[0];
     const key = decryptKey.value;
-
-    console.log("DEBUG — Selected file:", file);
-    console.log("DEBUG — Entered key:", `"${key}"`);
 
     if (!file || !key) {
         console.warn("Missing file or key");
         return;
     }
 
-    console.log("Decrypting file:", file.name);
     decryptFile(file, key);
 });
 </script>
+
+
 
 </body>
 </html>
