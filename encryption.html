@@ -1,0 +1,318 @@
+          <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="A Free and Secure Local File Encryption Tool, No Sign Up Required.">
+    <meta name="keywords" content="cyberalex, cyberalexuk, cyber alex">
+    <meta name="author" content="Alex">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="module" src="./templatemanager.js"></script>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="hacker.css" rel="stylesheet">
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+
+    <title>CyberAlex</title>
+
+    <style>
+        .footer {
+            background-color: black;
+            padding: 20px 0;
+        }
+        #dropZone, .dropZone {
+            border: 2px dashed #01CD00;
+            padding: 30px;
+            text-align: center;
+            color: #01CD00;
+            background: #3D3D3C;
+            transition: all 0.2s ease-in-out;
+        }
+        #dropZone.dragover, .dropZone.dragover {
+            background-color: #01CD00;
+            border-color: #019100;
+            color: #019100;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .custom-padding {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<the-header></the-header>
+
+<main class="container" id="main">
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li class="active">File Encryption Tool</li>
+            </ul>
+        </div>
+        <div class="col-md-3"><p>Published:<br>14 April 2025</p></div>
+        <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <h1>Universal Local Encryption Tool (ULET) Beta Version 1*</h1>
+            <p>This AES file encryption tool allows you to securely encrypt or decrypt any file right in your browser. No data is transmitted and your files never leave your device.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <h2>Encrypt a File</h2>
+            <div id="dropZone">
+                Drag & Drop File Here or Click to Select
+                <input type="file" id="encryptInput" />
+            </div>
+            <br>
+            <input type="password" id="encryptKey" class="form-control" placeholder="Enter encryption password">
+            <button id="encryptBtn" class="btn btn-primary" style="margin-top:10px">Encrypt</button>
+
+  <br><br>
+            <a id="downloadEncrypted" class="btn btn-link" style="display:none">> Download Encrypted File</a>
+
+            <h2>Decrypt a File</h2>
+            <div id="decryptDropZone" class="dropZone">
+                Drag & Drop File Here or Click to Select
+                <input type="file" id="decryptInput" />
+            </div>
+            <br>
+            <input type="password" id="decryptKey" class="form-control" placeholder="Enter decryption password">
+            <button id="decryptBtn" class="btn btn-primary" style="margin-top:10px">Decrypt</button>
+            <br><br>
+            <a id="downloadDecrypted" class="btn btn-link" style="display:none">> Download Decrypted File</a>
+
+
+    <h2>How It Works</h2>
+    This encryption tool is in development. It provides a secure and user-friendly interface for anyone to protect files, images, documents, and text files by allowing you to select a file and enter a password that serves as the encryption key. The process involves generating a random Initialization Vector (IV) and a salt to further improve security, transforming your password into a strong encryption key that uses the PBKDF2 algorithm, which is then encrypted with the AES-GCM algorithm. The entire process occurs locally in your browser, and your file never leaves your device, which significantly reduces the risk of sensitive data exposure.
+
+    <h2>Limitations</h2>
+    It is worth noting that while the tool offers robust security features, such as strong encryption standards and the use of random IVs and salts, you should be aware of its limitations. The primary limitation is that the security of your encrypted files relies heavily on the strength of the password you choose, and if you forget it, there is no way to recover the files. To help you create secure passwords, you can use <a href="https://www.cyberalex.uk/generator.html">> this password generator tool</a>, to verify the strength of the password use <a href="https://www.cyberalex.uk/password.html"> > this password testing tool</a>. Both of these tools run locally and privately without sending any data.
+
+    <h2>*Important Notice</h2>
+    Whilst this tool is in its beta testing stage, it is not advised to rely on it, and the use of tools such as Veracrypt and BitLocker ought to take priority. CyberAlex does not currently consider this tool to be fully GDPR compliant since it's yet to undergo any peer review. CyberAlex accepts no liability for the use or misuse of this tool.
+<br><br>
+        </div>   
+ </div>
+</main>
+
+<the-footer></the-footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const encryptInput = document.getElementById('encryptInput');
+const encryptKey = document.getElementById('encryptKey');
+const encryptBtn = document.getElementById('encryptBtn');
+const decryptInput = document.getElementById('decryptInput');
+const decryptKey = document.getElementById('decryptKey');
+const decryptBtn = document.getElementById('decryptBtn');
+const downloadEncrypted = document.getElementById('downloadEncrypted');
+const downloadDecrypted = document.getElementById('downloadDecrypted');
+
+let currentEncryptFile = null;
+let currentDecryptFile = null;
+
+// Click on encryption drop zone opens file input
+dropZone.addEventListener('click', () => encryptInput.click());
+
+// Click on decryption drop zone opens file input
+const decryptDropZone = document.getElementById('decryptDropZone');
+decryptDropZone.addEventListener('click', () => decryptInput.click());
+
+// Handle drag events for encryption drop zone
+['dragover', 'dragenter'].forEach(event => {
+    dropZone.addEventListener(event, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('dragover');
+    });
+});
+
+['dragleave', 'drop'].forEach(event => {
+    dropZone.addEventListener(event, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('dragover');
+    });
+});
+
+// Handle file drop for encryption
+dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    currentEncryptFile = e.dataTransfer.files[0];
+    dropZone.textContent = `Selected: ${currentEncryptFile.name}`;
+});
+
+// Handle file select via input for encryption
+encryptInput.addEventListener('change', () => {
+    currentEncryptFile = encryptInput.files[0];
+    dropZone.textContent = `Selected: ${currentEncryptFile.name}`;
+});
+
+// Handle drag events for decryption drop zone
+['dragover', 'dragenter'].forEach(event => {
+    decryptDropZone.addEventListener(event, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        decryptDropZone.classList.add('dragover');
+    });
+});
+
+['dragleave', 'drop'].forEach(event => {
+    decryptDropZone.addEventListener(event, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        decryptDropZone.classList.remove('dragover');
+    });
+});
+
+// Handle file drop for decryption
+decryptDropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    currentDecryptFile = e.dataTransfer.files[0];
+    decryptInput.files = e.dataTransfer.files; // Set the file input
+    decryptDropZone.textContent = `Selected: ${currentDecryptFile.name}`;
+});
+
+// Handle file select via input for decryption
+decryptInput.addEventListener('change', () => {
+    currentDecryptFile = decryptInput.files[0];
+    decryptDropZone.textContent = `Selected: ${currentDecryptFile.name}`;
+});
+
+// Handle Enter key press for encryption and decryption
+encryptKey.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') encryptBtn.click();
+});
+
+decryptKey.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') decryptBtn.click();
+});
+
+// Encrypt file function
+async function encryptFile(file, password) {
+    try {
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const salt = crypto.getRandomValues(new Uint8Array(16)); // Save this with the file
+
+        // Derive a 256-bit AES-GCM key from the password using PBK
+       
+ // Derive a 256-bit AES-GCM key from the password using PBKDF2
+        const baseKey = await crypto.subtle.importKey(
+            "raw",
+            new TextEncoder().encode(password),
+            { name: "PBKDF2" },
+            false,
+            ["deriveKey"]
+        );
+
+        const encKey = await crypto.subtle.deriveKey(
+            {
+                name: "PBKDF2",
+                salt: salt,
+                iterations: 100000,
+                hash: "SHA-256"
+            },
+            baseKey,
+            { name: "AES-GCM", length: 256 },
+            false,
+            ["encrypt"]
+        );
+
+        const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, encKey, await file.arrayBuffer());
+
+        // Combine salt + iv + encrypted data
+        const blob = new Blob([salt, iv, new Uint8Array(encrypted)], { type: "application/octet-stream" });
+        const url = URL.createObjectURL(blob);
+        downloadEncrypted.href = url;
+        downloadEncrypted.download = file.name + ".cyberal";
+        downloadEncrypted.style.display = 'inline-block';
+    } catch (err) {
+        console.error("Encryption failed:", err);
+        alert("Encryption failed. See console for details.");
+    }
+}
+
+// Encrypt button click event
+encryptBtn.addEventListener('click', () => {
+    if (!currentEncryptFile || !encryptKey.value) {
+        alert("Please select a file and enter a key.");
+        return;
+    }
+    encryptFile(currentEncryptFile, encryptKey.value);
+});
+
+// Decrypt file function
+async function decryptFile(file, password) {
+    const buffer = await file.arrayBuffer();
+    const salt = new Uint8Array(buffer.slice(0, 16));
+    const iv = new Uint8Array(buffer.slice(16, 28));
+    const data = buffer.slice(28);
+
+    try {
+        const baseKey = await crypto.subtle.importKey(
+            "raw",
+            new TextEncoder().encode(password),
+            { name: "PBKDF2" },
+            false,
+            ["deriveKey"]
+        );
+
+        const decKey = await crypto.subtle.deriveKey(
+            {
+                name: "PBKDF2",
+                salt: salt,
+                iterations: 100000,
+                hash: "SHA-256"
+            },
+            baseKey,
+            { name: "AES-GCM", length: 256 },
+            false,
+            ["decrypt"]
+        );
+
+        const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, decKey, data);
+        const blob = new Blob([decrypted]);
+        const url = URL.createObjectURL(blob);
+        downloadDecrypted.href = url;
+        downloadDecrypted.download = file.name.replace(/\.cyberal$/, '');
+        downloadDecrypted.style.display = 'inline-block';
+    } catch (e) {
+        console.error("Decryption failed:", e);
+        alert("Decryption failed. Wrong key or corrupted file.");
+    }
+}
+
+// Decrypt button click event
+decryptBtn.addEventListener('click', () => {
+    const file = decryptInput.files[0];
+    const key = decryptKey.value;
+
+    console.log("DEBUG — Selected file:", file);
+    console.log("DEBUG — Entered key:", `"${key}"`);
+
+    if (!file || !key) {
+        console.warn("Missing file or key");
+        return;
+    }
+
+    console.log("Decrypting file:", file.name);
+    decryptFile(file, key);
+});
+</script>
+
+</body>
+</html>
