@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Copyright Steganography Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 350px;
+        }
+        input[type="file"], input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            width: 80%;
+            text-align: center;
+            border: 2px solid #888;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .output-section {
+            margin-top: 30px;
+        }
+        #downloadLink {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Image Copyright Steganography Tool</h2>
+
+        <!-- Encoder Section -->
+        <div>
+            <h3>Encode Copyright Info</h3>
+            <input type="file" id="imageInput" accept="image/*">
+            <input type="text" id="copyrightText" placeholder="Enter copyright information">
+            <br>
+            <button onclick="encodeImage()">Encode Copyright Info</button>
+            <div class="result" id="result"></div>
+            <br>
+            <a id="downloadLink" href="#" download="encoded_image.png">
+                <button>Download Encoded Image</button>
+            </a>
+        </div>
+
+        <!-- Decoder Section -->
+        <div class="output-section">
+            <h3>Decode Copyright Info</h3>
+            <input type="file" id="imageInputDecoder" accept="image/*">
+            <br>
+            <button onclick="decodeImage()">Decode Copyright Info</button>
+            <div class="result" id="decodedResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function encodeImage() {
+            const imageInput = document.getElementById('imageInput');
+            const copyrightText = document.getElementById('copyrightText').value;
+            const result = document.getElementById('result');
+            const downloadLink = document.getElementById('downloadLink');
+
+            if (!imageInput.files.length || !copyrightText.trim()) {
+                result.innerText = "Please upload an image and enter copyright information.";
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const image = new Image();
+                image.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    ctx.drawImage(image, 0, 0);
+
+                    // Encode copyright text in the image's pixel data
+                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imgData.data;
+                    let bitIndex = 0;
+                    for (let i = 0; i < copyrightText.length; i++) {
+                        for (let j = 0; j < 8; j++) {
+                            const charCode = copyrightText.charCodeAt(i);
+                            const bit = (charCode >> (7 - j)) & 1;
+                            data[bitIndex * 4] = (data[bitIndex * 4] & 0xFE) | bit;  // Change LSB of the red channel
+                            bitIndex++;
+                        }
+                    }
+
+                    // Put the modified image data back
+                    ctx.putImageData(imgData, 0, 0);
+
+                    // Convert the canvas to a downloadable image
+                    const encodedImageUrl = canvas.toDataURL('image/png');
+                    downloadLink.href = encodedImageUrl;
+                    downloadLink.style.display = 'inline-block';
+
+                    result.innerText = "Copyright info has been successfully encoded!";
+                };
+                image.src = event.target.result;
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+
+        function decodeImage() {
+            const imageInput = document.getElementById('imageInputDecoder');
+            const decodedResult = document.getElementById('decodedResult');
+
+            if (!imageInput.files.length) {
+                decodedResult.innerText = "Please upload an image to decode.";
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const image = new Image();
+                image.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    ctx.drawImage(image, 0, 0);
+
+                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imgData.data;
+                    let bits = '';
+                    let character = '';
+                    let decodedText = '';
+                    let bitIndex = 0;
+
+                    // Extract LSB from the red channel and rebuild the text
+                    for (let i = 0; i < data.length; i += 4) {
+                        bits += (data[i] & 1);  // Extract the LSB from the red channel
+                        if (bits.length === 8) {
+                            character = String.fromCharCode(parseInt(bits, 2));
+                            decodedText += character;
+                            bits = '';
+                        }
+                    }
+
+                    // Display the decoded copyright text
+                    decodedResult.innerText = `Decoded Copyright Info: ${decodedText}`;
+                };
+                image.src = event.target.result;
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+    </script>
+
+</body>
+</html>
