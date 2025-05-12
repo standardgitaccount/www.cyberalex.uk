@@ -33,12 +33,14 @@ class TheFooter extends HTMLElement {
           <div class="container">
               <div class="row">
                   <div class="col-md-4">
-                      <h4>Legal</h4>
+                      <h4>Resources</h4>
                       <ul class="list-unstyled">
                           <li>> <a href="privacypolicy.html">Privacy Policy</a></li>
                           <li>> <a href="termsandconditions.html">Terms and Conditions</a></li>
                           <li>> <a href="copyright.html">Copyright</a></li>
                           <li>> <a href="licences.html">Licences</a></li>
+                          <li>> <a href="refrences.html">Cite This CRAAP</a></li>
+                          <li>> <a href="affiliated.html">Affiliated Websites</a></li>
                       </ul>
                   </div>
                   <div class="col-md-4">
