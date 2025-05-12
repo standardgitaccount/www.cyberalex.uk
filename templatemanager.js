@@ -39,7 +39,7 @@ class TheFooter extends HTMLElement {
                           <li>> <a href="termsandconditions.html">Terms and Conditions</a></li>
                           <li>> <a href="copyright.html">Copyright</a></li>
                           <li>> <a href="licences.html">Licences</a></li>
-                          <li>> <a href="refrences.html">Cite This CRAAP</a></li>
+                          <li>> <a href="references.html">Cite This CRAAP</a></li>
                           <li>> <a href="affiliated.html">Affiliated Websites</a></li>
                       </ul>
                   </div>
