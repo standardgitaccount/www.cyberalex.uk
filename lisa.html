@@ -11,6 +11,17 @@
   <link rel="icon" href="logo.svg" type="image/svg+xml">
   <title>LISA Calculator</title>
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
     .footer {
       background-color: black;
       padding: 20px 0;
@@ -19,8 +30,9 @@
       background-color: #3D3D3C;
       color: #01CD00;
       padding: 20px;
-      border: 1px dashed #01CD00;
+      border: 2px dotted #01CD00;
       margin-bottom: 20px;
+      border-radius: 4px;
     }
     input, label {
       display: block;
@@ -49,8 +61,7 @@
   <the-header></the-header>
 
   <main class="container">
-
-      <div class="row">
+    <div class="row">
       <div class="col-md-6">
         <ul class="breadcrumb">
           <li><a href="index.html">Home</a></li>
@@ -59,7 +70,7 @@
         </ul>
       </div>
       <div class="col-md-3"><p>Published:<br>11 June 2025</p></div>
-      <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
+      <div class="col-md-3"><p>Author:<br><a href="about.html">> Alex</a></p></div>
     </div>
 
     <div class="row">
