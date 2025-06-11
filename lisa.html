@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UK LISA Retirement Calculator - CyberAlex">
+  <meta name="author" content="Alex">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="hacker.css" rel="stylesheet">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <title>LISA Calculator</title>
+  <style>
+    .footer {
+      background-color: black;
+      padding: 20px 0;
+    }
+    .custom-box {
+      background-color: #3D3D3C;
+      color: #01CD00;
+      padding: 20px;
+      border: 1px dashed #01CD00;
+      margin-bottom: 20px;
+    }
+    input, label {
+      display: block;
+      margin: 10px 0;
+    }
+    input[type="number"] {
+      background-color: black;
+      color: #01CD00;
+      border: 1px solid #01CD00;
+      padding: 5px;
+      width: 100%;
+    }
+    button {
+      background-color: black;
+      color: #01CD00;
+      border: 1px solid #01CD00;
+      padding: 10px 15px;
+    }
+    button:hover {
+      background-color: #01CD00;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <the-header></the-header>
+
+  <main class="container">
+
+      <div class="row">
+      <div class="col-md-6">
+        <ul class="breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li class="active">LISA Calculator</li>
+        </ul>
+      </div>
+      <div class="col-md-3"><p>Published:<br>11 June 2025</p></div>
+      <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h1>LISA Retirement Calculator</h1>
+        <p>This calculator estimates how much you'll have in your Lifetime ISA (LISA) by retirement age, including government bonuses and compound interest.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7">
+        <div class="custom-box">
+          <label for="age">Your Current Age:</label>
+          <input type="number" id="age" min="18" max="49" value="25">
+
+          <label for="annualContribution">Annual Contribution (£, up to 4000):</label>
+          <input type="number" id="annualContribution" min="0" max="4000" value="4000">
+
+          <label for="interestRate">Annual Interest Rate (%):</label>
+          <input type="number" id="interestRate" min="0" max="20" step="0.1" value="5">
+
+          <button onclick="calculateLISA()">Calculate</button>
+        </div>
+
+        <div id="result" class="custom-box">
+          <strong>Results will appear here.</strong>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <the-footer></the-footer>
+
+  <script>
+    function calculateLISA() {
+      const age = parseInt(document.getElementById("age").value);
+      const annualContribution = Math.min(parseFloat(document.getElementById("annualContribution").value), 4000);
+      const interestRate = parseFloat(document.getElementById("interestRate").value) / 100;
+
+      if (age < 18 || age >= 50) {
+        document.getElementById("result").innerHTML = "<em>You must be aged between 18 and 49 to open a LISA.</em>";
+        return;
+      }
+
+      const canContributeYears = Math.min(50 - age, 50 - Math.max(age, 18));
+      const retirementAge = 60;
+      const totalYears = retirementAge - age;
+
+      let balance = 0;
+
+      for (let year = 0; year < totalYears; year++) {
+        if (year < canContributeYears) {
+          const bonus = annualContribution * 0.25;
+          balance += annualContribution + bonus;
+        }
+        balance *= (1 + interestRate);
+      }
+
+      const resultHTML = `
+        <strong>At age ${retirementAge}, you will have approximately:</strong><br>
+        <h2>£${balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+        <p>This includes government bonuses and estimated compound interest at ${interestRate * 100}% annually.</p>
+      `;
+
+      document.getElementById("result").innerHTML = resultHTML;
+    }
+  </script>
+</body>
+</html>
