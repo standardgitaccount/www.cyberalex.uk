@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UK SIPP Retirement Calculator - CyberAlex">
+  <meta name="author" content="Alex">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="hacker.css" rel="stylesheet">
+  <script type="module" src="./templatemanager.js"></script>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <title>SIPP Calculator</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+    .footer {
+      background-color: black;
+      padding: 20px 0;
+    }
+    .custom-box {
+      background-color: #3D3D3C;
+      color: #01CD00;
+      padding: 20px;
+      border: 2px dotted #01CD00;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    input, label {
+      display: block;
+      margin: 10px 0;
+    }
+    input[type="number"] {
+      background-color: black;
+      color: #01CD00;
+      border: 1px solid #01CD00;
+      padding: 5px;
+      width: 100%;
+    }
+    button {
+      background-color: black;
+      color: #01CD00;
+      border: 1px solid #01CD00;
+      padding: 10px 15px;
+    }
+    button:hover {
+      background-color: #01CD00;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <the-header></the-header>
+  <main class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li class="active">SIPP Calculator</li>
+        </ul>
+      </div>
+      <div class="col-md-3"><p>Published:<br>13 June 2025</p></div>
+      <div class="col-md-3"><p>Author:<br><a href="about.html">> Alex</a></p></div>
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+        <h1>SIPP Retirement Calculator</h1>
+        <p>This calculator estimates the potential value of your Self-Invested Personal Pension (SIPP) at retirement, factoring in your contributions and compound growth over time.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="custom-box">
+          <label for="age">Your Current Age:</label>
+          <input type="number" id="age" min="18" max="74" value="30">
+
+          <label for="annualContribution">Annual Contribution (£):</label>
+          <input type="number" id="annualContribution" min="0" value="5000">
+
+          <label for="interestRate">Annual Growth Rate (%):</label>
+          <input type="number" id="interestRate" min="0" max="20" step="0.1" value="5">
+
+          <label for="retirementAge">Planned Retirement Age:</label>
+          <input type="number" id="retirementAge" min="55" max="75" value="65">
+
+          <button onclick="calculateSIPP()">Calculate</button>
+        </div>
+
+        <div id="result" class="custom-box">
+          <strong>Results will appear here.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7">
+        <h2>About This Tool</h2>
+        <p>
+          The SIPP Calculator helps UK residents estimate how much their Self-Invested Personal Pension could grow before retirement. 
+          Enter your current age, planned retirement age, annual contribution, and expected annual growth rate to see a projected value.
+        </p>
+
+        <h2>SIPP Rules Summary</h2>
+        <ul>
+          <li>Anyone under 75 can open and contribute to a SIPP</li>
+          <li>Tax relief on personal contributions up to 100% of your earnings (or £3,600 if lower)</li>
+          <li>Annual contribution allowance: £60,000 (2024/25), tapered for very high earners</li>
+          <li>Tax relief: 20% basic rate added automatically; higher/additional rate reclaimable via tax return</li>
+          <li>Funds can be accessed from age 55 (rising to 57 in 2028)</li>
+          <li>25% of the fund is available tax-free upon withdrawal; the rest is taxed as income</li>
+          <li>No capital gains or income tax on investments within the SIPP</li>
+        </ul>
+
+        <h2>Choosing a Growth Rate</h2>
+        <p>Use your expected long-term investment return based on your portfolio. Conservative estimates often range from 4%–6% annually for a diversified mix of equities and bonds.</p>
+
+        <h2>Alex’s Perspective</h2>
+        <p>
+          SIPPs offer powerful tax advantages for those looking to take control of their retirement. This calculator shows how compound growth and tax relief make SIPPs one of the most effective long-term savings vehicles for UK investors.
+        </p>
+
+        <h2>Technical Details</h2>
+        <p>
+          The calculator applies basic rate tax relief automatically to each annual contribution and then compounds the total annually until your selected retirement age. 
+          This simulation offers a straightforward projection of possible fund value, assuming constant annual inputs and growth.
+        </p>
+
+        <h2>Privacy Notice</h2>
+        <p>
+          All calculations are done locally in your browser. No personal data is collected or stored.
+        </p>
+
+        <h3>Disclaimer</h3>
+        <p>
+          This tool is for educational purposes and does not constitute financial advice. For tailored guidance, speak to a regulated financial advisor.
+        </p>
+
+        <h2>Questions?</h2>
+        <a href="contact.html">> Contact</a>
+      </div>
+    </div>
+    <br><br><br>
+  </main>
+  <the-footer></the-footer>
+
+  <script>
+    function calculateSIPP() {
+      const age = parseInt(document.getElementById("age").value);
+      const retirementAge = parseInt(document.getElementById("retirementAge").value);
+      let annualContribution = parseFloat(document.getElementById("annualContribution").value);
+      const interestRate = parseFloat(document.getElementById("interestRate").value) / 100;
+
+      if (retirementAge <= age || age < 18 || age > 74 || retirementAge > 75) {
+        document.getElementById("result").innerHTML = "<em>Check that your age and retirement age are valid (must retire after your current age and before 75).</em>";
+        return;
+      }
+
+      const totalYears = retirementAge - age;
+      const taxReliefRate = 0.20;
+
+      let balance = 0;
+
+      for (let year = 0; year < totalYears; year++) {
+        const grossContribution = annualContribution + (annualContribution * taxReliefRate);
+        balance += grossContribution;
+        balance *= (1 + interestRate);
+      }
+
+      const resultHTML = `
+        <strong>At age ${retirementAge}, your SIPP could be worth approximately:</strong><br>
+        <h2>£${balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+        <p>This includes basic rate tax relief and assumes a consistent annual growth rate of ${(interestRate * 100).toFixed(1)}%.</p>
+      `;
+
+      document.getElementById("result").innerHTML = resultHTML;
+    }
+  </script>
+</body>
+</html>
