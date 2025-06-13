@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compound Interest Calculator - CyberAlex">
+  <meta name="author" content="Alex">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="hacker.css" rel="stylesheet">
+  <script type="module" src="./templatemanager.js"></script>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <title>Compound Interest Calculator</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+    .footer {
+      background-color: black;
+      padding: 20px 0;
+    }
+    .custom-box {
+      background-color: #3D3D3C;
+      color: #01CD00;
+      padding: 20px;
+      border: 2px dotted #01CD00;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    input, label {
+      display: block;
+      margin: 10px 0;
+    }
+    input[type="number"] {
+      background-color: black;
+      color: #01CD00;
+      border: 1px solid #01CD00;
+      padding: 5px;
+      width: 100%;
+    }
+    button {
+      background-color: black;
+      color: #01CD00;
+      border: 1px solid #01CD00;
+      padding: 10px 15px;
+    }
+    button:hover {
+      background-color: #01CD00;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <the-header></the-header>
+
+  <main class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li class="active">Compound Interest Calculator</li>
+        </ul>
+      </div>
+      <div class="col-md-3"><p>Published:<br>11 June 2025</p></div>
+      <div class="col-md-3"><p>Author:<br><a href="about.html">> Alex</a></p></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7">
+        <h1>Compound Interest Forecast Calculator</h1>
+        <p>This calculator helps estimate the future value of your investments or savings using compound interest, with or without annual contributions.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7">
+        <div class="custom-box">
+          <label for="initial">Initial Investment (£):</label>
+          <input type="number" id="initial" min="0" value="10000">
+
+          <label for="annualAdd">Annual Contribution (£):</label>
+          <input type="number" id="annualAdd" min="0" value="1000">
+
+          <label for="interestRate">Annual Interest Rate (%):</label>
+          <input type="number" id="interestRate" min="0" max="100" step="0.1" value="5">
+
+          <label for="years">Number of Years:</label>
+          <input type="number" id="years" min="1" max="100" value="30">
+
+          <button onclick="calculateCompound()">Calculate</button>
+        </div>
+
+        <div id="result" class="custom-box">
+          <strong>Results will appear here.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7">
+        <h2>About This Tool</h2>
+        <p>
+          This general-purpose compound interest calculator helps you forecast long-term financial growth. 
+          Whether saving for retirement, investing in the stock market, or growing a cash reserve, it shows the impact of consistent contributions and compound returns over time.
+        </p>
+
+        <h2>How It Works</h2>
+        <p>
+          Each year, your investment grows by the interest rate you specify. Any annual contributions are added at the start of the year before growth is applied. 
+          The total is recalculated yearly using compound interest.
+        </p>
+
+        <h3>Formula Used</h3>
+        <p><code>Total = Initial × (1 + r)^t + Annual × [((1 + r)^t - 1) / r]</code></p>
+        <p>Where:
+          <ul>
+            <li><strong>r</strong> = annual interest rate (decimal)</li>
+            <li><strong>t</strong> = number of years</li>
+            <li><strong>Annual</strong> = annual top-up contribution</li>
+          </ul>
+        </p>
+
+        <h2>Need Help?</h2>
+        <a href="contact.html">> Contact Alex</a>
+      </div>
+    </div>
+  </main>
+
+  <the-footer></the-footer>
+
+  <script>
+    function calculateCompound() {
+      const initial = parseFloat(document.getElementById("initial").value);
+      const annual = parseFloat(document.getElementById("annualAdd").value);
+      const rate = parseFloat(document.getElementById("interestRate").value) / 100;
+      const years = parseInt(document.getElementById("years").value);
+
+      let balance = initial;
+      for (let i = 0; i < years; i++) {
+        balance += annual;
+        balance *= (1 + rate);
+      }
+
+      document.getElementById("result").innerHTML = `
+        <strong>After ${years} years, your investment could grow to:</strong><br>
+        <h2>£${balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+        <p>Based on an annual return of ${rate * 100}% with regular £${annual.toLocaleString()} yearly contributions.</p>
+      `;
+    }
+  </script>
+</body>
+</html>
