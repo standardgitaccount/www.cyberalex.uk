@@ -19,19 +19,19 @@
       margin-bottom: 20px;
       border-radius: 4px;
     }
-    input {
+    input, select, textarea {
       background-color: black;
       color: #01CD00;
       border: 1px solid #01CD00;
       width: 100%;
-      padding: 5px;
+      padding: 6px;
       margin-bottom: 10px;
     }
     button {
       background-color: black;
       color: #01CD00;
       border: 1px solid #01CD00;
-      padding: 10px 15px;
+      padding: 8px 15px;
     }
     button:hover {
       background-color: #01CD00;
@@ -118,18 +118,16 @@ function calculateMix() {
                   document.getElementById("input3").value];
 
   const ratios = inputs.map(parseInput);
-
   const defined = ratios.filter(r => r !== null);
-  if (defined.length < 2) {
-    document.getElementById("result").innerHTML = "<em>Please enter at least two ratios or percentages.</em>";
+
+  if (defined.length < 2 || isNaN(totalVolume) || totalVolume <= 0) {
+    document.getElementById("result").innerHTML = "<em>Please enter a valid total volume and at least two ratios or percentages.</em>";
     return;
   }
 
   const totalDefined = defined.reduce((a, b) => a + b, 0);
   const fullRatios = ratios.map(r => r !== null ? r : 1 - totalDefined);
-
   const totalRatio = fullRatios.reduce((a, b) => a + b, 0);
-
   const mls = fullRatios.map(r => totalVolume * (r / totalRatio));
 
   let output = "<strong>Component Breakdown:</strong><br><ul>";
