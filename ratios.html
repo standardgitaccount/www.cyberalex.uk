@@ -43,111 +43,91 @@
 <the-header></the-header>
 
 <main class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>Liquid Mixing Ratio Calculator</h1>
-      <p>This tool helps you calculate the volumes and percentages of up to three chemicals to make a desired total volume of liquid. It's ideal for chemistry labs, DIY projects, or hobbyists.</p>
-    </div>
+  <h1>Liquid Ratio / Percentage Calculator</h1>
+  <p>This tool calculates the mL amounts of up to 3 chemicals based on user-defined ratios or percentages and a total liquid volume.</p>
+
+  <div class="custom-box">
+    <label for="totalVolume">Total Volume (ml):</label>
+    <input type="number" id="totalVolume" placeholder="e.g., 1000" min="1" required>
+
+    <label for="input1">Chemical 1 (e.g., 1:10 or 10%):</label>
+    <input type="text" id="input1" placeholder="e.g., 1:10 or 10%">
+
+    <label for="input2">Chemical 2 (e.g., 9:10 or 90%):</label>
+    <input type="text" id="input2" placeholder="e.g., 9:10 or 90%">
+
+    <label for="input3">Chemical 3 (optional):</label>
+    <input type="text" id="input3" placeholder="e.g., 0.5:10 or 5%">
+
+    <button onclick="calculateMix()">Calculate</button>
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="custom-box">
-        <label for="totalVolume">Total Desired Volume (ml):</label>
-        <input type="number" id="totalVolume" value="1000" min="1">
-
-        <label>Chemical 1 (ml):</label>
-        <input type="number" id="chem1" value="500" min="0" oninput="autoFill()">
-
-        <label>Chemical 2 (ml):</label>
-        <input type="number" id="chem2" value="300" min="0" oninput="autoFill()">
-
-        <label>Chemical 3 (ml):</label>
-        <input type="number" id="chem3" value="200" min="0" oninput="autoFill()">
-
-        <button onclick="calculateMix()">Calculate Ratios</button>
-      </div>
-
-      <div id="result" class="custom-box">
-        <strong>Results will appear here.</strong>
-      </div>
-    </div>
+  <div id="result" class="custom-box">
+    <strong>Results will appear here.</strong>
   </div>
 
-  <div class="row">
-    <div class="col-md-10">
-      <h2>About This Tool</h2>
-      <p>This tool allows users to input a total target volume and individual volumes of up to three chemicals. When one or two values are provided, the remaining field(s) will autofill to meet the target volume if possible. It then calculates the percentage of each chemical in the final mix.</p>
+  <div class="custom-box">
+    <h3>How to Use</h3>
+    <ul>
+      <li>Enter total liquid volume in millilitres (ml).</li>
+      <li>Enter ratios (e.g. <code>1:10</code>) or percentages (e.g. <code>10%</code>) for each chemical.</li>
+      <li>If one input is left blank, the calculator will autofill it based on the others.</li>
+    </ul>
+    <p>Only up to three chemicals are supported. The third is optional. Input must be valid ratios or percentages.</p>
+  </div>
 
-      <h3>Common Uses</h3>
-      <ul>
-        <li>Laboratory liquid mixture calculations</li>
-        <li>Homebrew or DIY chemical recipes</li>
-        <li>Paint, resin, and cleaning product formulation</li>
-      </ul>
-
-      <h3>Instructions</h3>
-      <ol>
-        <li>Enter the total desired volume in millilitres (ml)</li>
-        <li>Input the volume of up to three components</li>
-        <li>Leave one or more components blank to autofill</li>
-        <li>Click <strong>Calculate Ratios</strong> to view percentage breakdown</li>
-      </ol>
-
-      <h3>Disclaimer</h3>
-      <p>This tool is for educational and convenience purposes only. It assumes all chemicals are compatible and miscible. Always consult a material safety data sheet (MSDS) and a qualified professional when working with hazardous substances.</p>
-
-      <h3>Privacy</h3>
-      <p>All calculations are performed locally in your browser. No data is stored or transmitted.</p>
-
-      <h3>Need Help?</h3>
-      <p><a href="contact.html">> Contact Alex</a> with questions or suggestions.</p>
-    </div>
+  <div class="custom-box">
+    <h3>Disclaimer</h3>
+    <p>This tool provides approximate volume breakdowns based on user input. It is for educational and experimental purposes only. Always follow proper guidelines when mixing chemicals, and consult safety data sheets (SDS) and professionals for industrial or hazardous use.</p>
   </div>
 </main>
 
 <the-footer></the-footer>
 
 <script>
-function autoFill() {
-  const total = parseFloat(document.getElementById('totalVolume').value) || 0;
-  const chem1 = parseFloat(document.getElementById('chem1').value) || 0;
-  const chem2 = parseFloat(document.getElementById('chem2').value) || 0;
-  const filled = chem1 + chem2;
-
-  const chem3Input = document.getElementById('chem3');
-  const remaining = total - filled;
-
-  if (!isNaN(remaining) && remaining >= 0) {
-    chem3Input.value = remaining.toFixed(2);
+function parseInput(input) {
+  input = input.trim();
+  if (input.endsWith('%')) {
+    return parseFloat(input.slice(0, -1)) / 100;
+  } else if (input.includes(':')) {
+    const parts = input.split(':').map(Number);
+    return parts[0] / parts[1];
+  } else if (!input) {
+    return null;
+  } else {
+    return parseFloat(input);
   }
 }
 
 function calculateMix() {
-  const total = parseFloat(document.getElementById('totalVolume').value);
-  const c1 = parseFloat(document.getElementById('chem1').value) || 0;
-  const c2 = parseFloat(document.getElementById('chem2').value) || 0;
-  const c3 = parseFloat(document.getElementById('chem3').value) || 0;
+  const totalVolume = parseFloat(document.getElementById("totalVolume").value);
+  const inputs = [document.getElementById("input1").value,
+                  document.getElementById("input2").value,
+                  document.getElementById("input3").value];
 
-  const actualTotal = c1 + c2 + c3;
+  const ratios = inputs.map(parseInput);
 
-  if (actualTotal === 0 || isNaN(total) || isNaN(c1) || isNaN(c2) || isNaN(c3)) {
-    document.getElementById("result").innerHTML = "<em>Please enter valid non-zero values.</em>";
+  const defined = ratios.filter(r => r !== null);
+  if (defined.length < 2) {
+    document.getElementById("result").innerHTML = "<em>Please enter at least two ratios or percentages.</em>";
     return;
   }
 
-  const p1 = (c1 / actualTotal) * 100;
-  const p2 = (c2 / actualTotal) * 100;
-  const p3 = (c3 / actualTotal) * 100;
+  const totalDefined = defined.reduce((a, b) => a + b, 0);
+  const fullRatios = ratios.map(r => r !== null ? r : 1 - totalDefined);
 
-  const resultHTML = `
-    <strong>Final Mix (Total ${actualTotal.toFixed(2)} ml):</strong><br>
-    Chemical 1: ${c1.toFixed(2)} ml (${p1.toFixed(2)}%)<br>
-    Chemical 2: ${c2.toFixed(2)} ml (${p2.toFixed(2)}%)<br>
-    Chemical 3: ${c3.toFixed(2)} ml (${p3.toFixed(2)}%)<br>
-  `;
+  const totalRatio = fullRatios.reduce((a, b) => a + b, 0);
 
-  document.getElementById("result").innerHTML = resultHTML;
+  const mls = fullRatios.map(r => totalVolume * (r / totalRatio));
+
+  let output = "<strong>Component Breakdown:</strong><br><ul>";
+  mls.forEach((ml, i) => {
+    if (!isNaN(ml) && ml > 0)
+      output += `<li>Chemical ${i + 1}: ${ml.toFixed(2)} ml</li>`;
+  });
+  output += "</ul>";
+
+  document.getElementById("result").innerHTML = output;
 }
 </script>
 </body>
