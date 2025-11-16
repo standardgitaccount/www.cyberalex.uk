@@ -10,6 +10,146 @@
   <script type="module" src="./templatemanager.js"></script>
   <link rel="icon" href="logo.svg" type="image/svg+xml">
   <title>Automatic University of South Wales Reference Generator to Reference the Internet</title>
+
+    <style>
+    .footer {
+      background-color: black;
+      padding: 20px 0;
+    }
+    </style>
+</head>
+
+<body>
+  
+  <the-header></the-header>
+
+  <main class="container" id="main">
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="afil.html">Affiliated Websites</li>
+            </ul>
+        </div>
+            <div class="col-md-3"><p>Published:<br>12 May 2025</p></div>
+            <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
+    </div><hr>
+
+      <!-- main content here -->
+<!-- Reference Generator START -->
+<section id="reference-generator" class="refgen">
+  <div class="refgen-container">
+    <h2 class="refgen-title">Reference Generator</h2>
+
+    <!-- Name or Organisation -->
+    <label>Name(s) or Organisation</label>
+    <div class="name-org-row">
+      <div>
+        <input tabindex="1" type="text" id="personName" placeholder="e.g. billy joe rob, bob rob, sarah jane smith">
+      </div>
+      <div class="or-text">or</div>
+      <div>
+        <input tabindex="2" type="text" id="orgName" placeholder="e.g. world health organization">
+      </div>
+    </div>
+    <div id="lockNotice" class="notice">
+      Please only use ONE of the fields above. The other is effectively locked – clear it if you need to switch.
+    </div>
+
+    <!-- Year + no date -->
+    <label>Year of last update</label>
+    <div class="year-row">
+      <input tabindex="3" type="number" id="year" placeholder="e.g. 2023">
+      <label class="no-date-label">
+        <input tabindex="4" type="checkbox" id="noDate">
+        <span>no date?</span>
+      </label>
+    </div>
+    <div id="noDateNudge" class="notice">
+      You’ve selected “no date”. As a general rule, undated sources are best avoided unless the author or document is of particularly good standing or clearly meritworthy.
+    </div>
+
+    <!-- Title -->
+    <label>Title</label>
+    <input tabindex="5" type="text" id="title" placeholder="e.g. an introduction to cyber security in practice">
+
+    <!-- URL -->
+    <label>URL</label>
+    <input tabindex="6" type="url" id="url" placeholder="e.g. https://example.com">
+
+    <!-- Add button -->
+    <button tabindex="7" id="generateBtn">Add Reference to List</button>
+
+    <!-- Last generated -->
+    <div class="output-container">
+      <strong>Last generated reference:</strong><br>
+      <div id="outputText"></div>
+
+      <div class="citation-row">
+        <div class="citation-block">
+          <span class="citation-label">In-text citation</span>
+          <div class="citation-inner">
+            <input type="text" id="inTextCitation" readonly>
+            <button id="copyInTextBtn">Copy</button>
+          </div>
+          <div class="citation-example" id="inTextExample"></div>
+        </div>
+        <div class="citation-block">
+          <span class="citation-label">End-text citation</span>
+          <div class="citation-inner">
+            <input type="text" id="endTextCitation" readonly>
+            <button id="copyEndTextBtn">Copy</button>
+          </div>
+          <div class="citation-example" id="endTextExample"></div>
+        </div>
+      </div>
+
+      <div class="regen-row">
+        <span class="small-label">Re-generate citations from reference # (in the A–Z list)</span>
+        <div class="regen-inner">
+          <input type="number" id="regenIndex" min="1" step="1">
+          <button id="regenBtn" type="button">Re-generate</button>
+        </div>
+        <div id="regenNotice" class="notice"></div>
+      </div>
+    </div>
+
+    <!-- All references / lists -->
+    <div class="list-container">
+      <div class="list-meta">
+        <div>
+          <span class="small-label">Active list</span>
+          <div id="activeListName"></div>
+          <div id="listStatus" class="notice"></div>
+        </div>
+
+        <div class="list-meta-row">
+          <div>
+            <span class="small-label">Saved lists</span>
+            <select id="savedLists"></select>
+          </div>
+          <div class="list-meta-buttons">
+            <button id="renameListBtn" type="button">Rename</button>
+            <button id="newListBtn" type="button">Create new list</button>
+            <button id="deleteListBtn" type="button">Remove</button>
+            <button id="exportBtn" type="button">Export</button>
+            <button id="importBtn" type="button">Import</button>
+            <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+          </div>
+        </div>
+      </div>
+
+      <h3>All References (A–Z)</h3>
+      <ol id="referencesList"></ol>
+
+      <div class="list-buttons">
+        <button id="copyBtn">Copy List</button>
+        <button id="clearBtn">Clear All References</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <style>
   /* Scoped styling for Reference Generator to avoid clashing with site theme */
   .refgen {
@@ -312,146 +452,7 @@
     }
   }
 </style>
-</head>
-<body>
-  <the-header></the-header>
 
-  <main class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <ul class="breadcrumb">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li class="active">LISA Calculator</li>
-        </ul>
-      </div>
-      <div class="col-md-3"><p>Published:<br>11 June 2025</p></div>
-      <div class="col-md-3"><p>Author:<br><a href="about.html">> Alex</a></p></div>
-    </div>
-
-  <section id="reference-generator" class="refgen">
-  <div class="refgen-container">
-    <h2 class="refgen-title">Reference Generator</h2>
-
-    <!-- Name or Organisation -->
-    <label>Name(s) or Organisation</label>
-    <div class="name-org-row">
-      <div>
-        <input tabindex="1" type="text" id="personName" placeholder="e.g. billy joe rob, bob rob, sarah jane smith">
-      </div>
-      <div class="or-text">or</div>
-      <div>
-        <input tabindex="2" type="text" id="orgName" placeholder="e.g. world health organization">
-      </div>
-    </div>
-    <div id="lockNotice" class="notice">
-      Please only use ONE of the fields above. The other is effectively locked – clear it if you need to switch.
-    </div>
-
-    <!-- Year + no date -->
-    <label>Year of last update</label>
-    <div class="year-row">
-      <input tabindex="3" type="number" id="year" placeholder="e.g. 2023">
-      <label class="no-date-label">
-        <input tabindex="4" type="checkbox" id="noDate">
-        <span>no date?</span>
-      </label>
-    </div>
-    <div id="noDateNudge" class="notice">
-      You’ve selected “no date”. As a general rule, undated sources are best avoided unless the author or document is of particularly good standing or clearly meritworthy.
-    </div>
-
-    <!-- Title -->
-    <label>Title</label>
-    <input tabindex="5" type="text" id="title" placeholder="e.g. an introduction to cyber security in practice">
-
-    <!-- URL -->
-    <label>URL</label>
-    <input tabindex="6" type="url" id="url" placeholder="e.g. https://example.com">
-
-    <!-- Add button -->
-    <button tabindex="7" id="generateBtn">Add Reference to List</button>
-
-    <!-- Last generated -->
-    <div class="output-container">
-      <strong>Last generated reference:</strong><br>
-      <div id="outputText"></div>
-
-      <div class="citation-row">
-        <div class="citation-block">
-          <span class="citation-label">In-text citation</span>
-          <div class="citation-inner">
-            <input type="text" id="inTextCitation" readonly>
-            <button id="copyInTextBtn">Copy</button>
-          </div>
-          <div class="citation-example" id="inTextExample"></div>
-        </div>
-        <div class="citation-block">
-          <span class="citation-label">End-text citation</span>
-          <div class="citation-inner">
-            <input type="text" id="endTextCitation" readonly>
-            <button id="copyEndTextBtn">Copy</button>
-          </div>
-          <div class="citation-example" id="endTextExample"></div>
-        </div>
-      </div>
-
-      <div class="regen-row">
-        <span class="small-label">Re-generate citations from reference # (in the A–Z list)</span>
-        <div class="regen-inner">
-          <input type="number" id="regenIndex" min="1" step="1">
-          <button id="regenBtn" type="button">Re-generate</button>
-        </div>
-        <div id="regenNotice" class="notice"></div>
-      </div>
-    </div>
-
-    <!-- All references / lists -->
-    <div class="list-container">
-      <div class="list-meta">
-        <div>
-          <span class="small-label">Active list</span>
-          <div id="activeListName"></div>
-          <div id="listStatus" class="notice"></div>
-        </div>
-
-        <div class="list-meta-row">
-          <div>
-            <span class="small-label">Saved lists</span>
-            <select id="savedLists"></select>
-          </div>
-          <div class="list-meta-buttons">
-            <button id="renameListBtn" type="button">Rename</button>
-            <button id="newListBtn" type="button">Create new list</button>
-            <button id="deleteListBtn" type="button">Remove</button>
-            <button id="exportBtn" type="button">Export</button>
-            <button id="importBtn" type="button">Import</button>
-            <input type="file" id="importFile" accept=".json,application/json" style="display:none">
-          </div>
-        </div>
-      </div>
-
-      <h3>All References (A–Z)</h3>
-      <ol id="referencesList"></ol>
-
-      <div class="list-buttons">
-        <button id="copyBtn">Copy List</button>
-        <button id="clearBtn">Clear All References</button>
-      </div>
-    </div>
-  </div>
-</section>
-        
-        <h2>Questions?</h2>
-        <a href="contact.html">> Contact</a>     
-    </div>
-  </div>
-    
-    <br><br><br>
-
-  </main>
-
-  <the-footer></the-footer>
 <script>
   const joiningWords = new Set([
     "and","or","but","for","nor",
@@ -1057,6 +1058,16 @@
   refreshSavedListsUI();
   updateReferencesDisplay();
 </script>
+<!-- Reference Generator END -->
+
+    
+  </main>
+<br><br><br>
+
+  <the-footer></the-footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 </body>
 </html>
