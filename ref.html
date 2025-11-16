@@ -28,10 +28,10 @@
         <div class="col-md-6">
             <ul class="breadcrumb">
                 <li><a href="index.html">Home</a></li>
-                <li class="afil.html">Affiliated Websites</li>
+                <li class="afil.html">USW Reference Generator</li>
             </ul>
         </div>
-            <div class="col-md-3"><p>Published:<br>12 May 2025</p></div>
+            <div class="col-md-3"><p>Published:<br>16 Nov 2025</p></div>
             <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
     </div><hr>
 
@@ -451,6 +451,51 @@
       width: 100%;
     }
   }
+
+    /* Darker tool background */
+  .refgen-container {
+    background: #101010;   /* darker card */
+  }
+  
+  /* Darker inner panels */
+  .refgen .output-container,
+  .refgen .list-container {
+    background: #111111;
+    border-color: #262626;
+  }
+
+    /* Slightly more vertical spacing around rows */
+  .refgen .output-container {
+    margin-top: 24px;
+  }
+  
+  .refgen .citation-row {
+    margin-top: 18px;
+  }
+  
+  .refgen .regen-row {
+    margin-top: 14px;
+  }
+  
+  .refgen .list-container {
+    margin-top: 28px;
+  }
+  
+  /* Make the small buttons feel less cramped */
+  .refgen .citation-inner button,
+  .refgen .list-meta-buttons button {
+    padding: 6px 14px;
+    margin-top: 2px;
+  }
+  
+  /* On small screens, avoid cramped full-width buttons touching each other */
+  @media (max-width: 650px) {
+    .refgen .list-meta-buttons button {
+      margin-top: 6px;
+    }
+  }
+
+
 </style>
 
 <script>
