@@ -22,7 +22,21 @@
 <body>
   
   <the-header></the-header>
-<!-- Loan & Interest Visualiser START -->
+
+  <main class="container" id="main">
+<div class="row">
+        <div class="col-md-6">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+              <li><a href="projects.html">Projects</a></li>
+                <li class="#">Loan &amp; Interest Visualiser</li>
+            </ul>
+        </div>
+            <div class="col-md-3"><p>Published:<br>18 Nov 2025</p></div>
+            <div class="col-md-3"><p>Author:<br> <a href="about.html">> Alex</a></p></div>
+    </div><hr>
+    
+    <!-- Loan & Interest Visualiser START -->
 <section class="loantool">
   <div class="loantool-card">
     <h2 class="loantool-title">Loan &amp; Interest Visualiser</h2>
@@ -49,10 +63,10 @@
           <select id="lt-repaymentType">
             <option value="amortised">Standard repayment (paid off within term)</option>
             <option value="interest_only">Interest-only (principal never reduces)</option>
-            <option value="min_payment">Credit card style minimum payments (Such as 3% or £5)</option>
+            <option value="min_payment">Credit card style minimum payments (such as 3% or £5)</option>
           </select>
           <div class="loantool-note">
-            Standard repayment uses the term below. Interest-only and minimum payment modes simulate over a chosen number of years.
+            Standard repayment uses the term below. Interest-only and minimum-payment modes simulate over a chosen number of years.
           </div>
         </div>
       </div>
@@ -80,10 +94,19 @@
           <input type="number" id="lt-age" placeholder="e.g. 30" min="0" max="100" />
         </div>
         <div>
-          <label>Optional: custom minimum monthly payment</label>
-          <input type="number" id="lt-customMin" placeholder="Leave blank to use 3% or £5 rule" min="0" step="0.01" />
+          <label>Optional: custom minimum payments (for minimum-payment mode)</label>
+          <div class="loantool-minirow">
+            <div>
+              <span class="loantool-mini-label">Percent of balance (%):</span>
+              <input type="number" id="lt-customMinPct" placeholder="e.g. 3" min="0" step="0.01" />
+            </div>
+            <div>
+              <span class="loantool-mini-label">Fixed minimum (£):</span>
+              <input type="number" id="lt-customMinFixed" placeholder="e.g. 5" min="0" step="0.01" />
+            </div>
+          </div>
           <div class="loantool-note">
-            Only used in minimum payment mode. If left blank, minimum payment = max(3% of balance, £5).
+            Leave both blank to use the standard rule: minimum payment = max(3% of balance, £5).
           </div>
         </div>
       </div>
@@ -102,10 +125,14 @@
     <!-- GRAPHS -->
     <div class="loantool-section" id="lt-graphsSection" style="display:none;">
       <h3>Balance over time</h3>
-      <canvas id="lt-balanceChart"></canvas>
+      <div class="loantool-chart-wrapper">
+        <canvas id="lt-balanceChart"></canvas>
+      </div>
 
       <h3 style="margin-top:20px;">Cumulative interest over time</h3>
-      <canvas id="lt-interestChart"></canvas>
+      <div class="loantool-chart-wrapper">
+        <canvas id="lt-interestChart"></canvas>
+      </div>
     </div>
 
     <!-- EXTRA PAYMENT COMPARISON -->
@@ -152,7 +179,7 @@
     margin-top: 0;
     text-align: center;
     margin-bottom: 4px;
-    color: #6af16a;
+    color: #00ff00; /* match CyberAlex green */
   }
 
   .loantool-subtitle {
@@ -218,6 +245,25 @@
     -moz-appearance: textfield;
   }
 
+  .loantool-minirow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .loantool-minirow > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .loantool-mini-label {
+    display: block;
+    font-size: 12px;
+    color: #ccc;
+    margin-bottom: 2px;
+  }
+
   .loantool-btn-main,
   .loantool-btn-secondary {
     width: 100%;
@@ -262,8 +308,17 @@
     color: #eee;
   }
 
+  .loantool-chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 260px;
+  }
+
   @media (max-width: 700px) {
     .loantool-row {
+      flex-direction: column;
+    }
+    .loantool-minirow {
       flex-direction: column;
     }
   }
@@ -280,7 +335,8 @@
   const termYearsEl = document.getElementById("lt-termYears");
   const simYearsEl = document.getElementById("lt-simYears");
   const ageEl = document.getElementById("lt-age");
-  const customMinEl = document.getElementById("lt-customMin");
+  const customMinPctEl = document.getElementById("lt-customMinPct");
+  const customMinFixedEl = document.getElementById("lt-customMinFixed");
 
   const calcBtn = document.getElementById("lt-calcBtn");
   const errorEl = document.getElementById("lt-error");
@@ -301,9 +357,7 @@
 
   let balanceChart = null;
   let interestChart = null;
-
-  // Store baseline for comparison
-  let baselineResult = null;
+  let baselineState = null;
 
   function monthlyRateFromAER(aer) {
     const r = aer / 100;
@@ -332,7 +386,6 @@
         result.balances.push(Math.max(balance, 0));
         result.cumInterest.push(cumI);
         if (m === n) break;
-        const interest = 0;
         const principalPaid = payment;
         balance -= principalPaid;
       }
@@ -355,9 +408,7 @@
       }
       const interest = balance * r;
       let principalPaid = payment - interest;
-      if (principalPaid > balance) {
-        principalPaid = balance;
-      }
+      if (principalPaid > balance) principalPaid = balance;
       balance -= principalPaid;
       cumI += interest;
     }
@@ -383,18 +434,21 @@
       result.balances.push(balance);
       result.cumInterest.push(cumI);
       const interest = balance * r;
-      const payment = interest; // interest-only
+      const payment = interest;
       cumI += payment;
     }
     result.totalInterest = cumI;
     return result;
   }
 
-  function simulateMinPayment(principal, aer, simYears, customMin) {
+  function simulateMinPayment(principal, aer, simYears, customPct, customFixed) {
     const r = monthlyRateFromAER(aer);
     const maxMonths = Math.round(simYears * 12);
-    const minPct = 0.03;
-    const minAbs = 5;
+    let pct = 0.03;
+    let absMin = 5;
+    if (customPct && customPct > 0) pct = customPct / 100;
+    if (customFixed && customFixed > 0) absMin = customFixed;
+
     const result = {
       months: [],
       balances: [],
@@ -403,6 +457,7 @@
       paidOffMonth: null,
       paymentOverTime: []
     };
+
     let balance = principal;
     let cumI = 0;
     for (let m = 0; m <= maxMonths; m++) {
@@ -416,17 +471,10 @@
       }
 
       const interest = balance * r;
-      let minPayment;
-      if (customMin && customMin > 0) {
-        minPayment = customMin;
-      } else {
-        minPayment = Math.max(balance * minPct, minAbs);
-      }
-
+      let minPayment = Math.max(balance * pct, absMin);
       let payment = minPayment;
-      if (payment > balance + interest) {
-        payment = balance + interest;
-      }
+
+      if (payment > balance + interest) payment = balance + interest;
       result.paymentOverTime.push(payment);
 
       const principalPaid = payment - interest;
@@ -463,14 +511,11 @@
 
       const interest = balance * r;
       if (payment <= interest + 1e-8) {
-        // payment is not enough to reduce principal
         result.insufficient = true;
         break;
       }
       let actualPayment = payment;
-      if (actualPayment > balance + interest) {
-        actualPayment = balance + interest;
-      }
+      if (actualPayment > balance + interest) actualPayment = balance + interest;
       const principalPaid = actualPayment - interest;
       balance -= principalPaid;
       cumI += interest;
@@ -480,14 +525,13 @@
   }
 
   function buildLabels(months) {
-    // Chart labels as years (0,1,2,...) based on month index
     return months.map(m => (m / 12));
   }
 
   function monthsToYearsMonths(m) {
+    if (m === null || m === undefined) return "Not repaid in simulation period";
     const years = Math.floor(m / 12);
     const months = m % 12;
-    if (m === null || m === undefined) return "Not repaid in simulation period";
     if (years === 0) return `${months} month(s)`;
     if (months === 0) return `${years} year(s)`;
     return `${years} year(s) and ${months} month(s)`;
@@ -499,20 +543,15 @@
 
   function updateCharts(baseline, extra) {
     const labels = buildLabels(baseline.months);
-
-    const baselineBalanceData = baseline.balances;
-    const baselineInterestData = baseline.cumInterest;
-
     const datasetsBalance = [{
       label: "Baseline balance",
-      data: baselineBalanceData,
+      data: baseline.balances,
       borderWidth: 2,
       tension: 0.1
     }];
-
     const datasetsInterest = [{
       label: "Baseline cumulative interest",
-      data: baselineInterestData,
+      data: baseline.cumInterest,
       borderWidth: 2,
       tension: 0.1
     }];
@@ -543,10 +582,7 @@
           ticks: {
             callback: function(value, index) {
               const year = labels[index];
-              // Show integer years only
-              if (Math.abs(year - Math.round(year)) < 1e-8) {
-                return Math.round(year);
-              }
+              if (Math.abs(year - Math.round(year)) < 1e-8) return Math.round(year);
               return "";
             }
           },
@@ -558,9 +594,7 @@
         }
       },
       plugins: {
-        legend: {
-          labels: { color: "#eee" }
-        },
+        legend: { labels: { color: "#eee" } },
         tooltip: {
           callbacks: {
             label: function(ctx) {
@@ -575,36 +609,27 @@
     if (balanceChart) balanceChart.destroy();
     balanceChart = new Chart(balanceCanvas.getContext("2d"), {
       type: "line",
-      data: {
-        labels: labels,
-        datasets: datasetsBalance
-      },
+      data: { labels, datasets: datasetsBalance },
       options: commonOptions
     });
 
     if (interestChart) interestChart.destroy();
     interestChart = new Chart(interestCanvas.getContext("2d"), {
       type: "line",
-      data: {
-        labels: labels,
-        datasets: datasetsInterest
-      },
+      data: { labels, datasets: datasetsInterest },
       options: commonOptions
     });
   }
 
-  function buildSummaryText(mode, principal, aer, simYears, termYears, baseline) {
-    const lines = [];
+  function buildSummaryText(mode, principal, aer, simYears, termYears, baseline, customPct, customFixed) {
     const rMonthly = monthlyRateFromAER(aer);
-
+    const lines = [];
     lines.push(`Amount borrowed: ${formatMoney(principal)}.`);
-    lines.push(`Annual interest rate: ${aer.toFixed(2)}% (approx. ${(rMonthly*100).toFixed(3)}% per month).`);
+    lines.push(`Annual interest rate: ${aer.toFixed(2)}% (approximately ${(rMonthly*100).toFixed(3)}% per month).`);
 
     if (mode === "amortised") {
       lines.push(`Repayment type: standard repayment over ${termYears} year(s).`);
-      if (baseline.payment) {
-        lines.push(`Estimated fixed monthly payment: ${formatMoney(baseline.payment)}.`);
-      }
+      if (baseline.payment) lines.push(`Estimated fixed monthly payment: ${formatMoney(baseline.payment)}.`);
       if (baseline.paidOffMonth != null) {
         lines.push(`Loan fully repaid after approximately ${monthsToYearsMonths(baseline.paidOffMonth)}.`);
       }
@@ -614,12 +639,14 @@
       lines.push("Repayment type: interest-only (principal does not reduce).");
       lines.push(`Approximate monthly interest-only payment: ${formatMoney(interestPerMonth)}.`);
       lines.push(`Over ${simYears} year(s), total interest paid would be about ${formatMoney(baseline.totalInterest)}, while the original balance remains outstanding.`);
-    } else if (mode === "min_payment") {
+    } else {
       lines.push("Repayment type: credit-card style minimum payments.");
-      if (customMinEl.value && parseFloat(customMinEl.value) > 0) {
-        lines.push(`Custom minimum monthly payment used: ${formatMoney(parseFloat(customMinEl.value))}.`);
+      if (customPct && customPct > 0 || customFixed && customFixed > 0) {
+        const pctText = customPct && customPct > 0 ? `${customPct.toFixed(2)}%` : "3%";
+        const fixedText = customFixed && customFixed > 0 ? formatMoney(customFixed) : "£5.00";
+        lines.push(`Custom minimum payment rule used: the higher of ${pctText} of the balance or ${fixedText}.`);
       } else {
-        lines.push("Minimum monthly payment rule: the higher of 3% of the balance or £5.");
+        lines.push("Minimum payment rule used: the higher of 3% of the balance or £5.");
       }
       if (baseline.paidOffMonth != null) {
         lines.push(`Under these assumptions, the debt would be repaid after approximately ${monthsToYearsMonths(baseline.paidOffMonth)}.`);
@@ -628,57 +655,51 @@
         lines.push(`Within ${simYears} year(s), the debt is not fully repaid under the chosen minimum payment structure. Total interest paid over this period: ${formatMoney(baseline.totalInterest)}.`);
       }
     }
-
     return lines.join(" ");
   }
 
   function buildSavingsContext(interestSaved, ageNow) {
-    if (!interestSaved || interestSaved <= 0 || !ageNow || ageNow <= 0) {
-      return "";
-    }
+    if (!interestSaved || interestSaved <= 0 || !ageNow || ageNow <= 0) return "";
     const retirementAge = 67;
     const yearsToRet = Math.max(0, retirementAge - ageNow);
     const rate = 0.07;
     const lines = [];
 
     if (yearsToRet >= 15) {
-      // Retirement-focused scenario
       const futureAtRet = interestSaved * Math.pow(1 + rate, yearsToRet);
-      lines.push(
-        `If an amount equivalent to the interest saved (${formatMoney(interestSaved)}) were invested at 7% annual growth today, it could grow to around ${formatMoney(futureAtRet)} by age ${retirementAge}.`
-      );
       const future10 = interestSaved * Math.pow(1 + rate, 10);
       lines.push(
-        `Over 10 years, the same amount could grow to approximately ${formatMoney(future10)}.`
+        `If an amount equivalent to the interest saved (${formatMoney(interestSaved)}) were invested at 7% annual growth, it could grow to around ${formatMoney(futureAtRet)} by age ${retirementAge}.`
+      );
+      lines.push(
+        `Over 10 years, the same amount could grow to approximately ${formatMoney(future10)}, materially improving long-term financial resilience.`
       );
     } else if (yearsToRet > 0 && yearsToRet < 15) {
       const futureAtRet = interestSaved * Math.pow(1 + rate, yearsToRet);
+      const future10 = interestSaved * Math.pow(1 + rate, 10);
       lines.push(
         `If an amount equivalent to the interest saved were invested now at 7% until age ${retirementAge}, it could grow to approximately ${formatMoney(futureAtRet)}.`
       );
-      const future10 = interestSaved * Math.pow(1 + rate, 10);
       lines.push(
-        `Over 10 years, this level of saving would be in the region of ${formatMoney(future10)}, which is comparable to the cost of a well-maintained used car or a substantial home improvement, depending on market conditions.`
+        `Over 10 years, this level of saving would be in the region of ${formatMoney(future10)}, comparable to the cost of a well-maintained used car or a substantial home improvement, depending on market conditions.`
       );
     } else {
-      // Age beyond or near retirement: focus on 10–20 year horizons only
       const future10 = interestSaved * Math.pow(1 + rate, 10);
       const future20 = interestSaved * Math.pow(1 + rate, 20);
       lines.push(
         `If this interest saving were invested for 10 years at 7% annual growth, it could reach roughly ${formatMoney(future10)}.`
       );
       lines.push(
-        `Over 20 years, it could reach around ${formatMoney(future20)}, which in many cases would be enough to fund a significant financial goal such as a vehicle purchase, major home project, or a series of higher-cost holidays.`
+        `Over 20 years, it could reach around ${formatMoney(future20)}, which could realistically fund a significant financial goal such as a vehicle purchase, major home project, or a series of higher-cost holidays.`
       );
     }
-
     return lines.join(" ");
   }
 
   calcBtn.addEventListener("click", function() {
     errorEl.style.display = "none";
     errorEl.textContent = "";
-    baselineResult = null;
+    baselineState = null;
     extraSummaryEl.textContent = "";
     savingsContextEl.textContent = "";
 
@@ -691,7 +712,8 @@
     if (simYears > 100) simYears = 100;
     simYearsEl.value = simYears;
 
-    const customMin = parseFloat(customMinEl.value) || 0;
+    const customPct = parseFloat(customMinPctEl.value) || 0;
+    const customFixed = parseFloat(customMinFixedEl.value) || 0;
 
     if (!principal || principal <= 0) {
       errorEl.textContent = "Please enter a valid loan amount.";
@@ -703,8 +725,6 @@
       errorEl.style.display = "block";
       return;
     }
-
-    // If standard repayment but no term, prompt
     if (repaymentType === "amortised" && termYears <= 0) {
       errorEl.textContent = "Please enter a positive term in years for a standard repayment loan, or choose a different repayment type.";
       errorEl.style.display = "block";
@@ -714,7 +734,6 @@
     let baseline;
     if (repaymentType === "amortised") {
       baseline = simulateAmortised(principal, aer, termYears);
-      // Extend the arrays with flat values if simYears is longer than payoff period
       const maxMonths = Math.round(Math.min(simYears, 100) * 12);
       const lastBalance = baseline.balances[baseline.balances.length - 1] || 0;
       const lastInterest = baseline.cumInterest[baseline.cumInterest.length - 1] || 0;
@@ -726,19 +745,21 @@
     } else if (repaymentType === "interest_only") {
       baseline = simulateInterestOnly(principal, aer, simYears);
     } else {
-      baseline = simulateMinPayment(principal, aer, simYears, customMin);
+      baseline = simulateMinPayment(principal, aer, simYears, customPct, customFixed);
     }
 
-    baselineResult = {
+    baselineState = {
       type: repaymentType,
       principal,
       aer,
       termYears,
       simYears,
-      result: baseline
+      result: baseline,
+      customPct,
+      customFixed
     };
 
-    const summary = buildSummaryText(repaymentType, principal, aer, simYears, termYears, baseline);
+    const summary = buildSummaryText(repaymentType, principal, aer, simYears, termYears, baseline, customPct, customFixed);
     summaryTextEl.textContent = summary;
 
     summarySection.style.display = "block";
@@ -752,14 +773,13 @@
     extraSummaryEl.textContent = "";
     savingsContextEl.textContent = "";
 
-    if (!baselineResult) {
+    if (!baselineState) {
       extraSummaryEl.textContent = "Please generate the baseline analysis first.";
       return;
     }
 
     const extraMonthly = parseFloat(extraMonthlyEl.value) || 0;
     const extraWeekly = parseFloat(extraWeeklyEl.value) || 0;
-
     let paymentMonthly = 0;
     if (extraMonthly > 0) {
       paymentMonthly = extraMonthly;
@@ -772,7 +792,7 @@
       return;
     }
 
-    const { principal, aer, termYears, simYears, type } = baselineResult;
+    const { principal, aer, termYears, simYears, type, result: baseline } = baselineState;
     let simYearsUsed = simYears;
     if (type === "amortised" && termYears > 0) {
       simYearsUsed = Math.min(simYears, termYears);
@@ -783,92 +803,65 @@
     if (extra.insufficient) {
       extraSummaryEl.textContent =
         "The higher payment entered is still not sufficient to reduce the balance (it does not exceed the monthly interest). Please increase the amount and try again.";
-      updateCharts(baselineResult.result, null);
+      updateCharts(baseline, null);
       return;
     }
 
-    // Compare payoff times and interest
-    const baseline = baselineResult.result;
     let baselinePayoff = baseline.paidOffMonth;
-    if (type !== "amortised" && type !== "min_payment") {
-      // interest-only: there is no payoff
-      baselinePayoff = null;
-    }
-
+    if (type === "interest_only") baselinePayoff = null;
     const extraPayoff = extra.paidOffMonth;
-
-    let comparisonLines = [];
+    const lines = [];
 
     if (baselinePayoff != null && extraPayoff != null) {
       const timeSavedMonths = baselinePayoff - extraPayoff;
       const interestSaved = baseline.totalInterest - extra.totalInterest;
-
-      comparisonLines.push(
-        `Baseline time to clear the loan: ${monthsToYearsMonths(baselinePayoff)}.`
-      );
-      comparisonLines.push(
-        `With a fixed monthly payment of ${formatMoney(paymentMonthly)}, the loan would be cleared in approximately ${monthsToYearsMonths(extraPayoff)}.`
-      );
+      lines.push(`Baseline time to clear the loan: ${monthsToYearsMonths(baselinePayoff)}.`);
+      lines.push(`With a fixed monthly payment of ${formatMoney(paymentMonthly)}, the loan would be cleared in approximately ${monthsToYearsMonths(extraPayoff)}.`);
       if (timeSavedMonths > 0) {
-        comparisonLines.push(
-          `Time saved by increasing payments: ${monthsToYearsMonths(timeSavedMonths)}.`
-        );
+        lines.push(`Time saved by increasing payments: ${monthsToYearsMonths(timeSavedMonths)}.`);
       }
       if (interestSaved > 0) {
-        comparisonLines.push(
-          `Total interest saved compared with the baseline: approximately ${formatMoney(interestSaved)}.`
-        );
+        lines.push(`Total interest saved compared with the baseline: approximately ${formatMoney(interestSaved)}.`);
         const ageNow = parseFloat(ageEl.value);
-        const context = buildSavingsContext(interestSaved, ageNow);
-        savingsContextEl.textContent = context;
+        savingsContextEl.textContent = buildSavingsContext(interestSaved, ageNow);
       }
     } else if (baselinePayoff == null && extraPayoff != null) {
       const interestSaved = baseline.totalInterest - extra.totalInterest;
-      comparisonLines.push(
-        "In the baseline scenario, the loan was not fully repaid within the simulated period."
-      );
-      comparisonLines.push(
-        `With a fixed monthly payment of ${formatMoney(paymentMonthly)}, the loan would be cleared in approximately ${monthsToYearsMonths(extraPayoff)}.`
-      );
+      lines.push("In the baseline scenario, the loan was not fully repaid within the simulated period.");
+      lines.push(`With a fixed monthly payment of ${formatMoney(paymentMonthly)}, the loan would be cleared in approximately ${monthsToYearsMonths(extraPayoff)}.`);
       if (interestSaved > 0) {
-        comparisonLines.push(
-          `Over the same period, this approach would reduce interest paid by about ${formatMoney(interestSaved)} compared with the baseline.`
-        );
+        lines.push(`Over the same period, this approach would reduce interest paid by about ${formatMoney(interestSaved)} compared with the baseline.`);
         const ageNow = parseFloat(ageEl.value);
-        const context = buildSavingsContext(interestSaved, ageNow);
-        savingsContextEl.textContent = context;
+        savingsContextEl.textContent = buildSavingsContext(interestSaved, ageNow);
       }
     } else {
-      comparisonLines.push(
-        "In both scenarios, the loan was not fully repaid within the simulated period. Consider a higher payment or shorter loan term."
-      );
+      lines.push("In both scenarios, the loan was not fully repaid within the simulated period. Consider a higher payment or shorter loan term.");
     }
 
-    extraSummaryEl.textContent = comparisonLines.join(" ");
+    extraSummaryEl.textContent = lines.join(" ");
 
     // Extend extra arrays to match baseline length for charting
-    const baseline = baselineResult.result;
     const extraExtended = {
       months: baseline.months.slice(),
       balances: [],
       cumInterest: [],
       totalInterest: extra.totalInterest
     };
-    const lastExtraBalance = extra.balances[extra.balances.length - 1] || 0;
-    const lastExtraInterest = extra.cumInterest[extra.cumInterest.length - 1] || 0;
-    const extraMaxMonth = extra.months[extra.months.length - 1] || 0;
+    const lastBalance = extra.balances[extra.balances.length - 1] || 0;
+    const lastInterest = extra.cumInterest[extra.cumInterest.length - 1] || 0;
+    const maxExtraMonth = extra.months[extra.months.length - 1] || 0;
 
     baseline.months.forEach(m => {
       const idx = extra.months.indexOf(m);
       if (idx !== -1) {
         extraExtended.balances.push(extra.balances[idx]);
         extraExtended.cumInterest.push(extra.cumInterest[idx]);
-      } else if (m > extraMaxMonth) {
-        extraExtended.balances.push(Math.max(lastExtraBalance, 0));
-        extraExtended.cumInterest.push(lastExtraInterest);
+      } else if (m > maxExtraMonth) {
+        extraExtended.balances.push(lastBalance);
+        extraExtended.cumInterest.push(lastInterest);
       } else {
-        extraExtended.balances.push(lastExtraBalance);
-        extraExtended.cumInterest.push(lastExtraInterest);
+        extraExtended.balances.push(lastBalance);
+        extraExtended.cumInterest.push(lastInterest);
       }
     });
 
@@ -878,8 +871,6 @@
 </script>
 <!-- Loan & Interest Visualiser END -->
 
-  <main class="container" id="main">
- 
   </main>
 <br><br><br>
 
