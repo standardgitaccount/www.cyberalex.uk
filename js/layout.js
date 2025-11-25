@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const userPreference = localStorage.getItem('theme');
   const initialTheme = userPreference || 'dark';
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const initialTheme = userPreference || (prefersDark ? 'dark' : 'light');
 
   function applyTheme(theme) {
     document.body.classList.toggle('theme-dark', theme === 'dark');
@@ -68,7 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const isActive = target === currentPath;
 
       link.classList.toggle('active', isActive);
-      link.setAttribute('aria-current', isActive ? 'page' : null);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
     });
   }
 
@@ -99,7 +101,4 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   loadPartial('site-footer', 'partials/footer.html', hydrateEmailLinks);
-  });
-
-  loadPartial('site-footer', 'partials/footer.html');
 });
