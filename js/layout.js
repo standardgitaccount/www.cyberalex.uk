@@ -49,6 +49,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function markActiveNav() {
+    const links = document.querySelectorAll('header nav a[data-page]');
+    if (!links.length) return;
+
+    const currentPath = window.location.pathname.endsWith('/')
+      ? `${window.location.pathname}index.html`
+      : window.location.pathname;
+
+    links.forEach(link => {
+      const target = new URL(link.getAttribute('href'), window.location.href).pathname;
+      const isActive = target === currentPath || target === window.location.pathname;
+
+      link.classList.toggle('active', isActive);
+      link.setAttribute('aria-current', isActive ? 'page' : null);
+    });
+  }
+
   // Helper to load a partial into a container
   function loadPartial(id, url, onLoad) {
     const container = document.getElementById(id);
@@ -71,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPartial('site-header', 'partials/header.html', () => {
     updateToggle(initialTheme);
     setupThemeToggle();
+    markActiveNav();
     hydrateEmailLinks();
   });
 
