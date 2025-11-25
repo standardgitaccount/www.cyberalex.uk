@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const userPreference = localStorage.getItem('theme');
   const initialTheme = userPreference || 'dark';
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = userPreference || (prefersDark ? 'dark' : 'light');
 
   function applyTheme(theme) {
     document.body.classList.toggle('theme-dark', theme === 'dark');
@@ -97,4 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   loadPartial('site-footer', 'partials/footer.html', hydrateEmailLinks);
+  });
+
+  loadPartial('site-footer', 'partials/footer.html');
 });
