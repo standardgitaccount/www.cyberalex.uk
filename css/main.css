@@ -1,19 +1,46 @@
-/* Basic body styling */
+/* Theme tokens */
+:root {
+  --background: #f7f7f9;
+  --surface: #ffffff;
+  --surface-alt: #f8f9fa;
+  --border: #dee2e6;
+  --text: #212529;
+  --muted: #6c757d;
+  --link: #0d6efd;
+  --brand: #0d6efd;
+  --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+}
+
 body {
-  background-color: #f7f7f9;
-  color: #212529;
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+body.theme-dark {
+  --background: #0f1115;
+  --surface: #171b21;
+  --surface-alt: #1f242c;
+  --border: #2c3138;
+  --text: #e5e9f0;
+  --muted: #b0b7c3;
+  --link: #7cb7ff;
+  --brand: #7cb7ff;
+  --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.35);
 }
 
 /* Hero styling */
 .hero {
-  background: #ffffff;
+  background: var(--surface);
   border-radius: 0.75rem;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--border);
+  padding: clamp(1.5rem, 1.5vw + 1rem, 2.5rem);
 }
 
 /* Panel in hero */
 .focus-panel {
-  background-color: #f8f9fa;
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border);
 }
 
 /* Skip link for keyboard users */
@@ -39,7 +66,7 @@ button:focus,
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid #0d6efd;
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
@@ -57,10 +84,80 @@ select:focus {
 
 /* Small adjustments for dark text in header nav */
 .nav-link {
-  color: #495057;
+  color: var(--text);
 }
 
 .nav-link:hover,
 .nav-link:focus {
-  color: #0d6efd;
+  color: var(--link);
+}
+
+/* Header styling */
+.site-header {
+  background-color: var(--surface);
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow);
+}
+
+.brand-text {
+  color: var(--text);
+}
+
+.theme-toggle__icon {
+  margin-right: 0.35rem;
+}
+
+body.theme-dark .btn-outline-secondary {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+body.theme-dark .btn-outline-secondary:hover,
+body.theme-dark .btn-outline-secondary:focus {
+  background-color: var(--surface-alt);
+  border-color: var(--border);
+}
+
+/* Panels and cards */
+.card,
+.focus-panel,
+.hero {
+  box-shadow: var(--shadow);
+}
+
+.card {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.card .text-secondary,
+.text-muted {
+  color: var(--muted) !important;
+}
+
+/* Footer */
+.border-top {
+  border-color: var(--border) !important;
+}
+
+.bg-light,
+.bg-light-subtle {
+  background-color: var(--surface-alt) !important;
+}
+
+footer {
+  background-color: var(--surface-alt);
+  color: var(--text);
+}
+
+/* Links */
+a {
+  color: var(--link);
+}
+
+a:hover,
+a:focus {
+  color: var(--link);
+  text-decoration-color: var(--link);
 }
