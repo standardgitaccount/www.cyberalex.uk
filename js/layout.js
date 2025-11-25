@@ -2,10 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const userPreference = localStorage.getItem('theme');
   const initialTheme = userPreference || 'dark';
 
-  if (!userPreference) {
-    localStorage.setItem('theme', initialTheme);
-  }
-
   function applyTheme(theme) {
     document.body.classList.toggle('theme-dark', theme === 'dark');
     document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'dark' : 'light');
