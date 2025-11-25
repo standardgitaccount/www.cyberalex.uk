@@ -53,13 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = document.querySelectorAll('header nav a[data-page]');
     if (!links.length) return;
 
-    const currentPath = window.location.pathname.endsWith('/')
-      ? `${window.location.pathname}index.html`
-      : window.location.pathname;
+    const normalizePath = (pathname) => {
+      if (!pathname) return '/index.html';
+      if (pathname.endsWith('/')) return `${pathname}index.html`;
+      return pathname.endsWith('/index.html') ? pathname : pathname.replace(/\/$/, '/index.html');
+    };
+
+    const currentPath = normalizePath(window.location.pathname);
 
     links.forEach(link => {
-      const target = new URL(link.getAttribute('href'), window.location.href).pathname;
-      const isActive = target === currentPath || target === window.location.pathname;
+      const target = normalizePath(new URL(link.getAttribute('href'), window.location.href).pathname);
+      const isActive = target === currentPath;
 
       link.classList.toggle('active', isActive);
       link.setAttribute('aria-current', isActive ? 'page' : null);
