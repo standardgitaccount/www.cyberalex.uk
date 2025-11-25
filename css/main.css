@@ -9,6 +9,7 @@
   --link: #0d6efd;
   --brand: #0d6efd;
   --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08);
+  --shadow-strong: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12);
 }
 
 body {
@@ -27,6 +28,7 @@ body.theme-dark {
   --link: #7cb7ff;
   --brand: #7cb7ff;
   --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.35);
+  --shadow-strong: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.5);
 }
 
 /* Hero styling */
@@ -48,7 +50,7 @@ body.theme-dark {
   position: absolute;
   left: -999px;
   top: 0.5rem;
-  z-index: 1000;
+  z-index: 1100;
   padding: 0.5rem 0.75rem;
   background: #0d6efd;
   color: #ffffff;
@@ -97,6 +99,9 @@ select:focus {
   background-color: var(--surface);
   border-color: var(--border) !important;
   box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
 }
 
 .brand-text {
@@ -129,11 +134,41 @@ body.theme-dark .btn-outline-secondary:focus {
   background-color: var(--surface);
   border-color: var(--border);
   color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .card .text-secondary,
 .text-muted {
   color: var(--muted) !important;
+}
+
+.card:focus-within,
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-strong);
+  border-color: var(--brand);
+}
+
+.card-visual {
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(circle at 20% 20%, rgba(13, 110, 253, 0.12), transparent 50%),
+    radial-gradient(circle at 80% 0%, rgba(124, 183, 255, 0.15), transparent 45%),
+    linear-gradient(135deg, var(--surface-alt), var(--surface));
+}
+
+.card-visual img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.card:hover .card-visual img,
+.card:focus-within .card-visual img {
+  transform: scale(1.03);
+  filter: brightness(1.05);
 }
 
 /* Footer */

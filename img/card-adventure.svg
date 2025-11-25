@@ -1,0 +1,21 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract landscape illustration">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1827" />
+      <stop offset="100%" stop-color="#142134" />
+    </linearGradient>
+    <linearGradient id="mountain" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1c2f48" />
+      <stop offset="100%" stop-color="#274162" />
+    </linearGradient>
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7cb7ff" />
+      <stop offset="100%" stop-color="#8de3cf" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" rx="32" fill="url(#sky)" />
+  <path d="M0 340L200 240L360 320L520 200L700 300L800 260V480H0V340Z" fill="url(#mountain)" />
+  <path d="M160 400C260 360 340 340 420 280C500 220 560 200 700 240" stroke="url(#trail)" stroke-width="14" stroke-linecap="round" opacity="0.85" />
+  <circle cx="140" cy="140" r="42" fill="#f6c453" />
+  <path d="M120 140L140 100L160 140L140 120Z" fill="#0f1827" opacity="0.25" />
+</svg>

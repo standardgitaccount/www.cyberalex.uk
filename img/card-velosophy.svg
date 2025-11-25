@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-labelledby="title desc">
+  <title id="title">Open road at dusk illustration</title>
+  <desc id="desc">Stylised highway stretching toward mountains at dusk, representing driving and automotive journeys.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#10223a" />
+      <stop offset="1" stop-color="#1c2f46" />
+    </linearGradient>
+    <linearGradient id="road" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#1a1f2b" />
+      <stop offset="1" stop-color="#10141b" />
+    </linearGradient>
+    <linearGradient id="sunset" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffb36b" />
+      <stop offset="1" stop-color="#ff6f61" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" rx="12" fill="url(#sky)" />
+  <circle cx="256" cy="40" r="22" fill="url(#sunset)" opacity="0.85" />
+  <path d="M0 118c34-16 70-24 108-24 46 0 74 14 112 14 32 0 64-8 100-26v98H0V118z" fill="#111825" opacity="0.8" />
+  <path d="M36 116c16-10 36-18 64-18 52 0 86 24 122 24 30 0 60-10 98-32v70H36v-44z" fill="#131c28" opacity="0.85" />
+  <path d="M150 40l-26 150h72L170 40" fill="url(#road)" />
+  <rect x="158" y="72" width="4" height="26" rx="2" fill="#ffeaa0" />
+  <rect x="160" y="112" width="4" height="26" rx="2" fill="#ffeaa0" />
+  <rect x="162" y="152" width="4" height="26" rx="2" fill="#ffeaa0" />
+  <path d="M52 126c12-4 20-4 36 0m156-4c18 0 30-2 48-10" stroke="#1f3246" stroke-width="6" stroke-linecap="round" />
+  <g fill="#7fd3ff" opacity="0.65">
+    <circle cx="52" cy="26" r="2.6" />
+    <circle cx="86" cy="18" r="2.8" />
+    <circle cx="126" cy="30" r="2.4" />
+    <circle cx="178" cy="22" r="2.8" />
+    <circle cx="220" cy="14" r="2.4" />
+    <circle cx="252" cy="30" r="2.2" />
+    <circle cx="292" cy="18" r="2.4" />
+  </g>
+  <path d="M40 128l16-10c14-8 28-12 44-10l40 6c18 2 34 1 52-4l52-16" fill="none" stroke="#2e4560" stroke-width="5" stroke-linecap="round" />
+</svg>
