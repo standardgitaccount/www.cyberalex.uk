@@ -1,0 +1,28 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract insight illustration">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0d141f" />
+      <stop offset="100%" stop-color="#1a2435" />
+    </linearGradient>
+    <linearGradient id="radar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7cb7ff" />
+      <stop offset="100%" stop-color="#9fd8ff" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" rx="32" fill="url(#bg3)" />
+  <circle cx="520" cy="220" r="180" fill="url(#radar)" opacity="0.08" />
+  <circle cx="520" cy="220" r="120" fill="url(#radar)" opacity="0.14" />
+  <circle cx="520" cy="220" r="80" fill="url(#radar)" opacity="0.2" />
+  <g stroke="#7cb7ff" stroke-width="4" stroke-linecap="round">
+    <path d="M120 320C200 260 300 260 380 220C460 180 540 120 640 160" opacity="0.7" />
+    <path d="M160 360C260 300 320 340 420 280C520 220 600 240 700 220" opacity="0.5" />
+  </g>
+  <g fill="#0d6efd">
+    <circle cx="420" cy="220" r="12" />
+    <circle cx="520" cy="140" r="10" />
+    <circle cx="640" cy="200" r="11" />
+  </g>
+  <rect x="140" y="120" width="120" height="60" rx="16" fill="#152233" stroke="#7cb7ff" stroke-width="4" />
+  <rect x="180" y="280" width="140" height="70" rx="16" fill="#152233" stroke="#6ad1c8" stroke-width="4" />
+  <rect x="340" y="320" width="90" height="50" rx="12" fill="#152233" stroke="#7cb7ff" stroke-width="4" />
+</svg>
