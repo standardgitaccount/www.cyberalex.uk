@@ -1,0 +1,16 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CyberAlex hexagon logo">
+  <defs>
+    <linearGradient id="hex-a" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78f3ff" />
+      <stop offset="100%" stop-color="#7c8bff" />
+    </linearGradient>
+    <linearGradient id="hex-b" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d172b" />
+      <stop offset="100%" stop-color="#0b1020" />
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="32" fill="#0b1020" />
+  <path d="M80 18a6 6 0 0 1 3 0.8l48 27.7a6 6 0 0 1 3 5.2v56.6a6 6 0 0 1-3 5.2l-48 27.7a6 6 0 0 1-6 0l-48-27.7a6 6 0 0 1-3-5.2V51.7a6 6 0 0 1 3-5.2l48-27.7a6 6 0 0 1 3-0.8Z" fill="#0f172a" stroke="#1f2b46" stroke-width="4" />
+  <path d="M46 82c0-18.8 15.2-34 34-34h34c5.5 0 10 4.5 10 10v27c0 15.5-12.5 28-28 28H66l8-12h22c8.8 0 16-7.2 16-16V66H80c-12.2 0-22 9.8-22 22v10c0 2.2 1.8 4 4 4h6v12h-8c-7.7 0-14-6.3-14-14V82Z" fill="url(#hex-a)" opacity="0.9" />
+  <path d="M70 68h12c6.6 0 12 5.4 12 12s-5.4 12-12 12H78v14h-8c-4.4 0-8-3.6-8-8V76c0-4.4 3.6-8 8-8Z" fill="url(#hex-b)" />
+</svg>

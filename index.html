@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
 
@@ -15,10 +15,11 @@
   <!-- Custom styles -->
   <link rel="stylesheet" href="css/main.css">
 
-  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="logo.svg" type="image/svg+xml">
 </head>
 
-<body>
+<body class="theme-dark">
   <!-- Skip link for accessibility -->
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
@@ -26,27 +27,6 @@
   <header id="site-header" aria-label="Main site header"></header>
 
   <main id="main-content" class="container py-4" tabindex="-1">
-    <!-- Breadcrumb and meta row -->
-    <div class="row align-items-center mb-3">
-      <div class="col-md-6">
-        <nav aria-label="Breadcrumb">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item active" aria-current="page">Home</li>
-          </ol>
-        </nav>
-      </div>
-      <div class="col-md-3 small text-muted mt-2 mt-md-0">
-        <span class="d-block fw-semibold">Last updated:</span>
-        <span>25 November 2025</span>
-      </div>
-      <div class="col-md-3 small text-muted mt-2 mt-md-0">
-        <span class="d-block fw-semibold">Author:</span>
-        <a href="about.html">Alex</a>
-      </div>
-    </div>
-
-    <hr class="mb-4">
-
     <!-- HERO SECTION -->
     <section class="hero mb-5" aria-labelledby="hero-title">
       <div class="row align-items-center g-4">
@@ -104,7 +84,10 @@
       <h2 id="for-employers-heading" class="h4 mb-3">For employers</h2>
       <div class="row g-4">
         <div class="col-md-4">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-network.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h5 card-title">What I work on</h3>
               <p class="card-text small text-secondary">
@@ -119,7 +102,10 @@
           </article>
         </div>
         <div class="col-md-4">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-collab.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h5 card-title">How I tend to work</h3>
               <p class="card-text small text-secondary">
@@ -134,7 +120,10 @@
           </article>
         </div>
         <div class="col-md-4">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-insight.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h5 card-title">What I’m looking for</h3>
               <p class="card-text small text-secondary">
@@ -143,7 +132,7 @@
               </p>
               <p class="small mb-0">
                 If you’d like to talk about a role or collaboration:<br>
-                <a href="mailto:contact@cyberalex.uk">contact@cyberalex.uk</a> <!-- update to your preferred email -->
+                <a class="email-link" data-user="YWxleA==" data-domain="Y3liZXJhbGV4LnVr" aria-label="Email Alex">Email Alex</a>
               </p>
             </div>
           </article>
@@ -156,7 +145,10 @@
       <h2 id="tools-projects-heading" class="h4 mb-3">Highlighted tools &amp; projects</h2>
       <div class="row g-4">
         <div class="col-md-4">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-build.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h6 card-title">Referencing helper</h3>
               <p class="card-text small text-secondary">
@@ -169,7 +161,10 @@
           </article>
         </div>
         <div class="col-md-4">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-finance.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h6 card-title">Loan &amp; interest visualiser</h3>
               <p class="card-text small text-secondary">
@@ -182,7 +177,10 @@
           </article>
         </div>
         <div class="col-md-4">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-ownership.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h6 card-title">Car cost &amp; ownership models</h3>
               <p class="card-text small text-secondary">
@@ -205,7 +203,10 @@
       <h2 id="beyond-cyber-heading" class="h4 mb-3">Beyond cyber</h2>
       <div class="row g-4">
         <div class="col-md-6">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-adventure.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h5 card-title">Photography</h3>
               <p class="card-text small text-secondary">
@@ -219,7 +220,10 @@
           </article>
         </div>
         <div class="col-md-6">
-          <article class="card h-100 border-0 shadow-sm">
+          <article class="card h-100 shadow-sm">
+            <div class="card-visual" aria-hidden="true">
+              <img src="img/card-velosophy.svg" alt="" loading="lazy">
+            </div>
             <div class="card-body">
               <h3 class="h5 card-title">Velosophy</h3>
               <p class="card-text small text-secondary">
