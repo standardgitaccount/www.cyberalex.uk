@@ -1,0 +1,66 @@
+/* Basic body styling */
+body {
+  background-color: #f7f7f9;
+  color: #212529;
+}
+
+/* Hero styling */
+.hero {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #dee2e6;
+}
+
+/* Panel in hero */
+.focus-panel {
+  background-color: #f8f9fa;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  z-index: 1000;
+  padding: 0.5rem 0.75rem;
+  background: #0d6efd;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+}
+
+/* Improve focus visibility */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+/* Breadcrumb subtle style */
+.breadcrumb {
+  background-color: transparent;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+/* Card tweaks */
+.card-title {
+  margin-bottom: 0.5rem;
+}
+
+/* Small adjustments for dark text in header nav */
+.nav-link {
+  color: #495057;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #0d6efd;
+}
