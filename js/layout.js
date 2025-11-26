@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     links.forEach(link => {
       const href = link.getAttribute('href');
       if (!href) return;
-
       const target = normalizePath(new URL(href, window.location.href).pathname);
       const isActive = target === currentPath;
 
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Helper to load a partial into a container
   function loadPartial(id, url, onLoad) {
     const container = document.getElementById(id);
     if (!container) return Promise.resolve();
