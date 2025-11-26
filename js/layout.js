@@ -1,34 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const userPreference = localStorage.getItem('theme');
-  const initialTheme = userPreference || 'dark';
-
-  function applyTheme(theme) {
-    document.body.classList.toggle('theme-dark', theme === 'dark');
-    document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'dark' : 'light');
-  }
-
-  function updateToggle(theme) {
-    const toggle = document.getElementById('theme-toggle');
-    if (!toggle) return;
-
-    const isDark = theme === 'dark';
-    toggle.setAttribute('aria-pressed', String(isDark));
-    toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-    toggle.querySelector('.theme-toggle__text').textContent = isDark ? 'Light mode' : 'Dark mode';
-    toggle.querySelector('.theme-toggle__icon').textContent = isDark ? '☀️' : '🌙';
-  }
-
-  function setupThemeToggle() {
-    const toggle = document.getElementById('theme-toggle');
-    if (!toggle) return;
-
-    toggle.addEventListener('click', () => {
-      const isDark = document.body.classList.contains('theme-dark');
-      const nextTheme = isDark ? 'light' : 'dark';
-      applyTheme(nextTheme);
-      updateToggle(nextTheme);
-      localStorage.setItem('theme', nextTheme);
-    });
+  // Always use dark theme
+  function applyDarkTheme() {
+    document.body.classList.add('theme-dark');
+    document.documentElement.setAttribute('data-bs-theme', 'dark');
   }
 
   function hydrateEmailLinks() {
@@ -54,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!links.length) return;
 
     const normalizePath = (pathname) => {
-      if (!pathname) return '/index.html';
+      if (!pathname || pathname === '/') return '/index.html';
       if (pathname.endsWith('/')) return `${pathname}index.html`;
       return pathname.endsWith('/index.html') ? pathname : pathname.replace(/\/$/, '/index.html');
     };
@@ -62,7 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPath = normalizePath(window.location.pathname);
 
     links.forEach(link => {
-      const target = normalizePath(new URL(link.getAttribute('href'), window.location.href).pathname);
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      const target = normalizePath(new URL(href, window.location.href).pathname);
       const isActive = target === currentPath;
 
       link.classList.toggle('active', isActive);
@@ -90,12 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  applyTheme(initialTheme);
+  // Init
+  applyDarkTheme();
   hydrateEmailLinks();
 
   loadPartial('site-header', 'partials/header.html', () => {
-    updateToggle(initialTheme);
-    setupThemeToggle();
     markActiveNav();
     hydrateEmailLinks();
   });
