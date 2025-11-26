@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Force dark theme
   function applyDarkTheme() {
     document.body.classList.add('theme-dark');
     document.documentElement.setAttribute('data-bs-theme', 'dark');
@@ -68,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Init
   applyDarkTheme();
-  hydrateEmailLinks();
 
   loadPartial('site-header', 'partials/header.html', () => {
     markActiveNav();
