@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Always use dark theme
+  // Force dark theme
   function applyDarkTheme() {
     document.body.classList.add('theme-dark');
     document.documentElement.setAttribute('data-bs-theme', 'dark');
@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     links.forEach(link => {
       const href = link.getAttribute('href');
       if (!href) return;
+
       const target = normalizePath(new URL(href, window.location.href).pathname);
       const isActive = target === currentPath;
 
