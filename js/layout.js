@@ -2,10 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const userPreference = localStorage.getItem('theme');
   const initialTheme = userPreference || 'dark';
 
-  if (!userPreference) {
-    localStorage.setItem('theme', initialTheme);
-  }
-
   function applyTheme(theme) {
     document.body.classList.toggle('theme-dark', theme === 'dark');
     document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'dark' : 'light');
@@ -97,12 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
   applyTheme(initialTheme);
   hydrateEmailLinks();
 
-  loadPartial('site-header', '/partials/header.html', () => {
+  loadPartial('site-header', 'partials/header.html', () => {
     updateToggle(initialTheme);
     setupThemeToggle();
     markActiveNav();
     hydrateEmailLinks();
   });
 
-  loadPartial('site-footer', '/partials/footer.html', hydrateEmailLinks);
+  loadPartial('site-footer', 'partials/footer.html', hydrateEmailLinks);
 });
