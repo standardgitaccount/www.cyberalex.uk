@@ -1,5 +1,5 @@
-<div class="site-header border-bottom">
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<div class="site-header border-bottom bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark">
     <div class="container">
 
       <!-- Brand -->
@@ -9,29 +9,37 @@
       </a>
 
       <!-- Always-visible links: Home + Contact -->
-      <ul class="navbar-nav ms-auto d-flex flex-row align-items-center me-2">
-        <li class="nav-item me-2">
+      <ul class="navbar-nav ms-auto d-none d-md-flex align-items-center">
+        <li class="nav-item">
           <a class="nav-link px-2" href="index.html" data-page="index.html">Home</a>
         </li>
         <li class="nav-item">
-          <!-- If you don't have contact.html yet, change this to mailto: or a # -->
+          <!-- If you don't have contact.html yet, you can change to mailto: -->
           <a class="nav-link px-2" href="contact.html" data-page="contact.html">Contact</a>
         </li>
       </ul>
 
-      <!-- Burger toggler for extra links -->
-      <button class="navbar-toggler ms-1" type="button"
+      <!-- Burger button (always visible) -->
+      <button class="navbar-toggler ms-2" type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#mainNavExtra"
-              aria-controls="mainNavExtra"
+              data-bs-target="#extraNav"
+              aria-controls="extraNav"
               aria-expanded="false"
               aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <!-- Collapsible extra nav: Projects, Writing, About -->
-      <div class="collapse navbar-collapse mt-2 mt-md-0" id="mainNavExtra">
-        <ul class="navbar-nav ms-md-3 ms-lg-4">
+      <!-- Collapsible extra links -->
+      <div class="collapse navbar-collapse mt-2 mt-md-0" id="extraNav">
+        <ul class="navbar-nav ms-md-3">
+          <!-- On mobile, we show Home + Contact inside the burger as well -->
+          <li class="nav-item d-md-none">
+            <a class="nav-link px-2" href="index.html" data-page="index.html">Home</a>
+          </li>
+          <li class="nav-item d-md-none">
+            <a class="nav-link px-2" href="contact.html" data-page="contact.html">Contact</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link px-2" href="projects.html" data-page="projects.html">
               Projects &amp; tools
