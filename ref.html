@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Automatic University of South Wales reference generator for online sources, built by Alex.">
+  <meta name="author" content="Alex">
+  <meta name="robots" content="index, follow">
+
+  <title>USW Reference Generator - CyberAlex</title>
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.cyberalex.uk/tools/usw-reference-helper.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="USW Reference Generator - CyberAlex">
+  <meta property="og:description" content="Generate USW style references and in-text citations for online sources, then organise them into saved lists.">
+  <meta property="og:url" content="https://www.cyberalex.uk/tools/usw-reference-helper.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CyberAlex">
+  <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="USW Reference Generator - CyberAlex">
+  <meta name="twitter:description" content="Browser-based USW reference helper for online sources, with saved lists and export.">
+  <meta name="twitter:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+
+  <link rel="icon" href="/logo.png" type="image/png">
+</head>
+
+<body class="theme-dark">
+  <!-- Skip link -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header injected by layout.js -->
+  <header id="site-header" aria-label="Main site header"></header>
+
+  <main id="main-content" class="container py-4" tabindex="-1">
+    <!-- PAGE HEADER -->
+    <section class="mb-4" aria-label="Page header">
+      <nav aria-label="Breadcrumb" class="mb-2">
+        <ol class="breadcrumb small mb-0">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/projects.html">Tools &amp; Projects</a></li>
+          <li class="breadcrumb-item active" aria-current="page">USW Reference Generator</li>
+        </ol>
+      </nav>
+
+      <h1 class="h3 mb-1">USW Reference Generator</h1>
+      <p class="text-secondary small mb-0">
+        By Alex • Published: 16 November 2025 • Updated: 16 November 2025
+      </p>
+    </section>
+
+    <!-- INTRO / SUMMARY -->
+    <section class="mb-4">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-7">
+          <p class="lead mb-3">
+            A small browser tool to help generate University of South Wales style references for online sources, with both in-text and end-text citations and support for saved reference lists.
+          </p>
+          <p class="small text-secondary mb-0">
+            Everything runs locally in your browser. It is designed for day to day coursework and assignments, not as a substitute for reading the official USW referencing guidance in full.
+          </p>
+        </div>
+        <div class="col-lg-5">
+          <div class="card h-100 card-raise">
+            <div class="card-body small text-secondary">
+              <h2 class="h6 text-uppercase text-muted mb-2">At a glance</h2>
+              <ul class="mb-2">
+                <li>Generates both in-text and end-text citations.</li>
+                <li>Handles people or organisation authors with year or no date.</li>
+                <li>Keeps an A–Z list of references with copy and clear options.</li>
+                <li>Supports multiple named lists, with export and import.</li>
+                <li>All data is stored in your browser and can be removed at any time.</li>
+              </ul>
+              <p class="mb-0">
+                Always check your final references against the current USW style guide and your module requirements.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL INTERFACE -->
+    <section class="mb-5" aria-labelledby="reference-generator-heading">
+      <h2 id="reference-generator-heading" class="h4 mb-3">Reference generator</h2>
+
+      <!-- Reference Generator START -->
+      <section id="reference-generator" class="refgen">
+        <div class="refgen-container">
+          <h2 class="refgen-title">Reference Generator</h2>
+
+          <!-- Name or Organisation -->
+          <label>Name(s) or Organisation</label>
+          <div class="name-org-row">
+            <div>
+              <input tabindex="1" type="text" id="personName" placeholder="e.g. billy joe rob, bob rob, sarah jane smith">
+            </div>
+            <div class="or-text">or</div>
+            <div>
+              <input tabindex="2" type="text" id="orgName" placeholder="e.g. world health organization">
+            </div>
+          </div>
+          <div id="lockNotice" class="notice">
+            Please only use ONE of the fields above. The other is effectively locked – clear it if you need to switch.
+          </div>
+
+          <!-- Year + no date -->
+          <label>Year of last update</label>
+          <div class="year-row">
+            <input tabindex="3" type="number" id="year" placeholder="e.g. 2023">
+            <label class="no-date-label">
+              <input tabindex="4" type="checkbox" id="noDate">
+              <span>no date?</span>
+            </label>
+          </div>
+          <div id="noDateNudge" class="notice">
+            You’ve selected “no date”. As a general rule, undated sources are best avoided unless the author or document is of particularly good standing or clearly meritworthy.
+          </div>
+
+          <!-- Title -->
+          <label>Title</label>
+          <input tabindex="5" type="text" id="title" placeholder="e.g. an introduction to cyber security in practice">
+
+          <!-- URL -->
+          <label>URL</label>
+          <input tabindex="6" type="url" id="url" placeholder="e.g. https://example.com">
+
+          <!-- Add button -->
+          <button tabindex="7" id="generateBtn">Add Reference to List</button>
+
+          <!-- Last generated -->
+          <div class="output-container">
+            <strong>Last generated reference:</strong><br>
+            <div id="outputText"></div>
+
+            <div class="citation-row">
+              <div class="citation-block">
+                <span class="citation-label">In-text citation</span>
+                <div class="citation-inner">
+                  <input type="text" id="inTextCitation" readonly>
+                  <button id="copyInTextBtn">Copy</button>
+                </div>
+                <div class="citation-example" id="inTextExample"></div>
+              </div>
+              <div class="citation-block">
+                <span class="citation-label">End-text citation</span>
+                <div class="citation-inner">
+                  <input type="text" id="endTextCitation" readonly>
+                  <button id="copyEndTextBtn">Copy</button>
+                </div>
+                <div class="citation-example" id="endTextExample"></div>
+              </div>
+            </div>
+
+            <div class="regen-row">
+              <span class="small-label">Re-generate citations from reference # (in the A–Z list)</span>
+              <div class="regen-inner">
+                <input type="number" id="regenIndex" min="1" step="1">
+                <button id="regenBtn" type="button">Re-generate</button>
+              </div>
+              <div id="regenNotice" class="notice"></div>
+            </div>
+          </div>
+
+          <!-- All references / lists -->
+          <div class="list-container">
+            <div class="list-meta">
+              <div>
+                <span class="small-label">Active list</span>
+                <div id="activeListName"></div>
+                <div id="listStatus" class="notice"></div>
+              </div>
+
+              <div class="list-meta-row">
+                <div>
+                  <span class="small-label">Saved lists</span>
+                  <select id="savedLists"></select>
+                </div>
+                <div class="list-meta-buttons">
+                  <button id="renameListBtn" type="button">Rename</button>
+                  <button id="newListBtn" type="button">Create new list</button>
+                  <button id="deleteListBtn" type="button">Remove</button>
+                  <button id="exportBtn" type="button">Export</button>
+                  <button id="importBtn" type="button">Import</button>
+                  <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+                </div>
+              </div>
+            </div>
+
+            <h3>All References (A–Z)</h3>
+            <ol id="referencesList"></ol>
+
+            <div class="list-buttons">
+              <button id="copyBtn">Copy List</button>
+              <button id="clearBtn">Clear All References</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <style>
+        /* Scoped styling for Reference Generator to avoid clashing with site theme */
+        .refgen {
+          margin-top: 1.5rem;
+          margin-bottom: 2rem;
+        }
+
+        .refgen-container {
+          max-width: 900px;
+          margin: 0 auto;
+          background: #101010;
+          padding: 20px;
+          border-radius: 10px;
+        }
+
+        .refgen-title {
+          margin-top: 0;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+
+        .refgen label {
+          font-weight: bold;
+          margin-top: 12px;
+          display: block;
+        }
+
+        .refgen input[type="text"],
+        .refgen input[type="number"],
+        .refgen input[type="url"],
+        .refgen select {
+          width: 100%;
+          padding: 8px;
+          background: #2a2a2a;
+          border: 1px solid #444;
+          border-radius: 5px;
+          color: #f5f5f5;
+          margin-top: 5px;
+          box-sizing: border-box;
+        }
+
+        .refgen button {
+          width: 100%;
+          padding: 10px;
+          border-radius: 5px;
+          border: none;
+          background: #3f51b5;
+          color: #fff;
+          cursor: pointer;
+          margin-top: 18px;
+        }
+
+        .refgen button:hover {
+          background: #5c6bc0;
+        }
+
+        .refgen .name-org-row {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          gap: 10px;
+          align-items: center;
+          margin-top: 5px;
+        }
+
+        .refgen .or-text {
+          text-align: center;
+          font-weight: bold;
+          opacity: 0.85;
+        }
+
+        .refgen .year-row {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          margin-top: 5px;
+        }
+
+        .refgen .year-row input[type="number"] {
+          flex: 1;
+        }
+
+        .refgen .no-date-label {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-weight: normal;
+          font-size: 14px;
+          white-space: nowrap;
+        }
+
+        .refgen .no-date-label input[type="checkbox"] {
+          width: 14px;
+          height: 14px;
+          transform: scale(0.9);
+        }
+
+        .refgen .notice {
+          font-size: 13px;
+          color: #cccccc;
+          margin-top: 4px;
+          display: none;
+        }
+
+        .refgen .output-container {
+          margin-top: 24px;
+          background: #111111;
+          border: 1px solid #262626;
+          padding: 15px;
+          border-radius: 8px;
+          min-height: 40px;
+        }
+
+        .refgen .list-container {
+          margin-top: 28px;
+          background: #111111;
+          border: 1px solid #262626;
+          padding: 15px;
+          border-radius: 8px;
+        }
+
+        .refgen .list-container h3 {
+          margin-top: 0;
+          margin-bottom: 10px;
+        }
+
+        .refgen #referencesList {
+          padding-left: 20px;
+          margin-top: 0;
+          margin-bottom: 10px;
+        }
+
+        .refgen .list-buttons {
+          display: flex;
+          gap: 10px;
+          margin-top: 8px;
+        }
+
+        .refgen #copyBtn {
+          flex: 1;
+          background: #2e7d32;
+        }
+
+        .refgen #copyBtn:hover {
+          background: #3fa347;
+        }
+
+        .refgen #clearBtn {
+          flex: 1;
+          background: #b53f3f;
+        }
+
+        .refgen #clearBtn:hover {
+          background: #c75c5c;
+        }
+
+        .refgen .citation-row {
+          display: flex;
+          gap: 10px;
+          margin-top: 18px;
+          flex-wrap: wrap;
+        }
+
+        .refgen .citation-block {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .refgen .citation-label {
+          font-weight: bold;
+          font-size: 14px;
+          margin-bottom: 4px;
+          display: block;
+        }
+
+        .refgen .citation-inner {
+          display: flex;
+          gap: 6px;
+          align-items: center;
+        }
+
+        .refgen .citation-inner input[type="text"] {
+          flex: 1;
+          margin-top: 0;
+          padding: 6px 8px;
+          font-size: 13px;
+        }
+
+        .refgen .citation-inner button {
+          width: auto;
+          padding: 6px 14px;
+          margin-top: 2px;
+          font-size: 13px;
+          background: #455a64;
+        }
+
+        .refgen .citation-inner button:hover {
+          background: #607d8b;
+        }
+
+        .refgen .citation-example {
+          font-size: 12px;
+          color: #cccccc;
+          margin-top: 4px;
+          font-style: italic;
+        }
+
+        .refgen .regen-row {
+          margin-top: 14px;
+        }
+
+        .refgen .regen-inner {
+          display: flex;
+          gap: 6px;
+          align-items: center;
+          margin-top: 4px;
+        }
+
+        .refgen .regen-inner input[type="number"] {
+          max-width: 80px;
+          margin-top: 0;
+          padding: 6px 8px;
+          font-size: 13px;
+        }
+
+        .refgen .regen-inner button {
+          width: auto;
+          padding: 6px 10px;
+          margin-top: 0;
+          font-size: 13px;
+          background: #455a64;
+        }
+
+        .refgen .regen-inner button:hover {
+          background: #607d8b;
+        }
+
+        .refgen .list-meta {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 12px;
+        }
+
+        .refgen .list-meta-row {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          align-items: flex-end;
+        }
+
+        .refgen .list-meta-row > div {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .refgen .small-label {
+          font-weight: bold;
+          font-size: 13px;
+          margin-bottom: 2px;
+          display: block;
+        }
+
+        .refgen .list-meta-buttons {
+          flex: 0 0 auto;
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .refgen .list-meta-buttons button {
+          width: auto;
+          margin-top: 0;
+          padding: 6px 14px;
+          font-size: 13px;
+          background: #37474f;
+        }
+
+        .refgen .list-meta-buttons button:hover {
+          background: #546e7a;
+        }
+
+        .refgen #activeListName {
+          font-size: 1.4rem;
+          font-weight: bold;
+          margin-top: 4px;
+        }
+
+        .refgen #listStatus {
+          display: block;
+          margin-top: 6px;
+        }
+
+        @media (max-width: 650px) {
+          .refgen .list-meta-row {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .refgen .list-meta-buttons button {
+            width: 100%;
+            margin-top: 6px;
+          }
+        }
+      </style>
+
+      <script>
+        const joiningWords = new Set([
+          "and","or","but","for","nor",
+          "a","an","the",
+          "in","on","at","to","from","by","of","with","about","into","over",
+          "after","before","between","through","during","without","under","within"
+        ]);
+
+        function titleCaseExceptJoining(str) {
+          if (!str) return "";
+          return str.toLowerCase().split(/\\s+/).map((w, i) =>
+            (i === 0 || !joiningWords.has(w))
+              ? w.charAt(0).toUpperCase() + w.slice(1)
+              : w
+          ).join(" ");
+        }
+
+        function capitalise(word) {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        }
+
+        function surnameFromFullName(fullName) {
+          const parts = fullName.trim().split(/\\s+/);
+          if (!parts.length) return "";
+          return capitalise(parts[parts.length - 1]);
+        }
+
+        function formatOneName(fullName) {
+          let parts = fullName.trim().split(/\\s+/);
+          if (parts.length === 1) return capitalise(parts[0]);
+          let lastName = capitalise(parts.pop());
+          let initials = parts.map(p => capitalise(p)[0] + ".").join(" ");
+          return \`\${lastName} \${initials}\`;
+        }
+
+        function formatMultipleNames(input) {
+          return input
+            .split(",")
+            .map(n => n.trim())
+            .filter(n => n !== "")
+            .map(formatOneName)
+            .map(name => name + ",")
+            .join(" ");
+        }
+
+        function formatOrganisation(orgRaw) {
+          const trimmed = orgRaw.trim();
+          if (!trimmed) return "";
+          const parts = trimmed.split(/\\s+/);
+          parts[0] = capitalise(parts[0]);
+          return parts.join(" ");
+        }
+
+        function getMonthYear() {
+          const d = new Date();
+          const m = [
+            "January","February","March","April","May","June",
+            "July","August","September","October","November","December"
+          ];
+          return m[d.getMonth()] + " " + d.getFullYear();
+        }
+
+        async function copyWithFeedback(text, button, baseLabel, copiedLabel = "Copied") {
+          if (!text) return;
+          try {
+            await navigator.clipboard.writeText(text);
+            const original = button.textContent;
+            button.textContent = copiedLabel;
+            button.disabled = true;
+            setTimeout(() => {
+              button.textContent = original;
+              button.disabled = false;
+            }, 3000);
+          } catch (err) {
+            alert("Copy failed.");
+            console.error(err);
+          }
+        }
+
+        const personField = document.getElementById("personName");
+        const orgField = document.getElementById("orgName");
+        const lockNotice = document.getElementById("lockNotice");
+
+        const yearField = document.getElementById("year");
+        const noDateCheckbox = document.getElementById("noDate");
+        const noDateNudge = document.getElementById("noDateNudge");
+
+        const titleField = document.getElementById("title");
+        const urlField = document.getElementById("url");
+
+        const outputText = document.getElementById("outputText");
+        const inTextBox = document.getElementById("inTextCitation");
+        const endTextBox = document.getElementById("endTextCitation");
+        const inTextExample = document.getElementById("inTextExample");
+        const endTextExample = document.getElementById("endTextExample");
+
+        const regenIndexInput = document.getElementById("regenIndex");
+        const regenNotice = document.getElementById("regenNotice");
+
+        const activeListNameEl = document.getElementById("activeListName");
+        const savedListsSelect = document.getElementById("savedLists");
+        const listStatus = document.getElementById("listStatus");
+        const importFileInput = document.getElementById("importFile");
+
+        const referencesListEl = document.getElementById("referencesList");
+
+        const STORAGE_KEY = "referenceGeneratorLists_v4";
+
+        let references = [];
+        let listsState = {
+          currentListName: "Default",
+          lists: {
+            "Default": {
+              meta: { name: "Default", created: new Date().toISOString(), title: "All References (A–Z)" },
+              refs: []
+            }
+          }
+        };
+
+        function updateListStatus(msg) {
+          listStatus.textContent = msg ||
+            \`Active list: "\${listsState.currentListName}". Changes are saved automatically. Use Rename to change the name or Create new list to start another.\`;
+          listStatus.style.display = "block";
+        }
+
+        function saveListsToStorageSafe() {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(listsState));
+          } catch (e) {
+            console.warn("Could not save lists:", e);
+          }
+        }
+
+        function loadListsFromStorageSafe() {
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (parsed && parsed.lists) {
+                listsState = parsed;
+              }
+            }
+          } catch (e) {
+            console.warn("Could not load lists, using defaults:", e);
+          }
+          if (!listsState.lists || Object.keys(listsState.lists).length === 0) {
+            listsState = {
+              currentListName: "Default",
+              lists: {
+                "Default": {
+                  meta: { name: "Default", created: new Date().toISOString(), title: "All References (A–Z)" },
+                  refs: []
+                }
+              }
+            };
+          }
+          if (!listsState.currentListName || !listsState.lists[listsState.currentListName]) {
+            listsState.currentListName = Object.keys(listsState.lists)[0];
+          }
+          references = (listsState.lists[listsState.currentListName].refs || []).slice();
+        }
+
+        function refreshSavedListsUI() {
+          savedListsSelect.innerHTML = "";
+          const names = Object.keys(listsState.lists).sort((a, b) => a.localeCompare(b));
+          if (!names.includes(listsState.currentListName)) {
+            listsState.currentListName = names[0];
+          }
+          names.forEach(name => {
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.textContent = name;
+            if (name === listsState.currentListName) opt.selected = true;
+            savedListsSelect.appendChild(opt);
+          });
+          activeListNameEl.textContent = listsState.currentListName;
+          updateListStatus();
+        }
+
+        function syncCurrentList() {
+          const name = listsState.currentListName;
+          if (!listsState.lists[name]) {
+            listsState.lists[name] = {
+              meta: { name, created: new Date().toISOString(), title: "All References (A–Z)" },
+              refs: []
+            };
+          }
+          const meta = listsState.lists[name].meta;
+          meta.name = name;
+          meta.title = meta.title || "All References (A–Z)";
+          if (!meta.created) meta.created = new Date().toISOString();
+          listsState.lists[name].refs = references.slice();
+          saveListsToStorageSafe();
+          refreshSavedListsUI();
+        }
+
+        function updateReferencesDisplay() {
+          referencesListEl.innerHTML = "";
+          const sorted = references.slice().sort((a, b) =>
+            a.sortKey.localeCompare(b.sortKey)
+          );
+          sorted.forEach(ref => {
+            const li = document.createElement("li");
+            li.innerHTML = ref.text;
+            referencesListEl.appendChild(li);
+          });
+        }
+
+        function handleFocusAttempt(targetField, otherField) {
+          if (otherField.value.trim() !== "") {
+            lockNotice.style.display = "block";
+            targetField.blur();
+          }
+        }
+        personField.addEventListener("focus", () => handleFocusAttempt(personField, orgField));
+        orgField.addEventListener("focus", () => handleFocusAttempt(orgField, personField));
+
+        personField.addEventListener("keydown", (e) => {
+          if (e.key === "Tab" && !e.shiftKey && personField.value.trim() !== "") {
+            e.preventDefault();
+            yearField.focus();
+          }
+        });
+        function onNameInputChange() {
+          if (personField.value.trim() === "" && orgField.value.trim() === "") {
+            lockNotice.style.display = "none";
+          }
+        }
+        personField.addEventListener("input", onNameInputChange);
+        orgField.addEventListener("input", onNameInputChange);
+
+        noDateCheckbox.addEventListener("change", () => {
+          if (noDateCheckbox.checked) {
+            yearField.disabled = true;
+            yearField.value = "";
+            noDateNudge.style.display = "block";
+          } else {
+            yearField.disabled = false;
+            noDateNudge.style.display = "none";
+          }
+        });
+
+        urlField.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("generateBtn").click();
+            personField.focus();
+          }
+        });
+
+        document.getElementById("generateBtn").addEventListener("click", () => {
+          const personRaw = personField.value.trim();
+          const orgRaw = orgField.value.trim();
+          const year = yearField.value.trim();
+          const titleInput = titleField.value.trim();
+          const url = urlField.value.trim();
+
+          const accessed = getMonthYear();
+          const titleFormatted = titleCaseExceptJoining(titleInput);
+
+          let namePart = "";
+          let citationName = "";
+          let sortKey = "";
+          let isPerson = false;
+
+          if (personRaw) {
+            namePart = formatMultipleNames(personRaw);
+            const firstPerson = personRaw.split(",")[0].trim();
+            citationName = surnameFromFullName(firstPerson);
+            sortKey = surnameFromFullName(firstPerson).toLowerCase();
+            isPerson = true;
+          } else if (orgRaw) {
+            const orgFormatted = formatOrganisation(orgRaw);
+            namePart = orgFormatted;
+            citationName = orgFormatted;
+            sortKey = orgFormatted.toLowerCase();
+            isPerson = false;
+          } else {
+            outputText.innerHTML =
+              "<span style='color:#f88;'>Please enter either a name or an organisation.</span>";
+            return;
+          }
+
+          let yearSegment = "";
+          let citationYear = "";
+          if (noDateCheckbox.checked) {
+            yearSegment = "(no date)";
+            citationYear = "no date";
+          } else if (year) {
+            yearSegment = "(" + year + ")";
+            citationYear = year;
+          } else {
+            citationYear = "no date";
+          }
+
+          let out = "";
+
+          if (isPerson) {
+            out += namePart + " ";
+          } else {
+            out += namePart + ", ";
+          }
+
+          if (yearSegment) {
+            out += yearSegment + ", ";
+          }
+
+          if (titleFormatted) {
+            out += "<i>" + titleFormatted + "</i>, ";
+          }
+
+          if (url) {
+            out += "Available at: " + url + ", ";
+          }
+
+          out += "(Accessed: " + accessed + ")";
+
+          outputText.innerHTML = out;
+
+          const inText = \`\${citationName} (\${citationYear})\`;
+          const endText = \`(\${citationName}, \${citationYear})\`;
+          inTextBox.value = inText;
+          endTextBox.value = endText;
+          inTextExample.textContent = \`According to \${inText} these results indicate [...]\`;
+          endTextExample.textContent = \`[...] and as a result has many limitations. \${endText}\`;
+          regenNotice.style.display = "none";
+          regenNotice.textContent = "";
+
+          references.push({ sortKey, text: out, citationName, citationYear });
+          updateReferencesDisplay();
+          syncCurrentList();
+
+          personField.value = "";
+          orgField.value = "";
+          yearField.value = "";
+          titleField.value = "";
+          urlField.value = "";
+          noDateCheckbox.checked = false;
+          yearField.disabled = false;
+          noDateNudge.style.display = "none";
+          lockNotice.style.display = "none";
+          personField.focus();
+        });
+
+        document.getElementById("clearBtn").addEventListener("click", () => {
+          references = [];
+          updateReferencesDisplay();
+          outputText.innerHTML = "";
+          inTextBox.value = "";
+          endTextBox.value = "";
+          inTextExample.textContent = "";
+          endTextExample.textContent = "";
+          regenNotice.style.display = "none";
+          regenNotice.textContent = "";
+          syncCurrentList();
+        });
+
+        document.getElementById("copyBtn").addEventListener("click", async () => {
+          if (references.length === 0) return;
+
+          const sorted = references.slice().sort((a, b) =>
+            a.sortKey.localeCompare(b.sortKey)
+          );
+          const htmlLines = sorted.map(ref => ref.text);
+          const htmlString = htmlLines.join("<br>");
+          const copyBtn = document.getElementById("copyBtn");
+
+          let success = false;
+          try {
+            if (navigator.clipboard && window.ClipboardItem) {
+              const blob = new Blob([htmlString], { type: "text/html" });
+              const data = [new ClipboardItem({ "text/html": blob })];
+              await navigator.clipboard.write(data);
+              success = true;
+            }
+          } catch (err) {
+            console.error(err);
+          }
+
+          if (!success) {
+            const plainLines = sorted.map(ref => ref.text.replace(/<[^>]*>/g, ""));
+            const textToCopy = plainLines.join("\\n");
+            try {
+              await navigator.clipboard.writeText(textToCopy);
+            } catch (err) {
+              alert("Sorry, copying failed. You may need to copy manually.");
+              console.error(err);
+              return;
+            }
+          }
+
+          const originalText = copyBtn.textContent;
+          copyBtn.textContent = "List copied";
+          copyBtn.disabled = true;
+          setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.disabled = false;
+          }, 3000);
+        });
+
+        document.getElementById("copyInTextBtn").addEventListener("click", () => {
+          copyWithFeedback(inTextBox.value, document.getElementById("copyInTextBtn"), "Copy");
+        });
+        document.getElementById("copyEndTextBtn").addEventListener("click", () => {
+          copyWithFeedback(endTextBox.value, document.getElementById("copyEndTextBtn"), "Copy");
+        });
+
+        document.getElementById("regenBtn").addEventListener("click", () => {
+          regenNotice.style.display = "none";
+          regenNotice.textContent = "";
+          const n = parseInt(regenIndexInput.value, 10);
+          if (!n || n < 1) {
+            regenNotice.textContent = "Please enter a valid reference number (1, 2, 3, …).";
+            regenNotice.style.display = "block";
+            return;
+          }
+          if (references.length === 0) {
+            regenNotice.textContent = "There are no references in this list yet.";
+            regenNotice.style.display = "block";
+            return;
+          }
+          const sorted = references.slice().sort((a, b) =>
+            a.sortKey.localeCompare(b.sortKey)
+          );
+          if (n > sorted.length) {
+            regenNotice.textContent = \`This list only has \${sorted.length} reference(s).\`;
+            regenNotice.style.display = "block";
+            return;
+          }
+          const ref = sorted[n - 1];
+          outputText.innerHTML = ref.text;
+
+          const citationName = ref.citationName || ref.text.split(",")[0];
+          const yearMatch = ref.citationYear || (ref.text.match(/\\((\\d{4}|no date)\\)/i) || [null, "no date"])[1];
+          const inText = \`\${citationName} (\${yearMatch})\`;
+          const endText = \`(\${citationName}, \${yearMatch})\`;
+          inTextBox.value = inText;
+          endTextBox.value = endText;
+          inTextExample.textContent = \`According to \${inText} these results indicate [...]\`;
+          endTextExample.textContent = \`[...] and as a result has many limitations. \${endText}\`;
+        });
+
+        function renameCurrentList(newNameRaw) {
+          const newName = (newNameRaw || "").trim();
+          const oldName = listsState.currentListName;
+          if (!newName || newName === oldName) return;
+          if (listsState.lists[newName]) {
+            alert(\`A list called "\${newName}" already exists.\`);
+            return;
+          }
+          listsState.lists[newName] = listsState.lists[oldName];
+          listsState.lists[newName].meta.name = newName;
+          delete listsState.lists[oldName];
+          listsState.currentListName = newName;
+          saveListsToStorageSafe();
+          refreshSavedListsUI();
+          updateListStatus(\`List renamed to "\${newName}".\`);
+        }
+
+        document.getElementById("renameListBtn").addEventListener("click", () => {
+          const current = listsState.currentListName;
+          const newName = prompt("Enter a new name for this list:", current);
+          if (newName === null) return;
+          renameCurrentList(newName);
+        });
+
+        document.getElementById("newListBtn").addEventListener("click", () => {
+          let baseName = prompt("Enter a name for the new list:", "") || "New list";
+          baseName = baseName.trim() || "New list";
+          let candidate = baseName;
+          let counter = 1;
+          const names = Object.keys(listsState.lists);
+          while (names.includes(candidate)) {
+            candidate = \`\${baseName} (\${counter++})\`;
+          }
+          listsState.currentListName = candidate;
+          references = [];
+          listsState.lists[candidate] = {
+            meta: { name: candidate, created: new Date().toISOString(), title: "All References (A–Z)" },
+            refs: []
+          };
+          saveListsToStorageSafe();
+          refreshSavedListsUI();
+          updateReferencesDisplay();
+          updateListStatus(\`New empty list "\${candidate}" created. Add references to start using it.\`);
+        });
+
+        savedListsSelect.addEventListener("change", () => {
+          const selected = savedListsSelect.value;
+          if (!selected) return;
+          listsState.currentListName = selected;
+          references = (listsState.lists[selected].refs || []).slice();
+          saveListsToStorageSafe();
+          refreshSavedListsUI();
+          updateReferencesDisplay();
+          updateListStatus(\`Active list changed to "\${selected}".\`);
+        });
+
+        document.getElementById("deleteListBtn").addEventListener("click", () => {
+          const current = listsState.currentListName;
+          const names = Object.keys(listsState.lists);
+          if (!current) return;
+
+          if (!confirm(\`Remove list "\${current}"?\`)) return;
+
+          if (names.length === 1) {
+            references = [];
+            listsState.lists[current].refs = [];
+            saveListsToStorageSafe();
+            updateReferencesDisplay();
+            refreshSavedListsUI();
+            updateListStatus(\`List "\${current}" cleared (cannot remove the last remaining list).\`);
+            return;
+          }
+
+          delete listsState.lists[current];
+          const newNames = Object.keys(listsState.lists).sort((a, b) => a.localeCompare(b));
+          listsState.currentListName = newNames[0];
+          references = (listsState.lists[listsState.currentListName].refs || []).slice();
+          saveListsToStorageSafe();
+          refreshSavedListsUI();
+          updateReferencesDisplay();
+          updateListStatus(\`List "\${current}" removed. Switched to "\${listsState.currentListName}".\`);
+        });
+
+        document.getElementById("exportBtn").addEventListener("click", () => {
+          const name = listsState.currentListName;
+          const listObj = listsState.lists[name];
+          const payload = {
+            name,
+            meta: listObj.meta,
+            refs: listObj.refs
+          };
+
+          const dataStr = JSON.stringify(payload, null, 2);
+          const blob = new Blob([dataStr], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          const dateStr = new Date().toISOString().slice(0, 10);
+          const safeName = name.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "");
+          a.href = url;
+          a.download = \`refs-\${safeName || "list"}-\${dateStr}.json\`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+
+        document.getElementById("importBtn").addEventListener("click", () => {
+          importFileInput.value = "";
+          importFileInput.click();
+        });
+
+        importFileInput.addEventListener("change", (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            try {
+              const parsed = JSON.parse(ev.target.result);
+              if (!parsed.refs || !Array.isArray(parsed.refs)) {
+                throw new Error("No refs array in file.");
+              }
+              const baseName = (parsed.name || parsed.meta?.name || "Imported list").trim() || "Imported list";
+              let candidate = baseName;
+              let counter = 1;
+              const names = Object.keys(listsState.lists);
+              while (names.includes(candidate)) {
+                candidate = \`\${baseName} (\${counter++})\`;
+              }
+              listsState.lists[candidate] = {
+                meta: {
+                  name: candidate,
+                  title: parsed.meta?.title || "All References (A–Z)",
+                  created: parsed.meta?.created || new Date().toISOString()
+                },
+                refs: parsed.refs
+              };
+              listsState.currentListName = candidate;
+              references = parsed.refs.slice();
+              saveListsToStorageSafe();
+              refreshSavedListsUI();
+              updateReferencesDisplay();
+              updateListStatus(\`Imported list "\${candidate}".\`);
+            } catch (err) {
+              console.error(err);
+              alert("Import failed – file does not look like a valid exported list.");
+            }
+          };
+          reader.readAsText(file);
+        });
+
+        loadListsFromStorageSafe();
+        refreshSavedListsUI();
+        updateReferencesDisplay();
+      </script>
+      <!-- Reference Generator END -->
+    </section>
+  </main>
+
+  <!-- Footer injected by layout.js -->
+  <footer id="site-footer" aria-label="Main site footer"></footer>
+
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Layout loader for header/footer -->
+  <script src="/js/layout.js"></script>
+</body>
+</html>
