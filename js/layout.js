@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Init
   applyDarkTheme();
 
-  loadPartial('site-header', 'partials/header.html', () => {
+  loadPartial('site-header', '/partials/header.html', () => {
     markActiveNav();
     hydrateEmailLinks();
   });
 
-  loadPartial('site-footer', 'partials/footer.html', hydrateEmailLinks);
+  loadPartial('site-footer', '/partials/footer.html', hydrateEmailLinks);
 });
