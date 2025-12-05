@@ -63,7 +63,6 @@ body.theme-dark {
     0 0 30px rgba(56, 189, 248, 0.4);
 }
 
-
 /* HEADER LOGO — default neon aura */
 .navbar-logo-img {
   width: 42px;
@@ -72,8 +71,6 @@ body.theme-dark {
   transition: transform 0.25s ease-out,
               box-shadow 0.25s ease-out,
               filter 0.25s ease-out;
-
-  /* subtle ambient glow to match footer */
   box-shadow:
     0 0 6px  rgba(56, 189, 248, 0.35),
     0 0 12px rgba(56, 189, 248, 0.25);
@@ -83,106 +80,11 @@ body.theme-dark {
 .navbar-logo-img:hover {
   transform: translateY(-1px) rotate(-1deg);
   filter: brightness(1.15);
-
   box-shadow:
     0 0 10px rgba(56, 189, 248, 0.9),
     0 0 22px rgba(56, 189, 248, 0.65),
     0 0 36px rgba(56, 189, 248, 0.4);
 }
-
-/* ----- Page meta row (Questions / Change log / Share) ----- */
-
-.page-meta-row .page-meta-card {
-  height: 100%;
-}
-
-.page-meta-card-inner {
-  background: #02081b;
-  border-radius: 0.9rem;
-  border: 1px solid var(--ca-border-soft);
-  padding: 1.25rem 1.4rem;
-  transition:
-    border-color 0.2s ease-out,
-    box-shadow 0.2s ease-out,
-    transform 0.2s ease-out;
-}
-
-/* subtle hover lift on all three cards */
-.page-meta-card-inner:hover,
-.page-meta-card-inner:focus-within {
-  transform: translateY(-2px);
-  border-color: var(--ca-primary);
-  box-shadow:
-    0 18px 40px rgba(15, 23, 42, 0.9),
-    0 0 18px rgba(56, 189, 248, 0.25);
-}
-
-/* Share card: Zilchy-style gradient background */
-.page-meta-card--share .page-meta-card-inner {
-  background:
-    radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 55%),
-    radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.16), transparent 55%),
-    linear-gradient(135deg, #020617 0%, #02081b 45%, #030712 100%);
-  border-color: rgba(56, 189, 248, 0.45);
-}
-
-/* Short-link pill */
-
-.short-link-pill {
-  width: 100%;
-  text-align: left;
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  background: rgba(15, 23, 42, 0.85);
-  padding: 0.4rem 0.8rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  cursor: pointer;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
-  font-size: 0.85rem;
-  color: #e5e7eb;
-  box-shadow:
-    0 0 4px rgba(15, 23, 42, 0.8),
-    0 0 0 rgba(56, 189, 248, 0);
-  transition:
-    border-color 0.2s ease-out,
-    box-shadow 0.2s ease-out,
-    background 0.2s ease-out,
-    transform 0.15s ease-out;
-}
-
-.short-link-prefix {
-  color: #64748b; /* grey "https://www." */
-}
-
-.short-link-main {
-  color: #e5f4ff;
-}
-
-.short-link-pill:hover,
-.short-link-pill:focus-visible {
-  outline: none;
-  border-color: rgba(56, 189, 248, 0.9);
-  background: rgba(5, 22, 48, 0.98);
-  transform: translateY(-1px);
-  box-shadow:
-    0 0 8px rgba(56, 189, 248, 0.8),
-    0 0 18px rgba(56, 189, 248, 0.6);
-}
-
-.short-link-status {
-  min-height: 1.1em; /* reserve space for “Copied!” message */
-}
-
-/* Small screens: stack cards nicely */
-@media (max-width: 767.98px) {
-  .page-meta-row .page-meta-card-inner {
-    height: 100%;
-  }
-}
-
 
 /* HERO */
 .hero {
@@ -310,16 +212,6 @@ select:focus {
   color: var(--ca-muted);
 }
 
-/* Footer base */
-.site-footer .footer-column a:hover {
-  color: var(--ca-primary);
-  text-shadow:
-    0 0 6px  rgba(56, 189, 248, 0.85),
-    0 0 14px rgba(56, 189, 248, 0.65),
-    0 0 24px rgba(56, 189, 248, 0.45);
-}
-
-
 /* Make footer links block-level and spaced */
 .site-footer .footer-column a {
   display: block;
@@ -328,15 +220,16 @@ select:focus {
   text-decoration: none;
 }
 
-/* Neon-blue hover */
+/* Footer link hover glow */
 .site-footer .footer-column a:hover {
   color: #7fe9ff;
   text-shadow:
-    0 0 6px rgba(0, 229, 255, 0.8),
-    0 0 12px rgba(0, 229, 255, 0.6);
+    0 0 6px  rgba(56, 189, 248, 0.85),
+    0 0 14px rgba(56, 189, 248, 0.65),
+    0 0 24px rgba(56, 189, 248, 0.45);
 }
 
-/* BRAND / LOGO */
+/* BRAND / LOGO in footer */
 .footer-brand {
   gap: 0.6rem;
 }
@@ -360,7 +253,6 @@ select:focus {
     0 0 32px rgba(56, 189, 248, 0.4);
 }
 
-
 /* MOBILE / SMALL VIEWPORTS */
 @media (max-width: 767.98px) {
   .site-footer .footer-main-row {
@@ -381,6 +273,7 @@ select:focus {
   }
 }
 
+/* Back-to-top button */
 .back-to-top {
   position: fixed;
   right: 1.5rem;
@@ -407,14 +300,12 @@ select:focus {
     background 0.2s ease-out;
 }
 
-/* visible state */
 .back-to-top.back-to-top--visible {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
 
-/* hover effect */
 .back-to-top:hover {
   background: rgba(5, 32, 78, 0.95);
   box-shadow:
@@ -422,45 +313,11 @@ select:focus {
     0 0 18px rgba(0, 229, 255, 0.6);
 }
 
-/* Shared “Questions / Change log / Share” block tweaks */
+/* ---------------------------
+   Standard Questions / Changelog / Share
+   --------------------------- */
 
-/* Zilchy-style share card background */
-.share-card {
-  background: radial-gradient(circle at top, #020b2a 0, #020617 50%, #00010a 100%);
-  border-color: rgba(56, 189, 248, 0.45);
-  box-shadow:
-    0 0 10px rgba(15, 23, 42, 0.9),
-    0 0 26px rgba(56, 189, 248, 0.25);
-}
-
-/* Short-link button styling */
-.share-card .share-link-btn {
-  font-family: inherit;
-  font-size: 0.9rem;
-  color: var(--ca-primary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  text-decoration-thickness: 1px;
-  border-radius: 0.3rem;
-}
-
-.share-card .share-link-btn:hover,
-.share-card .share-link-btn:focus {
-  color: #7dd3fc;
-  text-shadow:
-    0 0 6px rgba(56, 189, 248, 0.8),
-    0 0 16px rgba(56, 189, 248, 0.5);
-}
-
-/* Make the three bottom cards behave nicely on mobile */
-@media (max-width: 767.98px) {
-  .share-card,
-  .card-raise {
-    height: auto;
-  }
-}
-
-/* Questions / change-log meta cards */
+/* Questions + changelog cards */
 .questions-box {
   background: rgba(0, 102, 255, 0.08); /* subtle blue wash */
   border: 1px solid rgba(0, 102, 255, 0.15);
