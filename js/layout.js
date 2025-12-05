@@ -73,6 +73,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+    function initFooterExtras() {
+    // Update copyright year
+    const yearEl = document.getElementById('year');
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+
+    // Back to top
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (!backToTopBtn) return;
+
+    const toggleButton = () => {
+      const scrolled = window.scrollY || document.documentElement.scrollTop;
+      backToTopBtn.classList.toggle('back-to-top--visible', scrolled > 300);
+    };
+
+    toggleButton(); // initial state
+    window.addEventListener('scroll', toggleButton);
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+
   // Init
   applyDarkTheme();
 
@@ -83,6 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadPartial('site-footer', '/partials/footer.html', () => {
     hydrateEmailLinks();
-    updateFooterYear();
+    initFooterExtras();
   });
 });
