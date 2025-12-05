@@ -64,7 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error loading partial:', url, err);
       });
   }
-
+  // Get Year
+  document.addEventListener("DOMContentLoaded", () => {
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  });
+  
   // Init
   applyDarkTheme();
 
