@@ -154,6 +154,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+    function setupShortLinkCopy() {
+    const pills = document.querySelectorAll('.short-link-pill');
+
+    pills.forEach(pill => {
+      const url = pill.dataset.shortUrl;
+      const statusEl = pill
+        .closest('.page-meta-card')
+        ?.querySelector('.short-link-status');
+
+      if (!url) return;
+
+      pill.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          if (statusEl) {
+            statusEl.textContent = 'Short link copied to clipboard.';
+          }
+          pill.classList.add('short-link-pill--copied');
+          setTimeout(() => {
+            pill.classList.remove('short-link-pill--copied');
+            if (statusEl) statusEl.textContent = '';
+          }, 2500);
+        } catch (err) {
+          console.error('Copy failed', err);
+          if (statusEl) {
+            statusEl.textContent = 'Copy failed – you may need to copy manually.';
+          }
+        }
+      });
+    });
+  }
+
 
   // Init
   applyDarkTheme();
@@ -167,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hydrateEmailLinks();
     initFooterEasterEgg();
     initShareButton();
+    setupShortLinkCopy();
   });
   
 });
