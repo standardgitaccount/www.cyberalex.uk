@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     links.forEach(link => {
       const user = link.dataset.user;
       const domain = link.dataset.domain;
-
       if (!user || !domain) return;
 
       const decodedUser = atob(user);
@@ -65,14 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  // Footer year + back-to-top button
   function initFooterExtras() {
-    // Copyright year
     const yearEl = document.getElementById('year');
     if (yearEl) {
       yearEl.textContent = new Date().getFullYear();
     }
 
-    // Back-to-top button
     const backToTopBtn = document.getElementById('backToTopBtn');
     if (!backToTopBtn) return;
 
@@ -89,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Easter egg: 5 clicks on footer logo in 3 seconds -> snake
   function initFooterEasterEgg() {
     const logo = document.querySelector('.footer-logo-img');
     if (!logo) return;
@@ -116,50 +115,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function initShareCopy() {
-    const buttons = document.querySelectorAll('.share-url-main');
+  // Copy-to-clipboard for Zilchy share cards
+  function initShareCards() {
+    const buttons = document.querySelectorAll('.share-url-main[data-share-url]');
 
     buttons.forEach(btn => {
-      const explicitUrl = btn.getAttribute('data-share-url');
-      const url = explicitUrl || btn.textContent.trim();
-      const textSpan = btn.querySelector('.share-url-text') || btn;
-
+      const url = btn.dataset.shareUrl;
       if (!url) return;
+
+      const textEl = btn.querySelector('.share-url-text');
+      const statusEl = btn.closest('.share-card')?.querySelector('.share-status');
+      const originalText = textEl ? textEl.textContent : url;
 
       btn.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(url);
-          const originalText = textSpan.textContent;
-          textSpan.textContent = 'Copied to clipboard';
+          if (textEl) textEl.textContent = 'Copied to clipboard';
           btn.classList.add('copied');
+          if (statusEl) statusEl.textContent = '';
 
           setTimeout(() => {
-            textSpan.textContent = originalText;
+            if (textEl) textEl.textContent = originalText;
             btn.classList.remove('copied');
           }, 2200);
         } catch (err) {
           console.error('Copy failed', err);
+          if (statusEl) {
+            statusEl.textContent = 'Copy failed – you may need to copy it manually.';
+          }
         }
       });
     });
   }
 
-  // ---- INIT ----
+  // ===== Init =====
   applyDarkTheme();
 
-  // Header partial
   loadPartial('site-header', '/partials/header.html', () => {
     markActiveNav();
     hydrateEmailLinks();
   });
 
-  // Footer partial
   loadPartial('site-footer', '/partials/footer.html', () => {
     hydrateEmailLinks();
     initFooterExtras();
     initFooterEasterEgg();
+    initShareCards();
   });
-
-  // Share cards live in main content (already parsed)
-  initShareCopy();
 });
