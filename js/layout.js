@@ -96,18 +96,50 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+  
+    function initFooterEasterEgg() {
+    const logo = document.querySelector('.footer-logo-img');
+    if (!logo) return;
+  
+    let clickCount = 0;
+    let firstClickTime = 0;
+    const WINDOW_MS = 3000;
+    const REQUIRED_CLICKS = 5;
+  
+    logo.addEventListener('click', () => {
+      const now = performance.now();
+  
+      // Reset window if it's been more than 3s since the first click
+      if (!firstClickTime || (now - firstClickTime) > WINDOW_MS) {
+        firstClickTime = now;
+        clickCount = 0;
+      }
+  
+      clickCount++;
+  
+      if (clickCount >= REQUIRED_CLICKS) {
+        // Reset so it doesn't immediately retrigger
+        clickCount = 0;
+        firstClickTime = 0;
+  
+        // Redirect to your snake game page
+        window.location.href = '/snake.html';
+      }
+    });
+  }
 
 
   // Init
   applyDarkTheme();
-
+  
   loadPartial('site-header', '/partials/header.html', () => {
     markActiveNav();
     hydrateEmailLinks();
   });
-
+  
   loadPartial('site-footer', '/partials/footer.html', () => {
     hydrateEmailLinks();
-    initFooterExtras();
+    initFooterEasterEgg();
   });
+  
 });
