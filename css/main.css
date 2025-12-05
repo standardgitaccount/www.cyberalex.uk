@@ -328,3 +328,42 @@ select:focus {
     0 0 8px rgba(0, 229, 255, 0.8),
     0 0 18px rgba(0, 229, 255, 0.6);
 }
+
+/* Shared “Questions / Change log / Share” block tweaks */
+
+/* Zilchy-style share card background */
+.share-card {
+  background: radial-gradient(circle at top, #020b2a 0, #020617 50%, #00010a 100%);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow:
+    0 0 10px rgba(15, 23, 42, 0.9),
+    0 0 26px rgba(56, 189, 248, 0.25);
+}
+
+/* Short-link button styling */
+.share-card .share-link-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ca-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  border-radius: 0.3rem;
+}
+
+.share-card .share-link-btn:hover,
+.share-card .share-link-btn:focus {
+  color: #7dd3fc;
+  text-shadow:
+    0 0 6px rgba(56, 189, 248, 0.8),
+    0 0 16px rgba(56, 189, 248, 0.5);
+}
+
+/* Make the three bottom cards behave nicely on mobile */
+@media (max-width: 767.98px) {
+  .share-card,
+  .card-raise {
+    height: auto;
+  }
+}
+
