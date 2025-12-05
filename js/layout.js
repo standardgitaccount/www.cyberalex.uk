@@ -64,12 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error loading partial:', url, err);
       });
   }
-  // Get Year
-  document.addEventListener("DOMContentLoaded", () => {
-    const yearEl = document.getElementById("year");
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-  });
-  
+
+  // NEW: update footer year after footer is injected
+  function updateFooterYear() {
+    const yearEl = document.querySelector('#site-footer #year');
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+  }
+
   // Init
   applyDarkTheme();
 
@@ -78,5 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
     hydrateEmailLinks();
   });
 
-  loadPartial('site-footer', '/partials/footer.html', hydrateEmailLinks);
+  loadPartial('site-footer', '/partials/footer.html', () => {
+    hydrateEmailLinks();
+    updateFooterYear();
+  });
 });
