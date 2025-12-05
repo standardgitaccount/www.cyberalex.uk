@@ -1,43 +1,52 @@
-<div class="footer border-top bg-navy-soft text-light mt-4">
+<footer class="footer site-footer border-top bg-navy-soft text-light mt-4">
   <div class="container py-3 small">
-    <div class="row gy-2">
-
+    <div class="row gy-3 align-items-center footer-main-row">
       <div class="col-md-4">
-        <span class="d-block fw-semibold">CyberAlex</span>
-        <span class="text-muted">Cyber Security, Risk &amp; Resilience</span>
-        <br>
-         <img src="/logo.png" alt="CyberAlex logo"
-           style="height:70px; width:70px; filter:brightness(0.9); opacity:0.85;">
-        <br>
+        <div class="footer-brand d-flex align-items-center gap-2">
+          <img src="/logo.png"
+               alt="CyberAlex logo"
+               class="footer-logo-img">
+          <div>
+            <span class="d-block fw-semibold">CyberAlex</span>
+            <span class="text-muted">Cyber Security, Risk &amp; Resilience</span>
+          </div>
+        </div>
       </div>
 
-      <div class="col-md-4">
-        <span class="d-block text-muted">Resources</span>
-        <ul class="list-unstyled mb-0">
-          <li><a href="/privacy-and-communications.html">Privacy and Secure Communications</a></li>
-          <li><a href="/copyright-licences-and-licensing.html">Copyright, Licences, &amp; Licensing</a></li>
-          <li><a href="/cite-this-craap">Cite This CRAAP</a></li>
-          <li><a href="https://archive.cyberalex.uk">Visit the Legacy CyberAlex Site</a></li>
-          <li><a href="/sitemap.html">Sitemap</a></li>
-        </ul>
+      <div class="col-md-4 footer-column">
+        <span class="d-block text-muted mb-1">Resources</span>
+        <a href="/privacy-and-communications.html">Privacy and Secure Communications</a>
+        <a href="/copyright-licences-and-licensing.html">Copyright, Licences, &amp; Licensing</a>
+        <a href="/cite-this-craap">
+          Cite This CRAAP
+          <small class="text-secondary d-block">
+            Information quality &amp; citation guidance
+          </small>
+        </a>
+        <a href="https://archive.cyberalex.uk">Visit the legacy CyberAlex site</a>
+        <a href="/sitemap.html">Sitemap</a>
       </div>
 
-      <div class="col-md-4">
-        <span class="d-block text-muted">Quick Links</span>
-        <ul class="list-unstyled mb-0">
-          <li><a href="/index.html">Home</a></li>
-          <li><a href="/projects.html">Projects &amp; Tools</a></li>
-          <li><a href="/blog.html">Writing &amp; Notes</a></li>
-          <li><a href="/about.html">About &amp; CV</a></li>
-          <li><a href="/contact.html">Contact</a></li>
-        </ul>
+      <div class="col-md-4 footer-column">
+        <span class="d-block text-muted mb-1">Quick Links</span>
+        <a href="/index.html">Home</a>
+        <a href="/projects.html">Projects &amp; Tools</a>
+        <a href="/blog.html">Writing &amp; Notes</a>
+        <a href="/about.html">About &amp; CV</a>
+        <a href="/contact.html">Contact</a>
       </div>
-      
-       
     </div>
-      
-    <div class="text-muted small mt-2">
-      Copyright &copy; <span id="year"></span> CyberAlex.uk - All rights reserved.
+
+    <div class="text-muted small mt-2 footer-meta d-flex flex-wrap justify-content-between align-items-center">
+      <span>Copyright &copy; <span id="year"></span> Alex. All rights reserved.</span>
     </div>
   </div>
-</div>
+
+  <!-- Back to top button -->
+  <button type="button"
+          class="btn btn-outline-light back-to-top"
+          id="backToTopBtn"
+          aria-label="Back to top">
+    ↑
+  </button>
+</footer>
