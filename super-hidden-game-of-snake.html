@@ -101,85 +101,77 @@
     </section>
 
     <!-- Standard bottom meta row: Questions / Change log / Share this tool -->
-   <section class="mb-5" aria-label="Questions, change log, and sharing">
-  <div class="row g-4">
+<section class="mb-5" aria-labelledby="page-meta-heading">
+  <h2 id="page-meta-heading" class="visually-hidden">Page meta</h2>
 
-    <!-- Questions -->
+  <div class="row g-4 page-meta-row">
+    <!-- QUESTIONS -->
     <div class="col-lg-4">
-      <div class="card card-raise h-100">
-        <div class="card-body small text-secondary d-flex flex-column">
-          <h2 class="h6 text-uppercase text-muted mb-2">Questions</h2>
-          <p class="mb-3">
+      <article class="page-meta-card page-meta-card--questions h-100">
+        <div class="page-meta-card-inner">
+          <h3 class="h6 text-uppercase text-muted mb-2">Questions</h3>
+          <p class="small text-secondary mb-3">
             If you have feedback, spot an issue, or want to suggest improvements to this page or tool,
             you’re welcome to get in touch.
           </p>
-          <div class="mt-auto">
-            <a href="/contact.html" class="btn btn-outline-light btn-sm">
-              Contact Alex
-            </a>
-          </div>
+          <a href="/contact.html" class="btn btn-primary btn-sm">
+            Contact Alex
+          </a>
         </div>
-      </div>
+      </article>
     </div>
 
-    <!-- Change log -->
+    <!-- CHANGE LOG -->
     <div class="col-lg-4">
-      <div class="card card-raise h-100">
-        <div class="card-body small text-secondary">
-          <h2 class="h6 text-uppercase text-muted mb-2">Change log</h2>
-          <p class="mb-2">
+      <article class="page-meta-card page-meta-card--changelog h-100">
+        <div class="page-meta-card-inner">
+          <h3 class="h6 text-uppercase text-muted mb-2">Change log</h3>
+          <p class="small text-secondary mb-2">
             A brief record of changes to this page. Dates are in UK format (day–month–year).
           </p>
-          <ul class="mb-0">
-            <!-- Replace these with real entries per page -->
-            <li>
-              <strong>05-12-2025</strong> – Initial public version of this page.
-            </li>
-            <li>
-              <strong>xx-xx-20xx</strong> – Description of future update.
-            </li>
+          <ul class="small text-secondary mb-0">
+            <li><strong>05-12-2025</strong> – Initial public version of this page.</li>
+            <li><strong>xx-xx-20xx</strong> – Description of future update.</li>
           </ul>
         </div>
-      </div>
+      </article>
     </div>
 
-    <!-- Share this tool -->
+    <!-- SHARE THIS TOOL -->
     <div class="col-lg-4">
-      <div class="card card-raise share-card h-100">
-        <div class="card-body small text-secondary d-flex flex-column">
-          <h2 class="h6 text-uppercase text-muted mb-2">Share this tool</h2>
-          <p class="mb-2">
+      <article class="page-meta-card page-meta-card--share h-100">
+        <div class="page-meta-card-inner">
+          <h3 class="h6 text-uppercase text-muted mb-2">Share this tool</h3>
+          <p class="small text-secondary mb-2">
             If you’d like to share this page with someone else, you can use the short link below.
           </p>
 
-          <!-- Per-page: update data-share-url and visible short link text -->
-          <p class="mb-1">
-            <span class="text-muted">https://www.</span>
-            <button type="button"
-                    class="btn btn-link p-0 align-baseline share-link-btn"
-                    data-share-url="https://zilchy.link/password">
-              zilchy.link/password
-            </button>
-          </p>
+          <!-- Short link pill -->
+          <button
+            class="short-link-pill"
+            type="button"
+            data-short-url="https://zilchy.link/password">
+            <span class="short-link-prefix">https://www.</span>
+            <span class="short-link-main">zilchy.link/password</span>
+          </button>
 
-          <!-- Per-page: update the code here -->
-          <p class="mb-2">
-            Or visit <strong>zilchy.link</strong> and enter the code
-            <code>password</code>.
+          <p class="small text-secondary mt-2 mb-1">
+            Or visit <a href="https://zilchy.link" class="link-light" target="_blank" rel="noopener">
+              zilchy.link
+            </a> and enter the code <code>password</code>.
           </p>
+          <p class="short-link-status small text-secondary mb-0" aria-live="polite"></p>
 
-          <p class="small text-muted mb-0">
-            Zilchy.link is my invite-only, GitHub-backed short link service. Links are static, FOSS,
+          <p class="small text-secondary mt-3 mb-0">
+            Zilchy.link is my invite-only, GitHub-backed short-link service. Links are static, FOSS,
             and only point to safe, non-malicious content.
           </p>
-
-          <p id="shareFeedback" class="small text-secondary mt-2 mb-0"></p>
         </div>
-      </div>
+      </article>
     </div>
-
   </div>
 </section>
+
 
     
   </main>
