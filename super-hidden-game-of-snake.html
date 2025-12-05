@@ -35,7 +35,8 @@
       <h1 class="h3 mb-1">Secret Snake (CyberAlex easter egg)</h1>
       <p class="text-secondary small mb-0">
         You’ve found a hidden page. Use the arrow keys or WASD to control the snake, eat the pulsing neon food, and avoid
-        crashing into yourself or the walls. Your best score is saved locally in this browser.
+        crashing into your own tail. The edges of the board wrap around like a loop. Your best score is saved locally
+        in this browser.
       </p>
     </section>
 
@@ -49,7 +50,8 @@
               <ul class="mb-2">
                 <li>Use <strong>Arrow keys</strong> or <strong>WASD</strong> to steer.</li>
                 <li>Eat the <strong>pulsing neon orb</strong> to grow and score.</li>
-                <li>Avoid hitting the walls or your own tail.</li>
+                <li>Don’t run into your own tail – that still ends the game.</li>
+                <li>The edges of the grid wrap: going off one side brings you back in on the opposite side.</li>
                 <li>On desktop the grid is 24×24 tiles; the board scales down on small screens.</li>
               </ul>
               <p class="mb-0">
@@ -92,6 +94,71 @@
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standard bottom meta row: Questions / Change log / Share this tool -->
+    <section class="mb-5" aria-label="Meta and sharing">
+      <div class="row g-4">
+        <!-- Questions -->
+        <div class="col-lg-4">
+          <div class="card card-raise h-100">
+            <div class="card-body small text-secondary d-flex flex-column">
+              <h2 class="h6 text-uppercase text-muted mb-2">Questions</h2>
+              <p class="mb-3">
+                If you have feedback about this easter egg, ideas for other small tools or games, or spot anything odd,
+                you’re welcome to get in touch.
+              </p>
+              <div class="mt-auto">
+                <a href="/contact.html" class="btn btn-outline-light btn-sm">
+                  Contact Alex
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change log -->
+        <div class="col-lg-4">
+          <div class="card card-raise h-100">
+            <div class="card-body small text-secondary">
+              <h2 class="h6 text-uppercase text-muted mb-2">Change log</h2>
+              <p class="mb-2">
+                A brief record of changes to this hidden page. Dates are in UK format (day–month–year).
+              </p>
+              <ul class="mb-0">
+                <li>
+                  <strong>05-12-2025</strong> – Initial hidden release of the Snake easter egg game, with wrap-around
+                  edges and local high score.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Share this tool -->
+        <div class="col-lg-4">
+          <div class="card card-raise h-100">
+            <div class="card-body small text-secondary d-flex flex-column">
+              <h2 class="h6 text-uppercase text-muted mb-2">Share this tool</h2>
+              <p class="mb-2">
+                If you want to share this page with someone else, you can use the short link below.
+              </p>
+              <p class="mb-1">
+                <span class="text-muted">https://www.</span>
+                <button type="button"
+                        class="btn btn-link p-0 align-baseline share-link-btn"
+                        data-share-url="https://zilchy.link/snake">
+                  zilchy.link/snake
+                </button>
+              </p>
+              <p class="mb-2">
+                Or visit <strong>zilchy.link</strong> and enter the code <code>snake</code>.
+              </p>
+              <p id="shareFeedback" class="small text-secondary mb-0"></p>
             </div>
           </div>
         </div>
@@ -244,7 +311,6 @@
       let lastFoodFlashTime = 0;
       let lastFoodPos = null;
       let deathBurstEl = null;
-      let deathTime = 0;
 
       function loadHighScore() {
         const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -344,7 +410,6 @@
       function endGame() {
         if (gameOver) return;
         gameOver = true;
-        deathTime = performance.now();
         statusEl.textContent = `Game over — final score ${score}. Press Space or Play again.`;
         overlayEl.classList.remove('hidden');
 
@@ -369,16 +434,19 @@
 
         direction = nextDirection;
         const head = snake[0];
-        const newHead = { x: head.x + direction.x, y: head.y + direction.y };
 
-        // Wall collision
-        if (newHead.x < 0 || newHead.x >= GRID_SIZE ||
-            newHead.y < 0 || newHead.y >= GRID_SIZE) {
-          endGame();
-          return;
-        }
+        // Compute new head with wrap-around
+        let newX = head.x + direction.x;
+        let newY = head.y + direction.y;
 
-        // Self collision
+        if (newX < 0) newX = GRID_SIZE - 1;
+        if (newX >= GRID_SIZE) newX = 0;
+        if (newY < 0) newY = GRID_SIZE - 1;
+        if (newY >= GRID_SIZE) newY = 0;
+
+        const newHead = { x: newX, y: newY };
+
+        // Self collision still ends the game
         if (snake.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
           endGame();
           return;
@@ -512,6 +580,31 @@
         resetGame();
         startGameIfNeeded();
       });
+
+      // Share short link copy
+      const shareBtn = document.querySelector('.share-link-btn');
+      const shareFeedback = document.getElementById('shareFeedback');
+
+      if (shareBtn && shareFeedback) {
+        shareBtn.addEventListener('click', async () => {
+          const url = shareBtn.getAttribute('data-share-url');
+          if (!url) return;
+
+          try {
+            await navigator.clipboard.writeText(url);
+            shareFeedback.textContent = 'Link copied to clipboard.';
+            setTimeout(() => {
+              shareFeedback.textContent = '';
+            }, 2500);
+          } catch (err) {
+            console.error(err);
+            shareFeedback.textContent = 'Copy failed. You may need to copy it manually.';
+            setTimeout(() => {
+              shareFeedback.textContent = '';
+            }, 4000);
+          }
+        });
+      }
 
       // Initial state
       loadHighScore();
