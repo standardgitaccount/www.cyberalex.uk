@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         firstClickTime = 0;
   
         // Redirect to your snake game page
-        window.location.href = '/snake.html';
+        window.location.href = '/super-hidden-game-of-snake.html';
       }
     });
   }
