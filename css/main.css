@@ -90,6 +90,99 @@ body.theme-dark {
     0 0 36px rgba(56, 189, 248, 0.4);
 }
 
+/* ----- Page meta row (Questions / Change log / Share) ----- */
+
+.page-meta-row .page-meta-card {
+  height: 100%;
+}
+
+.page-meta-card-inner {
+  background: #02081b;
+  border-radius: 0.9rem;
+  border: 1px solid var(--ca-border-soft);
+  padding: 1.25rem 1.4rem;
+  transition:
+    border-color 0.2s ease-out,
+    box-shadow 0.2s ease-out,
+    transform 0.2s ease-out;
+}
+
+/* subtle hover lift on all three cards */
+.page-meta-card-inner:hover,
+.page-meta-card-inner:focus-within {
+  transform: translateY(-2px);
+  border-color: var(--ca-primary);
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.9),
+    0 0 18px rgba(56, 189, 248, 0.25);
+}
+
+/* Share card: Zilchy-style gradient background */
+.page-meta-card--share .page-meta-card-inner {
+  background:
+    radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.16), transparent 55%),
+    linear-gradient(135deg, #020617 0%, #02081b 45%, #030712 100%);
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+/* Short-link pill */
+
+.short-link-pill {
+  width: 100%;
+  text-align: left;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: rgba(15, 23, 42, 0.85);
+  padding: 0.4rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  box-shadow:
+    0 0 4px rgba(15, 23, 42, 0.8),
+    0 0 0 rgba(56, 189, 248, 0);
+  transition:
+    border-color 0.2s ease-out,
+    box-shadow 0.2s ease-out,
+    background 0.2s ease-out,
+    transform 0.15s ease-out;
+}
+
+.short-link-prefix {
+  color: #64748b; /* grey "https://www." */
+}
+
+.short-link-main {
+  color: #e5f4ff;
+}
+
+.short-link-pill:hover,
+.short-link-pill:focus-visible {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.9);
+  background: rgba(5, 22, 48, 0.98);
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 8px rgba(56, 189, 248, 0.8),
+    0 0 18px rgba(56, 189, 248, 0.6);
+}
+
+.short-link-status {
+  min-height: 1.1em; /* reserve space for “Copied!” message */
+}
+
+/* Small screens: stack cards nicely */
+@media (max-width: 767.98px) {
+  .page-meta-row .page-meta-card-inner {
+    height: 100%;
+  }
+}
+
 
 /* HERO */
 .hero {
