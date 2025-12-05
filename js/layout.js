@@ -128,6 +128,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  document.addEventListener('DOMContentLoaded', () => {
+  const shareBtn = document.querySelector('.share-link-btn');
+  const shareFeedback = document.getElementById('shareFeedback');
+
+  if (shareBtn && shareFeedback) {
+    shareBtn.addEventListener('click', async () => {
+      const url = shareBtn.getAttribute('data-share-url');
+      if (!url) return;
+
+      try {
+        await navigator.clipboard.writeText(url);
+        shareFeedback.textContent = 'Link copied to clipboard.';
+        setTimeout(() => {
+          shareFeedback.textContent = '';
+        }, 2500);
+      } catch (err) {
+        console.error(err);
+        shareFeedback.textContent = 'Copy failed – you may need to copy it manually.';
+        setTimeout(() => {
+          shareFeedback.textContent = '';
+        }, 4000);
+      }
+    });
+  }
+});
+
 
   // Init
   applyDarkTheme();
@@ -140,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPartial('site-footer', '/partials/footer.html', () => {
     hydrateEmailLinks();
     initFooterEasterEgg();
+    initShareButton();
   });
   
 });
