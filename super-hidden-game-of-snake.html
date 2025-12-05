@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Secret CyberAlex snake game easter egg.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Secret Snake – CyberAlex</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+
+  <link rel="icon" href="/logo.png" type="image/png">
+</head>
+<body class="theme-dark">
+  <!-- Skip link -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header injected by layout.js -->
+  <header id="site-header" aria-label="Main site header"></header>
+
+  <main id="main-content" class="container py-4" tabindex="-1">
+    <section class="mb-4" aria-label="Page header">
+      <nav aria-label="Breadcrumb" class="mb-2">
+        <ol class="breadcrumb small mb-0">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/projects.html">Tools &amp; Projects</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Secret Snake</li>
+        </ol>
+      </nav>
+
+      <h1 class="h3 mb-1">Secret Snake (CyberAlex easter egg)</h1>
+      <p class="text-secondary small mb-0">
+        You’ve found a hidden page. Use the arrow keys or WASD to control the snake, eat the pulsing neon food, and avoid
+        crashing into yourself or the walls. Your best score is saved locally in this browser.
+      </p>
+    </section>
+
+    <section class="mb-5" aria-label="Snake game">
+      <div class="row g-4 align-items-start">
+        <!-- Text / info -->
+        <div class="col-lg-4">
+          <div class="card card-raise mb-3">
+            <div class="card-body small text-secondary">
+              <h2 class="h5 mb-2">How to play</h2>
+              <ul class="mb-2">
+                <li>Use <strong>Arrow keys</strong> or <strong>WASD</strong> to steer.</li>
+                <li>Eat the <strong>pulsing neon orb</strong> to grow and score.</li>
+                <li>Avoid hitting the walls or your own tail.</li>
+                <li>On desktop the grid is 24×24 tiles; the board scales down on small screens.</li>
+              </ul>
+              <p class="mb-0">
+                This game runs entirely in your browser with no network requests. It’s here mostly for fun — and as a
+                small nod to the people who poke around in the footer.
+              </p>
+            </div>
+          </div>
+
+          <div class="card card-raise">
+            <div class="card-body small text-secondary">
+              <h2 class="h6 text-uppercase text-muted mb-2">Stats</h2>
+              <p class="mb-1">
+                Current score: <strong><span id="snakeScore">0</span></strong><br>
+                Best score (this browser): <strong><span id="snakeHighScore">0</span></strong>
+              </p>
+              <button id="snakeRestartBtn" class="btn btn-primary btn-sm mt-2" type="button">
+                Play again
+              </button>
+              <p id="snakeStatus" class="mt-3 mb-0 small text-secondary"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game area -->
+        <div class="col-lg-8">
+          <div class="snake-frame card-raise">
+            <div class="snake-frame-inner">
+              <canvas id="snakeCanvas"
+                      class="snake-canvas"
+                      aria-label="Snake game board"
+                      role="img">
+              </canvas>
+              <div id="snakeOverlay" class="snake-overlay" aria-hidden="true">
+                <div class="snake-overlay-content">
+                  <p class="small text-secondary mb-1">Secret unlocked</p>
+                  <h2 class="h4 mb-2">You found the Snake easter egg</h2>
+                  <p class="small text-secondary mb-0">
+                    Press <strong>Space</strong> or click <strong>Play again</strong> to start.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer injected by layout.js -->
+  <footer id="site-footer"></footer>
+
+  <!-- Bootstrap + layout -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/layout.js"></script>
+
+  <style>
+    :root {
+      /* In case this page is loaded without main variables for some reason */
+      --ca-bg: #020617;
+      --ca-surface: #02081b;
+      --ca-surface-soft: #030b24;
+      --ca-border-soft: #1f2937;
+      --ca-primary: #38bdf8;
+    }
+
+    .snake-frame {
+      background: radial-gradient(circle at top, #02081b 0, #020617 55%, #00010a 100%);
+      border-radius: 1rem;
+      border: 1px solid var(--ca-border-soft);
+      padding: 1rem;
+    }
+
+    .snake-frame-inner {
+      position: relative;
+      border-radius: 0.9rem;
+      background: radial-gradient(circle at top left, #020921, #010313 60%, #000 100%);
+      box-shadow:
+        0 0 0 1px rgba(56,189,248,0.1),
+        0 0 40px rgba(15,23,42,0.9);
+      overflow: hidden;
+    }
+
+    .snake-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      aspect-ratio: 1 / 1;
+      background-color: transparent;
+      /* Neon grid (faint) */
+      background-image:
+        linear-gradient(to right, rgba(56,189,248,0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56,189,248,0.07) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Overlay text when arriving + on game over */
+    .snake-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      background: radial-gradient(circle at center, rgba(15,23,42,0.22), rgba(15,23,42,0.8));
+      opacity: 1;
+      transition: opacity 0.25s ease-out;
+    }
+
+    .snake-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .snake-overlay-content {
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      background: rgba(3,7,18,0.9);
+      box-shadow:
+        0 0 12px rgba(56,189,248,0.4),
+        0 0 30px rgba(15,23,42,0.9);
+    }
+
+    /* Screen shake for death */
+    .snake-frame-inner.shake {
+      animation: snake-shake 0.4s ease-in-out;
+    }
+
+    @keyframes snake-shake {
+      0%   { transform: translate(0, 0); }
+      20%  { transform: translate(-4px, 2px); }
+      40%  { transform: translate(3px, -3px); }
+      60%  { transform: translate(-2px, 4px); }
+      80%  { transform: translate(3px, 1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Neon death burst overlay */
+    .snake-death-burst {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, rgba(248,113,113,0.4), transparent 60%);
+      opacity: 0;
+      animation: snake-burst 0.45s ease-out forwards;
+    }
+
+    @keyframes snake-burst {
+      from { opacity: 0.9; transform: scale(1); }
+      to   { opacity: 0;   transform: scale(1.15); }
+    }
+
+    #snakeStatus {
+      min-height: 2.5em;
+    }
+
+    /* Make Play Again button full-width on small screens */
+    @media (max-width: 767.98px) {
+      #snakeRestartBtn {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('snakeCanvas');
+      const ctx = canvas.getContext('2d');
+      const scoreEl = document.getElementById('snakeScore');
+      const highScoreEl = document.getElementById('snakeHighScore');
+      const restartBtn = document.getElementById('snakeRestartBtn');
+      const statusEl = document.getElementById('snakeStatus');
+      const overlayEl = document.getElementById('snakeOverlay');
+      const frameInner = document.querySelector('.snake-frame-inner');
+
+      const GRID_SIZE = 24;              // 24x24 grid
+      const STEP_MS = 90;                // speed (lower = faster)
+      const STORAGE_KEY = 'caSnakeHighScore';
+
+      let tileSize = 16;
+      let snake = [];
+      let direction = { x: 1, y: 0 };
+      let nextDirection = { x: 1, y: 0 };
+      let food = { x: 5, y: 5 };
+      let score = 0;
+      let highScore = 0;
+      let lastTime = 0;
+      let gameOver = false;
+      let started = false;
+      let lastFoodFlashTime = 0;
+      let lastFoodPos = null;
+      let deathBurstEl = null;
+      let deathTime = 0;
+
+      function loadHighScore() {
+        const raw = window.localStorage.getItem(STORAGE_KEY);
+        const value = raw ? parseInt(raw, 10) : 0;
+        highScore = Number.isFinite(value) ? value : 0;
+        highScoreEl.textContent = highScore;
+      }
+
+      function saveHighScore() {
+        window.localStorage.setItem(STORAGE_KEY, String(highScore));
+      }
+
+      function updateScore() {
+        scoreEl.textContent = score;
+        if (score > highScore) {
+          highScore = score;
+          highScoreEl.textContent = highScore;
+          saveHighScore();
+        }
+      }
+
+      function resizeCanvas() {
+        const maxSize = 520;
+        const containerWidth = frameInner.clientWidth || window.innerWidth;
+        const size = Math.min(maxSize, containerWidth - 16);
+        canvas.width = size;
+        canvas.height = size;
+        tileSize = size / GRID_SIZE;
+        // Keep grid crisp-ish on resize by adjusting background size
+        canvas.style.backgroundSize = `${tileSize}px ${tileSize}px`;
+      }
+
+      function randomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      function placeFood() {
+        let x, y, collision;
+        do {
+          x = randomInt(GRID_SIZE);
+          y = randomInt(GRID_SIZE);
+          collision = snake.some(seg => seg.x === x && seg.y === y);
+        } while (collision);
+        food = { x, y };
+      }
+
+      function resetGame() {
+        const mid = Math.floor(GRID_SIZE / 2);
+        snake = [
+          { x: mid,     y: mid },
+          { x: mid - 1, y: mid },
+          { x: mid - 2, y: mid }
+        ];
+        direction = { x: 1, y: 0 };
+        nextDirection = { x: 1, y: 0 };
+        placeFood();
+        score = 0;
+        updateScore();
+        gameOver = false;
+        started = false;
+        lastTime = 0;
+        lastFoodPos = null;
+        statusEl.textContent = 'Press Space or Play again to start.';
+        overlayEl.classList.remove('hidden');
+
+        if (deathBurstEl) {
+          deathBurstEl.remove();
+          deathBurstEl = null;
+        }
+      }
+
+      function startGameIfNeeded() {
+        if (!started) {
+          started = true;
+          gameOver = false;
+          statusEl.textContent = 'Game running…';
+          overlayEl.classList.add('hidden');
+        }
+      }
+
+      function handleDirectionChange(key) {
+        let newDir = null;
+        if (key === 'ArrowUp'   || key === 'w' || key === 'W') newDir = { x: 0, y: -1 };
+        if (key === 'ArrowDown' || key === 's' || key === 'S') newDir = { x: 0, y: 1 };
+        if (key === 'ArrowLeft' || key === 'a' || key === 'A') newDir = { x: -1, y: 0 };
+        if (key === 'ArrowRight'|| key === 'd' || key === 'D') newDir = { x: 1, y: 0 };
+
+        if (!newDir) return;
+
+        // Prevent instant reversal into self
+        if (newDir.x === -direction.x && newDir.y === -direction.y) return;
+
+        nextDirection = newDir;
+        startGameIfNeeded();
+      }
+
+      function endGame() {
+        if (gameOver) return;
+        gameOver = true;
+        deathTime = performance.now();
+        statusEl.textContent = `Game over — final score ${score}. Press Space or Play again.`;
+        overlayEl.classList.remove('hidden');
+
+        // Screen shake
+        frameInner.classList.add('shake');
+        setTimeout(() => frameInner.classList.remove('shake'), 450);
+
+        // Neon red burst overlay
+        deathBurstEl = document.createElement('div');
+        deathBurstEl.className = 'snake-death-burst';
+        frameInner.appendChild(deathBurstEl);
+        setTimeout(() => {
+          if (deathBurstEl) {
+            deathBurstEl.remove();
+            deathBurstEl = null;
+          }
+        }, 500);
+      }
+
+      function stepGame() {
+        if (!started || gameOver) return;
+
+        direction = nextDirection;
+        const head = snake[0];
+        const newHead = { x: head.x + direction.x, y: head.y + direction.y };
+
+        // Wall collision
+        if (newHead.x < 0 || newHead.x >= GRID_SIZE ||
+            newHead.y < 0 || newHead.y >= GRID_SIZE) {
+          endGame();
+          return;
+        }
+
+        // Self collision
+        if (snake.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
+          endGame();
+          return;
+        }
+
+        snake.unshift(newHead);
+
+        // Food eaten?
+        if (newHead.x === food.x && newHead.y === food.y) {
+          score += 1;
+          updateScore();
+          lastFoodPos = { ...food };
+          lastFoodFlashTime = performance.now();
+          placeFood();
+        } else {
+          snake.pop();
+        }
+      }
+
+      function drawSnake(timestamp) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Neon food flash (localised to last food position)
+        if (lastFoodPos && timestamp - lastFoodFlashTime < 280) {
+          const t = (timestamp - lastFoodFlashTime) / 280;
+          const radius = tileSize * (1.1 + t * 0.8);
+          const alpha = 0.7 * (1 - t);
+          const cx = (lastFoodPos.x + 0.5) * tileSize;
+          const cy = (lastFoodPos.y + 0.5) * tileSize;
+          const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+          grad.addColorStop(0, `rgba(56,189,248,${alpha})`);
+          grad.addColorStop(1, 'rgba(56,189,248,0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Pulsing food orb
+        const pulse = 0.35 + 0.09 * Math.sin(timestamp / 140);
+        const foodRadius = tileSize * pulse;
+        const fx = (food.x + 0.5) * tileSize;
+        const fy = (food.y + 0.5) * tileSize;
+
+        const fg = ctx.createRadialGradient(fx, fy, 0, fx, fy, foodRadius * 1.6);
+        fg.addColorStop(0, 'rgba(244,249,255,0.95)');
+        fg.addColorStop(0.4, 'rgba(56,189,248,0.85)');
+        fg.addColorStop(1, 'rgba(56,189,248,0.05)');
+        ctx.fillStyle = fg;
+        ctx.beginPath();
+        ctx.arc(fx, fy, foodRadius * 1.6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Snake – pixel chunk style with heavy neon glow
+        ctx.save();
+        ctx.shadowColor = 'rgba(56,189,248,0.9)';
+        ctx.shadowBlur = tileSize * 0.9;
+
+        snake.forEach((seg, index) => {
+          const isHead = index === 0;
+          const x = seg.x * tileSize;
+          const y = seg.y * tileSize;
+          const inset = tileSize * 0.07;
+
+          ctx.fillStyle = isHead
+            ? '#e0faff'
+            : '#8be9ff';
+
+          ctx.fillRect(
+            x + inset,
+            y + inset,
+            tileSize - inset * 2,
+            tileSize - inset * 2
+          );
+
+          if (isHead) {
+            // extra bright core
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(
+              x + tileSize * 0.25,
+              y + tileSize * 0.25,
+              tileSize * 0.5,
+              tileSize * 0.5
+            );
+          }
+        });
+
+        ctx.restore();
+      }
+
+      function gameLoop(timestamp) {
+        requestAnimationFrame(gameLoop);
+
+        if (!lastTime) lastTime = timestamp;
+        const delta = timestamp - lastTime;
+        if (delta >= STEP_MS) {
+          lastTime = timestamp;
+          if (!gameOver) {
+            stepGame();
+          }
+        }
+
+        drawSnake(timestamp);
+      }
+
+      // Events
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === ' ' || event.code === 'Space') {
+          // Space -> start / restart
+          event.preventDefault();
+          if (gameOver) {
+            resetGame();
+          }
+          startGameIfNeeded();
+          return;
+        }
+
+        handleDirectionChange(event.key);
+
+        // If game over and any direction key is pressed, restart
+        if (gameOver && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d','W','A','S','D'].includes(event.key)) {
+          resetGame();
+          startGameIfNeeded();
+        }
+      });
+
+      restartBtn.addEventListener('click', () => {
+        resetGame();
+        startGameIfNeeded();
+      });
+
+      // Initial state
+      loadHighScore();
+      resizeCanvas();
+      resetGame();
+      requestAnimationFrame(gameLoop);
+    })();
+  </script>
+</body>
+</html>
