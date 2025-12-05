@@ -137,39 +137,33 @@
       </article>
     </div>
 
-    <!-- SHARE THIS TOOL -->
-    <div class="col-lg-4">
-      <article class="page-meta-card page-meta-card--share h-100">
-        <div class="page-meta-card-inner">
-          <h3 class="h6 text-uppercase text-muted mb-2">Share this tool</h3>
-          <p class="small text-secondary mb-2">
-            If you’d like to share this page with someone else, you can use the short link below.
-          </p>
+<!-- SHARE THIS TOOL -->
+<div class="col-lg-4">
+  <div class="share-card h-100">
+    <h3 class="h6 text-uppercase text-muted mb-2">Share this tool</h3>
+    <p class="small text-secondary mb-2">
+      If you’d like to share this page with someone else, you can use the short link below.
+    </p>
 
-          <!-- Short link pill – this is the bit that glows & copies -->
-          <button
-            class="short-link-pill"
-            type="button"
-            data-short-url="https://zilchy.link/password">
-            <span class="short-link-prefix">https://www.</span>
-            <span class="short-link-main">zilchy.link/password</span>
-          </button>
-
-          <p class="small text-secondary mt-2 mb-1">
-            Or visit <a href="https://zilchy.link" class="link-light" target="_blank" rel="noopener">
-              zilchy.link
-            </a> and enter the code <code>password</code>.
-          </p>
-
-          <p class="short-link-status small text-secondary mb-0" aria-live="polite"></p>
-
-          <p class="small text-secondary mt-3 mb-0">
-            Zilchy.link is my invite-only, GitHub-backed short link service. Links are static, FOSS,
-            and only point to safe, non-malicious content.
-          </p>
-        </div>
-      </article>
+    <div class="share-url-row mb-2">
+      <span class="share-url-prefix">https://www.</span>
+      <button
+        class="share-url-main"
+        id="copyShareLinkBtn"
+        type="button"
+        data-share-url="https://www.zilchy.link/password"
+      >
+        <span class="share-url-text">zilchy.link/password</span>
+      </button>
     </div>
+
+    <p class="small text-secondary mb-0">
+      Zilchy.link is my invite-only, GitHub-backed short link service. Links are static, FOSS,
+      and only point to safe, non-malicious content.
+    </p>
+  </div>
+</div>
+
   </div>
 </section>
 
