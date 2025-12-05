@@ -460,3 +460,84 @@ select:focus {
   }
 }
 
+/* Questions / change-log meta cards */
+.questions-box {
+  background: rgba(0, 102, 255, 0.08); /* subtle blue wash */
+  border: 1px solid rgba(0, 102, 255, 0.15);
+  border-radius: 10px;
+  padding: 18px;
+}
+
+/* Zilchy-style share card */
+.share-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(0, 255, 204, 0.12), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(255, 0, 153, 0.16), transparent 55%),
+    linear-gradient(135deg, #050816 0%, #060b1e 45%, #120420 100%);
+  border: 1px solid rgba(120, 180, 255, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.7),
+    0 18px 35px rgba(0, 0, 0, 0.85),
+    0 0 28px rgba(0, 180, 255, 0.15);
+}
+
+/* subtle grid overlay */
+.share-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* bring content above overlay */
+.share-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* share URL pill */
+.share-url-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(180, 220, 255, 0.3);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+.share-url-prefix {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
+}
+
+.share-url-main {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: #e5f2ff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.share-url-main:hover,
+.share-url-main:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+/* feedback when copied */
+.share-url-main.copied .share-url-text {
+  color: #7bffcf;
+}
