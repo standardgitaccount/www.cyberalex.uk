@@ -102,68 +102,97 @@
     cannot be recovered.
   </p>
 
-  <div class="card card-raise mb-3">
-    <div class="card-body">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#encrypt-tab" aria-controls="encrypt-tab" role="tab" data-toggle="tab">
-            Encrypt
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#decrypt-tab" aria-controls="decrypt-tab" role="tab" data-toggle="tab">
-            Decrypt
-          </a>
-        </li>
-      </ul>
+ <div class="card card-raise mb-3">
+  <div class="card-body">
+    <ul class="nav nav-tabs" id="fileCryptoTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="encrypt-tab-button"
+          data-bs-toggle="tab"
+          data-bs-target="#encrypt-tab"
+          type="button"
+          role="tab"
+          aria-controls="encrypt-tab"
+          aria-selected="true"
+        >
+          Encrypt
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="decrypt-tab-button"
+          data-bs-toggle="tab"
+          data-bs-target="#decrypt-tab"
+          type="button"
+          role="tab"
+          aria-controls="decrypt-tab"
+          aria-selected="false"
+        >
+          Decrypt
+        </button>
+      </li>
+    </ul>
 
-      <div class="tab-content" style="margin-top: 15px;">
-        <!-- Encrypt tab -->
-        <div role="tabpanel" class="tab-pane active" id="encrypt-tab">
-          <form id="encrypt-form" novalidate>
-            <div class="form-group">
-              <label for="encrypt-file" class="control-label">File to encrypt</label>
-              <input type="file" id="encrypt-file" class="form-control" required>
-            </div>
+    <div class="tab-content mt-3" id="fileCryptoTabContent">
+      <!-- Encrypt tab -->
+      <div
+        class="tab-pane fade show active"
+        id="encrypt-tab"
+        role="tabpanel"
+        aria-labelledby="encrypt-tab-button"
+      >
+        <form id="encrypt-form" novalidate>
+          <div class="mb-3">
+            <label for="encrypt-file" class="form-label">File to encrypt</label>
+            <input type="file" id="encrypt-file" class="form-control" required>
+          </div>
 
-            <div class="form-group">
-              <label for="encrypt-password" class="control-label">Password</label>
-              <input type="password" id="encrypt-password" class="form-control" autocomplete="new-password" required>
-            </div>
+          <div class="mb-3">
+            <label for="encrypt-password" class="form-label">Password</label>
+            <input type="password" id="encrypt-password" class="form-control" autocomplete="new-password" required>
+          </div>
 
-            <div class="form-group">
-              <label for="encrypt-password-confirm" class="control-label">Confirm password</label>
-              <input type="password" id="encrypt-password-confirm" class="form-control" autocomplete="new-password" required>
-              <p class="help-block small text-secondary">
-                Choose a strong password. If you lose or forget it, the file cannot be decrypted.
-              </p>
-            </div>
+          <div class="mb-3">
+            <label for="encrypt-password-confirm" class="form-label">Confirm password</label>
+            <input type="password" id="encrypt-password-confirm" class="form-control" autocomplete="new-password" required>
+            <p class="small text-secondary mb-0">
+              Choose a strong password. If you lose or forget it, the file cannot be decrypted.
+            </p>
+          </div>
 
-            <button type="submit" class="btn btn-primary btn-sm">Encrypt file</button>
-            <p id="encrypt-status" class="small text-secondary mt-2" aria-live="polite"></p>
-          </form>
-        </div>
+          <button type="submit" class="btn btn-primary btn-sm">Encrypt file</button>
+          <p id="encrypt-status" class="small text-secondary mt-2" aria-live="polite"></p>
+        </form>
+      </div>
 
-        <!-- Decrypt tab -->
-        <div role="tabpanel" class="tab-pane" id="decrypt-tab">
-          <form id="decrypt-form" novalidate>
-            <div class="form-group">
-              <label for="decrypt-file" class="control-label">Encrypted file (.caenc)</label>
-              <input type="file" id="decrypt-file" class="form-control" required>
-            </div>
+      <!-- Decrypt tab -->
+      <div
+        class="tab-pane fade"
+        id="decrypt-tab"
+        role="tabpanel"
+        aria-labelledby="decrypt-tab-button"
+      >
+        <form id="decrypt-form" novalidate>
+          <div class="mb-3">
+            <label for="decrypt-file" class="form-label">Encrypted file (.caenc)</label>
+            <input type="file" id="decrypt-file" class="form-control" required>
+          </div>
 
-            <div class="form-group">
-              <label for="decrypt-password" class="control-label">Password</label>
-              <input type="password" id="decrypt-password" class="form-control" autocomplete="current-password" required>
-            </div>
+          <div class="mb-3">
+            <label for="decrypt-password" class="form-label">Password</label>
+            <input type="password" id="decrypt-password" class="form-control" autocomplete="current-password" required>
+          </div>
 
-            <button type="submit" class="btn btn-primary btn-sm">Decrypt file</button>
-            <p id="decrypt-status" class="small text-secondary mt-2" aria-live="polite"></p>
-          </form>
-        </div>
+          <button type="submit" class="btn btn-primary btn-sm">Decrypt file</button>
+          <p id="decrypt-status" class="small text-secondary mt-2" aria-live="polite"></p>
+        </form>
       </div>
     </div>
   </div>
+</div>
+
 
   <p class="fs-7 text-secondary">
     Cryptography details: AES-256-GCM with a key derived from your password using PBKDF2 (SHA-256)
