@@ -65,13 +65,24 @@
       <div class="row g-4 align-items-start">
         <div class="col-lg-7">
           <p class="lead mb-3">
-            Encrypt and decrypt files
+            Client-Side File Encryption and Decryption Tool – A browser-based utility that applies modern AES-GCM encryption to your files using a password-derived key, with all cryptographic operations performed locally for maximum privacy.
           </p>
-          <p class="small text-secondary mb-0">
-          Encrypt and decrypt files locally in your browser using a password-derived key.
-    Files and passwords never leave this device. If you forget the password, the data
-    cannot be recovered.
-          </p>
+           <p class="small text-secondary">
+        In the <strong>Encrypt</strong> tab above, choose a file, set a password, and click
+        <em>Encrypt file</em>. The browser derives a key from your password, encrypts the file, and
+        downloads a new file with the <code>.caenc</code> extension. Keep both the encrypted file and
+        the password somewhere safe.
+      </p>
+      <p class="small text-secondary">
+        In the <strong>Decrypt</strong> tab, select a previously encrypted <code>.caenc</code> file and
+        enter the same password. If everything matches, the browser will download a decrypted copy.
+        If the password is wrong or the file has been modified, decryption will fail.
+      </p>
+      <p class="small text-secondary mb-0">
+        All of this happens locally in your browser. The file data and password are never sent to
+        this site, a server, or any external service. Closing the page clears everything from
+        memory apart from any copies you have saved to disk.
+      </p>
         </div>
         <div class="col-lg-5">
           <div class="card h-100 card-raise">
@@ -209,26 +220,6 @@
   </p>
 </section>
 
-    <!-- HOW TO USE / INTERPRET -->
-    <section class="mb-5" aria-labelledby="how-to-use-heading">
-      <h2 id="how-to-use-heading" class="h4 mb-3">How to use this tool</h2>
-      <p class="small text-secondary">
-        In the <strong>Encrypt</strong> tab above, choose a file, set a password, and click
-        <em>Encrypt file</em>. The browser derives a key from your password, encrypts the file, and
-        downloads a new file with the <code>.caenc</code> extension. Keep both the encrypted file and
-        the password somewhere safe.
-      </p>
-      <p class="small text-secondary">
-        In the <strong>Decrypt</strong> tab, select a previously encrypted <code>.caenc</code> file and
-        enter the same password. If everything matches, the browser will download a decrypted copy.
-        If the password is wrong or the file has been modified, decryption will fail.
-      </p>
-      <p class="small text-secondary mb-0">
-        All of this happens locally in your browser. The file data and password are never sent to
-        this site, a server, or any external service. Closing the page clears everything from
-        memory apart from any copies you have saved to disk.
-      </p>
-    </section>
 
     <!-- CONTEXT, THREAT MODEL, LIMITATIONS -->
     <section class="mb-5" aria-labelledby="context-heading">
