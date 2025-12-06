@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AES Encryption Tool by CyberAlex – encrypt and decrypt text in the browser with local-only processing for privacy and security.">
+  <meta name="author" content="Alex">
+  <meta name="robots" content="index, follow">
+
+  <title>Encryption Tool – CyberAlex</title>
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.cyberalex.uk/tools/encrypt.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Encryption Tool – CyberAlex">
+  <meta property="og:description" content="Encrypt and decrypt text directly in your browser using AES, with all processing performed locally to keep your data private and secure.">
+  <meta property="og:url" content="https://www.cyberalex.uk/tools/encrypt.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CyberAlex">
+  <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Encryption Tool – CyberAlex">
+  <meta name="twitter:description" content="Browser-based AES encryption and decryption with local-only processing.">
+  <meta name="twitter:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="/css/main.css">
+
+  <link rel="icon" href="/logo.png" type="image/png">
+</head>
+
+<body class="theme-dark">
+  <!-- Skip link for accessibility -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header loaded via JS -->
+  <header id="site-header" aria-label="Main site header"></header>
+
+  <main id="main-content" class="container py-4" tabindex="-1">
+    <!-- BREADCRUMBS + PAGE TITLE BLOCK -->
+    <section class="mb-4" aria-label="Page header">
+      <nav aria-label="Breadcrumb" class="mb-2">
+        <ol class="breadcrumb small mb-0">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/projects.html">Tools &amp; Projects</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Client-Side File Encryption and Decryption Tool</li>
+        </ol>
+      </nav>
+
+      <h1 class="h3 mb-1">Encryption Tool</h1>
+      <p class="text-secondary small mb-0">
+        By <a href="/about.html">Alex</a> &bull; Published: 6 November 2025 &bull; Updated: 6 November 2025
+      </p>
+    </section>
+
+    <!-- HERO / SUMMARY ROW -->
+    <section class="mb-4">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-7">
+          <p class="lead mb-3">
+            Encrypt and decrypt files
+          </p>
+          <p class="small text-secondary mb-0">
+          Encrypt and decrypt files locally in your browser using a password-derived key.
+    Files and passwords never leave this device. If you forget the password, the data
+    cannot be recovered.
+          </p>
+        </div>
+        <div class="col-lg-5">
+          <div class="card h-100 card-raise">
+            <div class="card-visual" aria-hidden="true">
+              <img src="/img/card-encryption.png" alt="" loading="lazy">
+            </div>
+            <div class="card-body small text-secondary">
+              <h2 class="h6 text-uppercase text-muted mb-2">At a Glance</h2>
+              <ul class="mb-2">
+                <li>Runs entirely in your browser – no data is sent to a server.</li>
+                <li>Uses AES in a modern browser-based implementation.</li>
+                <li>Useful for testing, demonstrations and learning.</li>
+              </ul>
+              <p class="mb-0">
+                <strong>Note:</strong> Do not paste highly sensitive data unless you fully trust the device and environment you are using.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5" aria-labelledby="file-crypto-heading">
+  <h2 id="file-crypto-heading" class="h4 mb-3">Client-Side File Encryption</h2>
+  <p class="small text-secondary mb-4">
+    Encrypt and decrypt files locally in your browser using a password-derived key.
+    Files and passwords never leave this device. If you forget the password, the data
+    cannot be recovered.
+  </p>
+
+  <div class="card card-raise mb-3">
+    <div class="card-body">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#encrypt-tab" aria-controls="encrypt-tab" role="tab" data-toggle="tab">
+            Encrypt
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#decrypt-tab" aria-controls="decrypt-tab" role="tab" data-toggle="tab">
+            Decrypt
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content" style="margin-top: 15px;">
+        <!-- Encrypt tab -->
+        <div role="tabpanel" class="tab-pane active" id="encrypt-tab">
+          <form id="encrypt-form" novalidate>
+            <div class="form-group">
+              <label for="encrypt-file" class="control-label">File to encrypt</label>
+              <input type="file" id="encrypt-file" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="encrypt-password" class="control-label">Password</label>
+              <input type="password" id="encrypt-password" class="form-control" autocomplete="new-password" required>
+            </div>
+
+            <div class="form-group">
+              <label for="encrypt-password-confirm" class="control-label">Confirm password</label>
+              <input type="password" id="encrypt-password-confirm" class="form-control" autocomplete="new-password" required>
+              <p class="help-block small text-secondary">
+                Choose a strong password. If you lose or forget it, the file cannot be decrypted.
+              </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">Encrypt file</button>
+            <p id="encrypt-status" class="small text-secondary mt-2" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <!-- Decrypt tab -->
+        <div role="tabpanel" class="tab-pane" id="decrypt-tab">
+          <form id="decrypt-form" novalidate>
+            <div class="form-group">
+              <label for="decrypt-file" class="control-label">Encrypted file (.caenc)</label>
+              <input type="file" id="decrypt-file" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="decrypt-password" class="control-label">Password</label>
+              <input type="password" id="decrypt-password" class="form-control" autocomplete="current-password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">Decrypt file</button>
+            <p id="decrypt-status" class="small text-secondary mt-2" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="fs-7 text-secondary">
+    Cryptography details: AES-256-GCM with a key derived from your password using PBKDF2 (SHA-256)
+    and a high iteration count. A random salt and IV are generated for every encryption. The encrypted
+    file format is: <code>[salt (16 bytes)][iv (12 bytes)][ciphertext]</code>.
+  </p>
+</section>
+
+
+
+
+     <!-- Standard bottom meta row: Questions / Change log / Share this tool -->
+<section class="mb-5" aria-labelledby="meta-row-heading">
+  <hr>
+  <h2 id="meta-row-heading" class="visually-hidden">Questions, change log and sharing</h2>
+
+  <div class="row g-4 align-items-stretch">
+    <!-- QUESTIONS -->
+    <div class="col-lg-4">
+      <div class="questions-box h-100">
+        <h3 class="h6 text-uppercase text-muted mb-2">Questions</h3>
+        <p class="small text-secondary mb-1">
+          If you have feedback, spot an issue, or want to suggest improvements
+          to this page or tool, you’re welcome to get in touch.
+        </p>
+        <a href="/contact.html" class="btn btn-primary btn-sm mt-auto">Contact Alex</a>
+      </div>
+    </div>
+
+    <!-- CHANGE LOG -->
+    <div class="col-lg-4">
+      <div class="questions-box h-100">
+        <h3 class="h6 text-uppercase text-muted mb-2">Changes</h3>
+        <p class="small text-secondary mb-1">
+          A record of changes to this page. 
+        </p>
+        <ul class="small text-secondary mb-0">
+          <li><strong>05-12-2025</strong> – Publication</li>
+          <!--li><strong>xx-xx-20xx</strong> – Description of future update.</li-->
+        </ul>
+        <p class="small text-secondary text-muted">Dates are in UK format (day–month–year).</p>
+      </div>
+    </div>
+
+    <!-- SHARE -->
+    <div class="col-lg-4">
+      <div class="share-card h-100">
+        <h3 class="h6 text-uppercase text-muted mb-2">Share</h3>
+        <p class="small text-secondary mb-2">
+          If you’d like to share this page with someone else, you can use the short link below.
+        </p>
+
+        <div class="share-url-row mb-2">
+          <span class="share-url-prefix">https://www.</span>
+          <button class="share-url-main"
+                  type="button"
+                  data-share-url="https://www.zilchy.link/snake">
+            <span class="share-url-text">zilchy.link/ca</span>
+          </button>
+        </div>
+
+        <p class="small text-secondary share-status mb-2" aria-live="polite"></p>
+
+        <p class="small text-secondary mb-0">
+          Zilchy.link is my own open-source short-link service. Links are hand-curated, do not track or log users, and this one simply redirects back to this page.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <!-- Footer loaded via JS -->
+  <footer id="site-footer" aria-label="Main site footer"></footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  <!-- Layout loader -->
+  <script src="/js/layout.js"></script>
+<script>
+  (function () {
+    if (!window.crypto || !window.crypto.subtle) {
+      var warn = document.createElement('p');
+      warn.className = 'text-danger small';
+      warn.textContent = 'Your browser does not support the Web Crypto API. ' +
+        'The file encryption tool is not available.';
+      var heading = document.getElementById('file-crypto-heading');
+      heading && heading.parentNode.insertBefore(warn, heading.nextSibling);
+      return;
+    }
+
+    var PBKDF2_ITERATIONS = 200000;    // Tune if needed
+    var SALT_LENGTH = 16;              // bytes
+    var IV_LENGTH = 12;                // bytes (AES-GCM recommended)
+
+    var textEncoder = new TextEncoder();
+
+    function deriveKeyFromPassword(password, salt) {
+      var passwordBytes = textEncoder.encode(password);
+      return crypto.subtle.importKey(
+        'raw',
+        passwordBytes,
+        { name: 'PBKDF2' },
+        false,
+        ['deriveKey']
+      ).then(function (baseKey) {
+        return crypto.subtle.deriveKey(
+          {
+            name: 'PBKDF2',
+            salt: salt,
+            iterations: PBKDF2_ITERATIONS,
+            hash: 'SHA-256'
+          },
+          baseKey,
+          { name: 'AES-GCM', length: 256 },
+          false,
+          ['encrypt', 'decrypt']
+        );
+      });
+    }
+
+    function concatUint8Arrays() {
+      var totalLength = 0;
+      for (var i = 0; i < arguments.length; i++) {
+        totalLength += arguments[i].length;
+      }
+      var result = new Uint8Array(totalLength);
+      var offset = 0;
+      for (var j = 0; j < arguments.length; j++) {
+        result.set(arguments[j], offset);
+        offset += arguments[j].length;
+      }
+      return result;
+    }
+
+    function downloadBlob(data, filename) {
+      var blob = new Blob([data]);
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function handleEncryptSubmit(event) {
+      event.preventDefault();
+
+      var fileInput = document.getElementById('encrypt-file');
+      var passwordInput = document.getElementById('encrypt-password');
+      var confirmInput = document.getElementById('encrypt-password-confirm');
+      var statusEl = document.getElementById('encrypt-status');
+
+      statusEl.textContent = '';
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        statusEl.textContent = 'Please choose a file to encrypt.';
+        return;
+      }
+
+      var file = fileInput.files[0];
+      var password = passwordInput.value;
+      var confirm = confirmInput.value;
+
+      if (!password) {
+        statusEl.textContent = 'Please enter a password.';
+        return;
+      }
+      if (password !== confirm) {
+        statusEl.textContent = 'Passwords do not match.';
+        return;
+      }
+
+      statusEl.textContent = 'Encrypting… please wait.';
+
+      var reader = new FileReader();
+      reader.onerror = function () {
+        statusEl.textContent = 'Error reading file.';
+      };
+      reader.onload = function (e) {
+        var fileData = e.target.result;
+        var salt = new Uint8Array(SALT_LENGTH);
+        crypto.getRandomValues(salt);
+        var iv = new Uint8Array(IV_LENGTH);
+        crypto.getRandomValues(iv);
+
+        deriveKeyFromPassword(password, salt)
+          .then(function (key) {
+            return crypto.subtle.encrypt(
+              { name: 'AES-GCM', iv: iv },
+              key,
+              fileData
+            );
+          })
+          .then(function (cipherBuffer) {
+            var cipherBytes = new Uint8Array(cipherBuffer);
+            var combined = concatUint8Arrays(salt, iv, cipherBytes);
+
+            var outName = file.name + '.caenc';
+            downloadBlob(combined, outName);
+            statusEl.textContent = 'File encrypted. Download should start automatically.';
+          })
+          .catch(function (err) {
+            console.error(err);
+            statusEl.textContent = 'Encryption failed.';
+          });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function handleDecryptSubmit(event) {
+      event.preventDefault();
+
+      var fileInput = document.getElementById('decrypt-file');
+      var passwordInput = document.getElementById('decrypt-password');
+      var statusEl = document.getElementById('decrypt-status');
+
+      statusEl.textContent = '';
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        statusEl.textContent = 'Please choose an encrypted (.caenc) file.';
+        return;
+      }
+
+      var file = fileInput.files[0];
+      var password = passwordInput.value;
+
+      if (!password) {
+        statusEl.textContent = 'Please enter the password.';
+        return;
+      }
+
+      statusEl.textContent = 'Decrypting… please wait.';
+
+      var reader = new FileReader();
+      reader.onerror = function () {
+        statusEl.textContent = 'Error reading file.';
+      };
+      reader.onload = function (e) {
+        var data = new Uint8Array(e.target.result);
+
+        if (data.length <= SALT_LENGTH + IV_LENGTH) {
+          statusEl.textContent = 'File is too short or not in the expected format.';
+          return;
+        }
+
+        var salt = data.slice(0, SALT_LENGTH);
+        var iv = data.slice(SALT_LENGTH, SALT_LENGTH + IV_LENGTH);
+        var cipherBytes = data.slice(SALT_LENGTH + IV_LENGTH);
+
+        deriveKeyFromPassword(password, salt)
+          .then(function (key) {
+            return crypto.subtle.decrypt(
+              { name: 'AES-GCM', iv: iv },
+              key,
+              cipherBytes
+            );
+          })
+          .then(function (plainBuffer) {
+            var originalName = file.name.replace(/\.caenc$/i, '');
+            if (originalName === file.name) {
+              originalName = 'decrypted-' + file.name;
+            }
+            downloadBlob(plainBuffer, originalName);
+            statusEl.textContent = 'File decrypted. Download should start automatically.';
+          })
+          .catch(function (err) {
+            console.error(err);
+            statusEl.textContent = 'Decryption failed. The password may be incorrect or the file is corrupt.';
+          });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    document.getElementById('encrypt-form').addEventListener('submit', handleEncryptSubmit);
+    document.getElementById('decrypt-form').addEventListener('submit', handleDecryptSubmit);
+  })();
+</script>
+</body>
+</html>
