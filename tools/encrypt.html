@@ -80,14 +80,18 @@
             </div>
             <div class="card-body small text-secondary">
               <h2 class="h6 text-uppercase text-muted mb-2">At a Glance</h2>
-              <ul class="mb-2">
-                <li>Runs entirely in your browser – no data is sent to a server.</li>
-                <li>Uses AES in a modern browser-based implementation.</li>
-                <li>Useful for testing, demonstrations and learning.</li>
-              </ul>
-              <p class="mb-0">
-                <strong>Note:</strong> Do not paste highly sensitive data unless you fully trust the device and environment you are using.
-              </p>
+              <ul class="small text-secondary mb-2">
+        <li>Encrypts and decrypts files locally in your browser using a password-derived key.</li>
+        <li>Uses AES-GCM with a random salt and IV for every encryption.</li>
+        <li>The password never leaves your device; there is no server-side component.</li>
+        <li>Designed as a simple, transparent helper for personal use and demonstrations.</li>
+        <li>If you forget the password, there is no recovery path – the data is effectively lost.</li>
+      </ul>
+      <p class="small text-secondary mb-0">
+        This tool is intentionally minimal. It does not try to be a full key management system or
+        compete with professional products. Instead it shows, in a concrete way, how modern
+        browser cryptography works and what “client-side only” actually means.
+      </p>
             </div>
           </div>
         </div>
@@ -204,23 +208,6 @@
     file format is: <code>[salt (16 bytes)][iv (12 bytes)][ciphertext]</code>.
   </p>
 </section>
-
-    <!-- AT A GLANCE (text version, like the password tester page) -->
-    <section class="mb-5" aria-labelledby="at-a-glance-heading">
-      <h2 id="at-a-glance-heading" class="h4 mb-3">At a glance</h2>
-      <ul class="small text-secondary mb-2">
-        <li>Encrypts and decrypts files locally in your browser using a password-derived key.</li>
-        <li>Uses AES-GCM with a random salt and IV for every encryption.</li>
-        <li>The password never leaves your device; there is no server-side component.</li>
-        <li>Designed as a simple, transparent helper for personal use and demonstrations.</li>
-        <li>If you forget the password, there is no recovery path – the data is effectively lost.</li>
-      </ul>
-      <p class="small text-secondary mb-0">
-        This tool is intentionally minimal. It does not try to be a full key management system or
-        compete with professional products. Instead it shows, in a concrete way, how modern
-        browser cryptography works and what “client-side only” actually means.
-      </p>
-    </section>
 
     <!-- HOW TO USE / INTERPRET -->
     <section class="mb-5" aria-labelledby="how-to-use-heading">
