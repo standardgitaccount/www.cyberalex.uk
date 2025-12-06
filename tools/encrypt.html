@@ -157,9 +157,13 @@
           <div class="mb-3">
             <label for="encrypt-password-confirm" class="form-label">Confirm password</label>
             <input type="password" id="encrypt-password-confirm" class="form-control" autocomplete="new-password" required>
-            <p class="small text-secondary mb-0">
-              Choose a strong password. If you lose or forget it, the file cannot be decrypted.
-            </p>
+       <p class="small text-secondary mb-0">
+        Choose a strong, unique passphrase. If you need help generating or checking one,
+        you can use my <a href="/tools/password-tester.html">Password Generator &amp; Strength Tester</a>.
+        Once set, the password cannot be recovered by anyone — including you — so keep it somewhere safe.
+      </p>
+
+
           </div>
 
           <button type="submit" class="btn btn-primary btn-sm">Encrypt file</button>
@@ -201,6 +205,120 @@
   </p>
 </section>
 
+    <!-- AT A GLANCE (text version, like the password tester page) -->
+    <section class="mb-5" aria-labelledby="at-a-glance-heading">
+      <h2 id="at-a-glance-heading" class="h4 mb-3">At a glance</h2>
+      <ul class="small text-secondary mb-2">
+        <li>Encrypts and decrypts files locally in your browser using a password-derived key.</li>
+        <li>Uses AES-GCM with a random salt and IV for every encryption.</li>
+        <li>The password never leaves your device; there is no server-side component.</li>
+        <li>Designed as a simple, transparent helper for personal use and demonstrations.</li>
+        <li>If you forget the password, there is no recovery path – the data is effectively lost.</li>
+      </ul>
+      <p class="small text-secondary mb-0">
+        This tool is intentionally minimal. It does not try to be a full key management system or
+        compete with professional products. Instead it shows, in a concrete way, how modern
+        browser cryptography works and what “client-side only” actually means.
+      </p>
+    </section>
+
+    <!-- HOW TO USE / INTERPRET -->
+    <section class="mb-5" aria-labelledby="how-to-use-heading">
+      <h2 id="how-to-use-heading" class="h4 mb-3">How to use this tool</h2>
+      <p class="small text-secondary">
+        In the <strong>Encrypt</strong> tab above, choose a file, set a password, and click
+        <em>Encrypt file</em>. The browser derives a key from your password, encrypts the file, and
+        downloads a new file with the <code>.caenc</code> extension. Keep both the encrypted file and
+        the password somewhere safe.
+      </p>
+      <p class="small text-secondary">
+        In the <strong>Decrypt</strong> tab, select a previously encrypted <code>.caenc</code> file and
+        enter the same password. If everything matches, the browser will download a decrypted copy.
+        If the password is wrong or the file has been modified, decryption will fail.
+      </p>
+      <p class="small text-secondary mb-0">
+        All of this happens locally in your browser. The file data and password are never sent to
+        this site, a server, or any external service. Closing the page clears everything from
+        memory apart from any copies you have saved to disk.
+      </p>
+    </section>
+
+    <!-- CONTEXT, THREAT MODEL, LIMITATIONS -->
+    <section class="mb-5" aria-labelledby="context-heading">
+      <h2 id="context-heading" class="h4 mb-3">Context, threat model and limitations</h2>
+      <p class="small text-secondary">
+        This tool sits in the “practical crypto” space: it shows how password-based encryption can
+        be implemented with modern browser APIs, and it is suitable for small personal files or
+        demonstrations where you want to keep data off a server. It is not a replacement for a
+        full enterprise key management system, an audited product, or a structured backup process.
+      </p>
+      <p class="small text-secondary">
+        The <strong>threat model</strong> assumed here is that your main risk is someone gaining
+        access to a copy of the encrypted file – for example, through a lost USB stick or cloud
+        account – and trying to decrypt it offline. Using a strong, unique passphrase makes that
+        offline attack impractical. What this tool does <em>not</em> protect you from is a compromised
+        device, malware with keylogging capabilities, or someone looking over your shoulder while
+        you type the password.
+      </p>
+      <p class="small text-secondary">
+        In short: if your device is already compromised, browser-based encryption cannot save you.
+        Equally, if you choose a weak or reused password, you are giving an attacker a much easier
+        job. Treat the password as seriously as you would for your primary email or password
+        manager account.
+      </p>
+      <h3 class="h6 text-uppercase text-muted mt-4 mb-2">When this tool is a good fit</h3>
+      <ul class="small text-secondary mb-2">
+        <li>Encrypting a small number of personal files before storing them somewhere you don’t fully control.</li>
+        <li>Demonstrating password-based encryption and decryption in teaching, workshops or talks.</li>
+        <li>Testing how AES-GCM and password-derived keys behave in a zero-knowledge, browser-only setup.</li>
+      </ul>
+      <h3 class="h6 text-uppercase text-muted mt-3 mb-2">When you should look for something else</h3>
+      <ul class="small text-secondary mb-0">
+        <li>You need centralised key management, access control, or audit trails.</li>
+        <li>You are handling highly regulated data with formal compliance requirements.</li>
+        <li>You need multi-user sharing, automatic backups, or integration with other systems.</li>
+      </ul>
+    </section>
+
+    <!-- CRYPTO DESIGN CHOICES -->
+    <section class="mb-5" aria-labelledby="crypto-design-heading">
+      <h2 id="crypto-design-heading" class="h4 mb-3">Cryptographic design choices</h2>
+      <p class="small text-secondary">
+        Under the hood, this page uses the <code>window.crypto.subtle</code> API provided by your
+        browser. A random <strong>salt</strong> and <strong>initialisation vector (IV)</strong> are
+        generated for every encryption. The password is turned into a key using PBKDF2 with SHA-256
+        and a high iteration count, and that key is then used with AES-256-GCM to encrypt the file.
+      </p>
+      <p class="small text-secondary">
+        The encrypted file format is deliberately simple:
+        <code>[salt (16 bytes)][iv (12 bytes)][ciphertext]</code>.
+        This makes it easier to explain, inspect, or port to another environment if you want to
+        write a compatible decryptor in a different language.
+      </p>
+      <p class="small text-secondary mb-0">
+        As with any small browser tool, this implementation relies on the security of your browser,
+        operating system and hardware. Subtle cryptographic flaws or implementation bugs are beyond
+        the scope of what a single static page can hope to detect, but the approach here follows
+        well-understood patterns from modern cryptography rather than inventing anything new.
+      </p>
+    </section>
+
+    <!-- BACKGROUND / WHY YOU SHOULD TRUST THIS -->
+    <section class="mb-5" aria-labelledby="background-heading">
+      <h2 id="background-heading" class="h4 mb-3">My background and why I built this</h2>
+      <p class="small text-secondary">
+        I built this tool as part of a broader set of CyberAlex projects to make security concepts
+        concrete and transparent. My background is in Computer Security and Cyber Security, Risk &
+        Resilience, with formal study covering cryptography, secure software design, and how real
+        attacks play out in practice rather than just in theory.
+      </p>
+      <p class="small text-secondary mb-0">
+        The goal here is not to claim this page is a silver bullet, but to give you a clear,
+        inspectable example of client-side file encryption done in a way that lines up with modern
+        guidance. If you have ideas for improvements, want to sanity-check the approach, or would
+        like to see other tools in this space, feel free to reach out via the contact link below.
+      </p>
+    </section>
 
 
 
