@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Time-in-Money Calculator — convert a price into the number of hours of labour required to pay for it. Runs entirely in your browser.">
+  <meta name="author" content="Alex">
+  <meta name="robots" content="index, follow">
+
+  <title>Time-in-Money Calculator – CyberAlex</title>
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.cyberalex.uk/tools/labour-value.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Time-in-Money Calculator – CyberAlex">
+  <meta property="og:description" content="Convert money into the hours of labour required to earn it. Fully client-side, private, and practical.">
+  <meta property="og:url" content="https://www.cyberalex.uk/tools/labour-value.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CyberAlex">
+  <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Time-in-Money Calculator – CyberAlex">
+  <meta name="twitter:description" content="Convert money into hours of work. A practical tool for understanding real-world cost.">
+  <meta name="twitter:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="/css/main.css">
+
+  <link rel="icon" href="/logo.png" type="image/png">
+</head>
+
+<body class="theme-dark">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header -->
+  <header id="site-header"></header>
+
+  <main id="main-content" class="container py-4" tabindex="-1">
+
+    <!-- Breadcrumb + title -->
+    <section class="mb-4">
+      <nav aria-label="Breadcrumb" class="mb-2">
+        <ol class="breadcrumb small mb-0">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/projects.html">Tools &amp; Projects</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Time-in-Money Calculator</li>
+        </ol>
+      </nav>
+
+      <h1 class="h3 mb-1">Time-in-Money Calculator</h1>
+      <p class="text-secondary small mb-0">
+        By <a href="/about.html">Alex</a> &bull; Published: 7 December 2025 &bull; Updated: 7 December 2025
+      </p>
+    </section>
+
+    <!-- HERO SECTION -->
+    <section class="mb-4">
+      <div class="row g-4 align-items-start">
+
+        <!-- LEFT: intro -->
+        <div class="col-lg-7">
+          <p class="lead mb-3">
+            Convert the price of an item into the number of hours of work required to pay for it.
+          </p>
+          <p class="small text-secondary mb-0">
+            This tool runs entirely in your browser. It is intended to help visualise the real-world
+            time cost behind fees, purchases or recurring expenses. No information is stored or transmitted.
+          </p>
+        </div>
+
+        <!-- RIGHT: At a glance -->
+        <div class="col-lg-5">
+          <div class="card h-100 card-raise">
+            <div class="card-body small text-secondary">
+              <h2 class="h6 text-uppercase text-muted mb-2">At a Glance</h2>
+              <ul class="mb-2">
+                <li>Convert prices into hours of labour.</li>
+                <li>Runs entirely client-side.</li>
+                <li>No data leaves your device.</li>
+                <li>Optional weekly-hours context.</li>
+              </ul>
+              <p class="mb-0">
+                <strong>Note:</strong> Calculations are approximate and intended for personal insight, not financial advice.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TOOL INTERFACE -->
+    <section class="mb-5" aria-labelledby="tool-heading">
+      <h2 id="tool-heading" class="h4 mb-3">Calculator</h2>
+
+      <div class="card card-raise">
+        <div class="card-body small">
+
+          <form id="time-money-form" class="row g-3" novalidate>
+
+            <div class="col-md-4">
+              <label class="form-label">Hourly wage</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">£</span>
+                <input type="number" min="0" step="0.01" id="hourly-rate" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Price of item</label>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">£</span>
+                <input type="number" min="0" step="0.01" id="price" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Hours per week (optional)</label>
+              <input type="number" min="1" step="0.1" id="hours-per-week" class="form-control form-control-sm" placeholder="37.5">
+              <div class="form-text">Used only to show weekly/daily context.</div>
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-sm">Calculate</button>
+            </div>
+
+          </form>
+
+          <hr class="my-3">
+
+          <div id="time-money-result" class="small text-secondary" aria-live="polite">
+            <p class="mb-0">Enter your details to begin.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- META BOXES (TOP SET) -->
+    <section class="mb-5">
+      <div class="row g-4">
+
+        <!-- Scope -->
+        <div class="col-lg-4">
+          <div class="questions-box h-100">
+            <h3 class="h6 text-uppercase text-muted mb-2">Scope</h3>
+            <p class="small text-secondary mb-0">
+              This tool offers an approximate conversion from the cost of an item to the hours of
+              labour needed to earn it. It is not a budgeting tool, nor does it consider tax,
+              overtime, bonuses, or regional wage variations.
+            </p>
+          </div>
+        </div>
+
+        <!-- Evaluation -->
+        <div class="col-lg-4">
+          <div class="questions-box h-100">
+            <h3 class="h6 text-uppercase text-muted mb-2">Evaluation</h3>
+            <p class="small text-secondary mb-0">
+              <strong>Credibility:</strong> Based on simple financial arithmetic.<br>
+              <strong>Relevance:</strong> Helps visualise real-world trade-offs.<br>
+              <strong>Authority:</strong> A practical tool, not financial advice.<br>
+              <strong>Accuracy:</strong> Depends on correct hourly input.<br>
+              <strong>Purpose:</strong> To build awareness of opportunity cost.
+            </p>
+          </div>
+        </div>
+
+        <!-- References -->
+        <div class="col-lg-4">
+          <div class="questions-box h-100" style="max-height: 220px; overflow-y: auto;">
+            <h3 class="h6 text-uppercase text-muted mb-2">References</h3>
+            <ul class="small text-secondary mb-0">
+              <li>Office for National Statistics – UK average working hours data.</li>
+              <li>Basic economic labour-value / opportunity-cost concepts.</li>
+              <li>No external data sources required for calculations.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUESTIONS / CHANGE LOG / SHARE -->
+    <section class="mb-5">
+      <hr>
+
+      <div class="row g-4 align-items-stretch">
+
+        <!-- Questions -->
+        <div class="col-lg-4">
+          <div class="questions-box h-100">
+            <h3 class="h6 text-uppercase text-muted mb-2">Questions</h3>
+            <p class="small text-secondary mb-1">
+              If you have feedback or suggestions for this tool, feel free to get in touch.
+            </p>
+            <a href="/contact.html" class="btn btn-primary btn-sm mt-auto">Contact Alex</a>
+          </div>
+        </div>
+
+        <!-- Change Log -->
+        <div class="col-lg-4">
+          <div class="questions-box h-100">
+            <h3 class="h6 text-uppercase text-muted mb-2">Changes</h3>
+            <ul class="small text-secondary mb-0">
+              <li><strong>07-12-2025</strong> – Initial publication</li>
+            </ul>
+            <p class="small text-secondary text-muted mb-0">Dates use UK format (day–month–year).</p>
+          </div>
+        </div>
+
+        <!-- Share -->
+        <div class="col-lg-4">
+          <div class="share-card h-100">
+            <h3 class="h6 text-uppercase text-muted mb-2">Share</h3>
+            <p class="small text-secondary mb-2">
+              Share this page using the link below.
+            </p>
+
+            <div class="share-url-row mb-2">
+              <span class="share-url-prefix">https://www.</span>
+              <button class="share-url-main" type="button" data-share-url="https://www.zilchy.link/value">
+                <span class="share-url-text">zilchy.link/value</span>
+              </button>
+            </div>
+
+            <p class="small text-secondary share-status mb-2" aria-live="polite"></p>
+
+            <p class="small text-secondary mb-0">
+              Zilchy.link is my own open-source short-link service. Links are hand-curated, do not track or log users, and simply redirect back to this page.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="site-footer"></footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Layout loader -->
+  <script src="/js/layout.js"></script>
+
+  <!-- Calculator Script -->
+  <script>
+  (function () {
+    const form = document.getElementById('time-money-form');
+    const output = document.getElementById('time-money-result');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const hourly = parseFloat(document.getElementById('hourly-rate').value);
+      const price = parseFloat(document.getElementById('price').value);
+      const weekly = parseFloat(document.getElementById('hours-per-week').value);
+
+      if (!hourly || hourly <= 0 || !price || price <= 0) {
+        output.innerHTML = `<p class="text-danger mb-0">Please enter a valid hourly wage and item price.</p>`;
+        return;
+      }
+
+      const hours = price / hourly;
+      let html = `<p class="mb-1">This equates to <strong>${hours.toFixed(2)} hours</strong> of work.</p>`;
+
+      if (weekly && weekly > 0) {
+        const fraction = hours / weekly;
+        const days = fraction * 5;
+
+        html += `<p class="mb-1">That's roughly <strong>${(fraction * 100).toFixed(1)}%</strong> of a standard working week (${weekly} hours).</p>`;
+        html += `<p class="mb-1">Equivalent to approximately <strong>${days.toFixed(2)} working days</strong>.</p>`;
+      }
+
+      html += `<p class="mb-0 text-muted">A simple way to understand the time value behind a purchase.</p>`;
+      output.innerHTML = html;
+    });
+  })();
+  </script>
+
+</body>
+</html>
