@@ -44,7 +44,7 @@
   <main id="main-content" class="container py-4" tabindex="-1">
 
     <!-- Breadcrumb + title -->
-    <section class="mb-4">
+    <section class="mb-4" aria-label="Page header">
       <nav aria-label="Breadcrumb" class="mb-2">
         <ol class="breadcrumb small mb-0">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -67,6 +67,8 @@
         <div class="col-lg-7">
           <p class="lead mb-3">
             Convert the price of an item into the number of hours of work required to pay for it.
+            This is a narrow but sometimes useful way of looking at cost: it turns money back into
+            time, without claiming to measure enjoyment, usefulness, or true “value”.
           </p>
           <p class="small text-secondary mb-0">
             This tool runs entirely in your browser. It is intended to help visualise the real-world
@@ -105,25 +107,27 @@
           <form id="time-money-form" class="row g-3" novalidate>
 
             <div class="col-md-4">
-              <label class="form-label">Post Tax Hourly wage</label>
+              <label class="form-label">Hourly wage</label>
               <div class="input-group input-group-sm">
                 <span class="input-group-text">£</span>
-                <input type="number" min="0" step="0.01" id="hourly-rate" class="form-control" required>
+                <input type="number" min="0" step="0.01" id="hourly-rate" class="form-control" required value="15.00">
               </div>
+              <div class="form-text">Your pay per hour (before or after tax — just be consistent).</div>
             </div>
 
             <div class="col-md-4">
               <label class="form-label">Price of item</label>
               <div class="input-group input-group-sm">
                 <span class="input-group-text">£</span>
-                <input type="number" min="0" step="0.01" id="price" class="form-control" required>
+                <input type="number" min="0" step="0.01" id="price" class="form-control" required value="70.00">
               </div>
+              <div class="form-text">Any one-off cost, fee, bill or purchase.</div>
             </div>
 
             <div class="col-md-4">
               <label class="form-label">Hours per week (optional)</label>
-              <input type="number" min="1" step="0.1" id="hours-per-week" class="form-control form-control-sm" placeholder="37.5">
-              <div class="form-text">Used only to show weekly/daily context.</div>
+              <input type="number" min="1" step="0.1" id="hours-per-week" class="form-control form-control-sm" placeholder="37.5" value="37.5">
+              <div class="form-text">Used only to show weekly and daily context.</div>
             </div>
 
             <div class="col-12">
@@ -135,17 +139,18 @@
           <hr class="my-3">
 
           <div id="time-money-result" class="small text-secondary" aria-live="polite">
-            <p class="mb-0">Enter your details to begin.</p>
+            <p class="mb-0">
+              Try the defaults above (for example, £15/hour and a £70 purchase), then adjust the
+              values to match your own situation.
+            </p>
           </div>
 
         </div>
       </div>
     </section>
 
-    <hr>
-
     <!-- META BOXES (TOP SET) -->
-    <section class="mb-5">
+    <section class="mb-5" aria-label="Page context">
       <div class="row g-4">
 
         <!-- Scope -->
@@ -154,8 +159,10 @@
             <h3 class="h6 text-uppercase text-muted mb-2">Scope</h3>
             <p class="small text-secondary mb-0">
               This tool offers an approximate conversion from the cost of an item to the hours of
-              labour needed to earn it. It is not a budgeting tool, nor does it consider tax,
-              overtime, bonuses, or regional wage variations.
+              labour needed to earn it. It deliberately focuses on a single dimension: time spent
+              earning. It does <em>not</em> account for subjective value, enjoyment, usefulness, or
+              wider economic factors such as supply, demand or brand perception. It is a lens, not a
+              verdict on whether something is “worth it”.
             </p>
           </div>
         </div>
@@ -165,11 +172,11 @@
           <div class="questions-box h-100">
             <h3 class="h6 text-uppercase text-muted mb-2">Evaluation</h3>
             <p class="small text-secondary mb-0">
-              <strong>Credibility:</strong> Based on simple financial arithmetic.<br>
-              <strong>Relevance:</strong> Helps visualise real-world trade-offs.<br>
-              <strong>Authority:</strong> A practical tool, not financial advice.<br>
-              <strong>Accuracy:</strong> Depends on correct hourly input.<br>
-              <strong>Purpose:</strong> To build awareness of opportunity cost.
+              <strong>Credibility:</strong> Uses basic arithmetic on income and price.<br>
+              <strong>Relevance:</strong> Helpful for visualising the time cost of purchases or fees.<br>
+              <strong>Authority:</strong> A simple personal finance perspective, not economic or moral advice.<br>
+              <strong>Accuracy:</strong> Depends entirely on correct hourly input; ignores tax and benefits.<br>
+              <strong>Purpose:</strong> To prompt reflection on opportunity cost — not to judge what you “should” buy.
             </p>
           </div>
         </div>
@@ -179,9 +186,9 @@
           <div class="questions-box h-100" style="max-height: 220px; overflow-y: auto;">
             <h3 class="h6 text-uppercase text-muted mb-2">References</h3>
             <ul class="small text-secondary mb-0">
-              <li>Office for National Statistics – UK average working hours data.</li>
-              <li>Basic economic labour-value / opportunity-cost concepts.</li>
-              <li>No external data sources required for calculations.</li>
+              <li>Basic labour-value and opportunity-cost concepts from introductory economics.</li>
+              <li>Office for National Statistics – UK data on average working hours and earnings.</li>
+              <li>No external data sources are queried or used in calculations; all inputs come from you.</li>
             </ul>
           </div>
         </div>
@@ -190,8 +197,9 @@
     </section>
 
     <!-- QUESTIONS / CHANGE LOG / SHARE -->
-    <section class="mb-5">
-      
+    <section class="mb-5" aria-labelledby="meta-row-heading">
+      <hr>
+      <h2 id="meta-row-heading" class="visually-hidden">Questions, change log and sharing</h2>
 
       <div class="row g-4 align-items-stretch">
 
@@ -200,7 +208,8 @@
           <div class="questions-box h-100">
             <h3 class="h6 text-uppercase text-muted mb-2">Questions</h3>
             <p class="small text-secondary mb-1">
-              If you have feedback or suggestions for this tool, feel free to get in touch.
+              If you have feedback, spot an issue, or want to suggest improvements
+              to this page or tool, you’re welcome to get in touch.
             </p>
             <a href="/contact.html" class="btn btn-primary btn-sm mt-auto">Contact Alex</a>
           </div>
@@ -211,7 +220,7 @@
           <div class="questions-box h-100">
             <h3 class="h6 text-uppercase text-muted mb-2">Changes</h3>
             <ul class="small text-secondary mb-0">
-              <li><strong>07-12-2025</strong> – Initial publication</li>
+              <li><strong>07-12-2025</strong> – Initial publication and conceptual clarifications.</li>
             </ul>
             <p class="small text-secondary text-muted mb-0">Dates use UK format (day–month–year).</p>
           </div>
@@ -222,12 +231,14 @@
           <div class="share-card h-100">
             <h3 class="h6 text-uppercase text-muted mb-2">Share</h3>
             <p class="small text-secondary mb-2">
-              Share this page using the link below.
+              If you’d like to share this page with someone else, you can use the short link below.
             </p>
 
             <div class="share-url-row mb-2">
               <span class="share-url-prefix">https://www.</span>
-              <button class="share-url-main" type="button" data-share-url="https://www.zilchy.link/value">
+              <button class="share-url-main"
+                      type="button"
+                      data-share-url="https://www.zilchy.link/value">
                 <span class="share-url-text">zilchy.link/value</span>
               </button>
             </div>
@@ -235,7 +246,7 @@
             <p class="small text-secondary share-status mb-2" aria-live="polite"></p>
 
             <p class="small text-secondary mb-0">
-              Zilchy.link is my own open-source short-link service. Links are hand-curated, do not track or log users, and simply redirect back to this page.
+              Zilchy.link is my own open-source short-link service. Links are hand-curated, do not track or log users, and this one simply redirects back to this page.
             </p>
           </div>
         </div>
@@ -263,27 +274,49 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const hourly = parseFloat(document.getElementById('hourly-rate').value);
-      const price = parseFloat(document.getElementById('price').value);
-      const weekly = parseFloat(document.getElementById('hours-per-week').value);
+      const hourlyInput = document.getElementById('hourly-rate');
+      const priceInput = document.getElementById('price');
+      const weeklyInput = document.getElementById('hours-per-week');
+
+      const hourly = parseFloat(hourlyInput.value);
+      const price = parseFloat(priceInput.value);
+      const weekly = parseFloat(weeklyInput.value);
 
       if (!hourly || hourly <= 0 || !price || price <= 0) {
-        output.innerHTML = `<p class="text-danger mb-0">Please enter a valid hourly wage and item price.</p>`;
+        output.innerHTML = '<p class="text-danger mb-0">Please enter a valid hourly wage and item price (both greater than zero).</p>';
         return;
       }
 
+      const warnings = [];
+
+      // Very rough sanity checks – not strict, just helpful hints.
+      if (hourly > 200) {
+        warnings.push('The hourly rate entered is very high. Did you accidentally enter an annual salary instead of an hourly value?');
+      } else if (hourly < 1) {
+        warnings.push('The hourly rate entered is very low. Please check that this is intentional.');
+      }
+
+      if (price > 100000) {
+        warnings.push('The price entered is unusually high. Make sure this is the cost you intended to analyse.');
+      }
+
       const hours = price / hourly;
-      let html = `<p class="mb-1">This equates to <strong>${hours.toFixed(2)} hours</strong> of work.</p>`;
+      let html = '<p class="mb-1">This equates to <strong>' + hours.toFixed(2) + ' hours</strong> of work.</p>';
 
       if (weekly && weekly > 0) {
         const fraction = hours / weekly;
         const days = fraction * 5;
 
-        html += `<p class="mb-1">That's roughly <strong>${(fraction * 100).toFixed(1)}%</strong> of a standard working week (${weekly} hours).</p>`;
-        html += `<p class="mb-1">Equivalent to approximately <strong>${days.toFixed(2)} working days</strong>.</p>`;
+        html += '<p class="mb-1">That\'s roughly <strong>' + (fraction * 100).toFixed(1) + '%</strong> of a standard working week (' + weekly + ' hours).</p>';
+        html += '<p class="mb-1">Equivalent to approximately <strong>' + days.toFixed(2) + ' working days</strong>.</p>';
       }
 
-      html += `<p class="mb-0 text-muted">A simple way to understand the time value behind a purchase.</p>`;
+      if (warnings.length > 0) {
+        html += '<p class="mb-1 text-warning">' + warnings.join(' ') + '</p>';
+      }
+
+      html += '<p class="mb-0 text-muted">This is a simple time-cost view. It does not measure enjoyment, usefulness, necessity, or true value — only hours worked.</p>';
+
       output.innerHTML = html;
     });
   })();
