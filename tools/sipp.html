@@ -47,7 +47,7 @@
 
     <h1 class="h3 mb-1">SIPP Projection Tool</h1>
     <p class="text-secondary small mb-0">
-      By <a href="/about.html">Alex</a> &bull; Published: 05 December 2025
+      By <a href="/about.html">Alex</a> &bull; Updated: 23 December 2025
     </p>
   </section>
 
@@ -224,7 +224,7 @@
         </p>
         <ul class="small text-secondary mb-0">
           <li><strong>03-06-2025</strong> – <a href="https://archive.cyberalex.uk/sipp.html" target="_blank">Original Publication</a></li>
-          <li><strong>23-12-2025</strong> – Updated</li>
+          <li><strong>23-12-2025</strong> – Significant Improvements</li>
           <!--li><strong>xx-xx-20xx</strong> – Description of future update.</li-->
         </ul>
         <p class="small text-secondary text-muted">Dates are in UK format (day–month–year).</p>
@@ -243,7 +243,7 @@
           <span class="share-url-prefix">https://www.</span>
           <button class="share-url-main"
                   type="button"
-                  data-share-url="https://www.zilchy.link/snake">
+                  data-share-url="https://www.zilchy.link/sipp">
             <span class="share-url-text">zilchy.link/sipp</span>
           </button>
         </div>
@@ -266,56 +266,349 @@
 <script src="/js/layout.js"></script>
 
 <script>
-function calculate() {
-  const dob = new Date(document.getElementById('dob').value);
-  if (isNaN(dob)) return alert("Please enter your date of birth.");
+/**
+ * SIPP Projection Tool — auditable maths
+ * - Earliest access age uses UK NMPA logic (55 now; 57 from 6 Apr 2028) for most people.
+ * - We determine whether the user reaches age 55 before 6 Apr 2028.
+ * - This DOES NOT attempt to model protected pension ages, ill-health access, scheme rules, etc.
+ */
 
-  const today = new Date();
-  const age = (today - dob) / (365.25 * 24 * 3600 * 1000);
-  const accessAge = (dob < new Date('1973-04-06')) ? 55 : 57;
+const NMPA_CHANGE_DATE = new Date('2028-04-06T00:00:00Z'); // 6 April 2028
 
-  document.getElementById('retirementAge').value = accessAge;
+function money(n) {
+  if (!isFinite(n)) return '—';
+  return Math.round(n).toLocaleString('en-GB');
+}
 
-  const years = accessAge - age;
-  const months = Math.max(0, Math.floor(years * 12));
+function parseNum(id, fallback = 0) {
+  const v = parseFloat(document.getElementById(id).value);
+  return isFinite(v) ? v : fallback;
+}
 
-  const pot = parseFloat(document.getElementById('currentPot').value);
-  const contrib = parseFloat(document.getElementById('contribution').value);
-  const growth = parseFloat(document.getElementById('growth').value) / 100;
-  const variance = parseFloat(document.getElementById('variance').value) / 100;
-  const type = document.getElementById('contributionType').value;
+function getDob() {
+  const raw = document.getElementById('dob').value;
+  const d = new Date(raw);
+  return isNaN(d) ? null : d;
+}
 
-  const grossMonthly = type === "net" ? contrib / 0.8 : contrib;
-  const rates = [growth - variance, growth, growth + variance];
+function addYears(date, years) {
+  const d = new Date(date.getTime());
+  d.setFullYear(d.getFullYear() + years);
+  return d;
+}
 
-  function project(rate) {
-    const r = rate / 12;
-    let total = pot;
-    for (let i = 0; i < months; i++) {
-      total = total * (1 + r) + grossMonthly;
-    }
-    return total;
+function wholeYearsAge(dob, asOf = new Date()) {
+  let age = asOf.getFullYear() - dob.getFullYear();
+  const m = asOf.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && asOf.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+function computeAccessAgeFromDob(dob) {
+  // If you reach 55 BEFORE 6 Apr 2028, NMPA=55; otherwise NMPA=57 (for most people).
+  // This is a practical rule-of-thumb consistent with public guidance.
+  const dateAt55 = addYears(dob, 55);
+  return (dateAt55 < NMPA_CHANGE_DATE) ? 55 : 57;
+}
+
+function monthsUntilAge(dob, targetAge, asOf = new Date()) {
+  // Count whole months from "asOf" until the date at which the user turns targetAge.
+  // We do this by comparing YYYY-MM month boundaries.
+  const target = addYears(dob, targetAge);
+
+  // If already past target birthday, return 0 months.
+  if (asOf >= target) return 0;
+
+  // Compute months difference between (asOf year-month) and (target year-month),
+  // then adjust if the day-of-month hasn't reached yet.
+  const y1 = asOf.getFullYear(), m1 = asOf.getMonth(), d1 = asOf.getDate();
+  const y2 = target.getFullYear(), m2 = target.getMonth(), d2 = target.getDate();
+
+  let months = (y2 - y1) * 12 + (m2 - m1);
+
+  // If we're past the target day in the month, the "final month" isn't fully ahead.
+  // If we're before the target day, we still have that month to go.
+  if (d1 > d2) months -= 1;
+
+  return Math.max(0, months);
+}
+
+function fvClosedForm(PV, pmt, monthlyRate, nMonths) {
+  // FV = PV*(1+r)^n + pmt*(((1+r)^n - 1)/r)
+  // Edge case: r == 0 => FV = PV + pmt*n
+  if (nMonths <= 0) return PV;
+  if (Math.abs(monthlyRate) < 1e-12) return PV + (pmt * nMonths);
+
+  const g = Math.pow(1 + monthlyRate, nMonths);
+  return (PV * g) + (pmt * ((g - 1) / monthlyRate));
+}
+
+function buildAuditRows(PV, pmt, monthlyRate, nMonths) {
+  // Provide a tiny “audit trail” table: first 3 + last 3 months (or fewer)
+  // using the same recurrence as the conceptual model:
+  // total_{i+1} = total_i*(1+r) + pmt
+  const rows = [];
+
+  const pushRow = (i, totalBefore, totalAfterGrowth, totalAfterContrib) => {
+    rows.push({
+      month: i + 1,
+      start: totalBefore,
+      afterGrowth: totalAfterGrowth,
+      afterContrib: totalAfterContrib
+    });
+  };
+
+  let total = PV;
+  const showFirst = Math.min(3, nMonths);
+  const showLast = Math.min(3, nMonths);
+
+  // First months
+  for (let i = 0; i < showFirst; i++) {
+    const afterGrowth = total * (1 + monthlyRate);
+    const afterContrib = afterGrowth + pmt;
+    pushRow(i, total, afterGrowth, afterContrib);
+    total = afterContrib;
   }
 
-  const low = project(rates[0]);
-  const mid = project(rates[1]);
-  const high = project(rates[2]);
+  // If we need last months and there's a gap, jump near the end using closed-form to get to month (nMonths - showLast)
+  if (nMonths > showFirst + showLast) {
+    const jumpTo = nMonths - showLast;
+    // total at month jumpTo using recurrence closed-form:
+    // total_jump = PV*(1+r)^jumpTo + pmt*(((1+r)^jumpTo - 1)/r)
+    const totalAtJump = fvClosedForm(PV, pmt, monthlyRate, jumpTo);
+    total = totalAtJump;
 
-  document.getElementById('lowOut').textContent = low.toFixed(0);
-  document.getElementById('midOut').textContent = mid.toFixed(0);
-  document.getElementById('highOut').textContent = high.toFixed(0);
+    for (let i = jumpTo; i < nMonths; i++) {
+      const afterGrowth = total * (1 + monthlyRate);
+      const afterContrib = afterGrowth + pmt;
+      pushRow(i, total, afterGrowth, afterContrib);
+      total = afterContrib;
+    }
+  } else if (nMonths > showFirst) {
+    // No gap: just continue sequentially until end
+    for (let i = showFirst; i < nMonths; i++) {
+      const afterGrowth = total * (1 + monthlyRate);
+      const afterContrib = afterGrowth + pmt;
+      pushRow(i, total, afterGrowth, afterContrib);
+      total = afterContrib;
+    }
+  }
+
+  return rows;
+}
+
+function renderWorkings(details) {
+  const {
+    dobISO, todayISO, currentAgeYears,
+    accessAge, months,
+    pot, contribNetOrGross, contribType, grossMonthly,
+    growthMid, variance, growthLow, growthHigh,
+    monthlyRateLow, monthlyRateMid, monthlyRateHigh,
+    fvLow, fvMid, fvHigh,
+    auditLow, auditMid, auditHigh
+  } = details;
+
+  const rateLine = (label, annual, monthly, fv) => `
+    <div class="mb-2">
+      <div><strong>${label}</strong></div>
+      <div>Annual return: ${(annual * 100).toFixed(1)}% &nbsp;→&nbsp; Monthly rate: ${(monthly * 100).toFixed(4)}%</div>
+      <div>Projection (FV): £${money(fv)}</div>
+    </div>
+  `;
+
+  const auditTable = (rows) => {
+    const tr = rows.map(r => `
+      <tr>
+        <td>${r.month}</td>
+        <td>£${money(r.start)}</td>
+        <td>£${money(r.afterGrowth)}</td>
+        <td>£${money(r.afterContrib)}</td>
+      </tr>
+    `).join('');
+
+    return `
+      <div class="table-responsive">
+        <table class="table table-sm table-dark align-middle mb-2">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Start of month</th>
+              <th>After growth</th>
+              <th>After contribution</th>
+            </tr>
+          </thead>
+          <tbody>${tr}</tbody>
+        </table>
+      </div>
+      <p class="text-secondary small mb-0">
+        Recurrence used for audit rows: <code>Totalᵢ₊₁ = Totalᵢ × (1 + r) + PMT</code>
+      </p>
+    `;
+  };
+
+  const html = `
+    <div class="mb-3">
+      <h3 class="h6 text-uppercase text-muted mb-2">Inputs (as used)</h3>
+      <ul class="small text-secondary mb-0">
+        <li>DOB: <strong>${dobISO}</strong></li>
+        <li>Today: <strong>${todayISO}</strong></li>
+        <li>Current whole-years age: <strong>${currentAgeYears}</strong></li>
+        <li>Earliest access age (NMPA logic): <strong>${accessAge}</strong></li>
+        <li>Time horizon: <strong>${months}</strong> months</li>
+        <li>Current pot (PV): <strong>£${money(pot)}</strong></li>
+        <li>Contribution entered: <strong>£${contribNetOrGross.toFixed(2)}</strong> per month (${contribType})</li>
+        <li>Contribution used in model (gross PMT): <strong>£${grossMonthly.toFixed(2)}</strong> per month</li>
+        <li>Expected annual return (mid): <strong>${(growthMid * 100).toFixed(1)}%</strong></li>
+        <li>Variance: <strong>±${(variance * 100).toFixed(1)}%</strong> (low/mid/high)</li>
+      </ul>
+    </div>
+
+    <div class="mb-3">
+      <h3 class="h6 text-uppercase text-muted mb-2">Model</h3>
+      <p class="small text-secondary mb-2">
+        This projection uses monthly compounding with a fixed monthly contribution.
+        It can be checked two ways:
+      </p>
+      <ol class="small text-secondary mb-2">
+        <li><strong>Closed-form FV:</strong>
+          <code>FV = PV(1+r)^n + PMT × (((1+r)^n − 1)/r)</code>
+          (or <code>FV = PV + PMT×n</code> if <code>r = 0</code>)
+        </li>
+        <li><strong>Recurrence (audit trail):</strong>
+          <code>Totalᵢ₊₁ = Totalᵢ × (1 + r) + PMT</code>
+        </li>
+      </ol>
+      <p class="small text-secondary mb-0">
+        Where <code>n</code> is months, <code>r</code> is monthly rate (annual/12),
+        <code>PV</code> is current pot, <code>PMT</code> is gross monthly contribution.
+      </p>
+    </div>
+
+    <div class="mb-3">
+      <h3 class="h6 text-uppercase text-muted mb-2">Results by scenario</h3>
+      ${rateLine('Low (cautious)', growthLow, monthlyRateLow, fvLow)}
+      ${rateLine('Mid (expected)', growthMid, monthlyRateMid, fvMid)}
+      ${rateLine('High (optimistic)', growthHigh, monthlyRateHigh, fvHigh)}
+    </div>
+
+    <div class="mb-3">
+      <h3 class="h6 text-uppercase text-muted mb-2">Audit trail sample (low)</h3>
+      ${auditTable(auditLow)}
+    </div>
+
+    <div class="mb-3">
+      <h3 class="h6 text-uppercase text-muted mb-2">Audit trail sample (mid)</h3>
+      ${auditTable(auditMid)}
+    </div>
+
+    <div class="mb-0">
+      <h3 class="h6 text-uppercase text-muted mb-2">Audit trail sample (high)</h3>
+      ${auditTable(auditHigh)}
+    </div>
+  `;
+
+  document.getElementById('workings').innerHTML = html;
+}
+
+function updateAccessAgeUI() {
+  const dob = getDob();
+  const retirementAgeEl = document.getElementById('retirementAge');
+
+  if (!dob) {
+    retirementAgeEl.value = '';
+    return;
+  }
+  retirementAgeEl.value = computeAccessAgeFromDob(dob);
+}
+
+// Hook DOB -> auto-fill earliest access age
+document.getElementById('dob').addEventListener('change', () => {
+  updateAccessAgeUI();
+  // Optional: auto-calc once DOB is set (comment out if you don’t want this behaviour)
+  // calculate();
+});
+
+function calculate() {
+  const dob = getDob();
+  if (!dob) return alert("Please enter your date of birth.");
+
+  // Auto-fill access age (and use it)
+  const accessAge = computeAccessAgeFromDob(dob);
+  document.getElementById('retirementAge').value = accessAge;
+
+  const today = new Date();
+  const currentAgeYears = wholeYearsAge(dob, today);
+  const months = monthsUntilAge(dob, accessAge, today);
+
+  const pot = parseNum('currentPot', 0);
+  const contrib = parseNum('contribution', 0);
+  const growthMid = parseNum('growth', 5.0) / 100;
+  const variance = parseNum('variance', 3.0) / 100;
+  const type = document.getElementById('contributionType').value;
+
+  // Net vs gross:
+  // If user selects "net", assume basic-rate relief added (net = 80% of gross).
+  // gross = net / 0.8
+  const grossMonthly = (type === "net") ? (contrib / 0.8) : contrib;
+
+  // Low/mid/high annual rates
+  const growthLow = growthMid - variance;
+  const growthHigh = growthMid + variance;
+
+  // Convert annual -> monthly nominal rate
+  const monthlyRateLow = growthLow / 12;
+  const monthlyRateMid = growthMid / 12;
+  const monthlyRateHigh = growthHigh / 12;
+
+  // Closed-form FV projections (auditable)
+  const fvLow = fvClosedForm(pot, grossMonthly, monthlyRateLow, months);
+  const fvMid = fvClosedForm(pot, grossMonthly, monthlyRateMid, months);
+  const fvHigh = fvClosedForm(pot, grossMonthly, monthlyRateHigh, months);
+
+  // Output
+  document.getElementById('lowOut').textContent = money(fvLow);
+  document.getElementById('midOut').textContent = money(fvMid);
+  document.getElementById('highOut').textContent = money(fvHigh);
   document.getElementById('outAge').textContent = accessAge;
 
-  document.getElementById('workings').innerHTML = `
-    <p>Time horizon: ${months} months until age ${accessAge}.</p>
-    <p>Monthly gross contribution: £${grossMonthly.toFixed(2)}.</p>
-    <p>Annual return assumptions: ${(growth*100).toFixed(1)}% ± ${(variance*100).toFixed(1)}%.</p>
-    <p>Compounding: monthly.</p>
-  `;
+  // Audit trail samples (first 3 + last 3 months)
+  const auditLow = buildAuditRows(pot, grossMonthly, monthlyRateLow, months);
+  const auditMid = buildAuditRows(pot, grossMonthly, monthlyRateMid, months);
+  const auditHigh = buildAuditRows(pot, grossMonthly, monthlyRateHigh, months);
+
+  // Render full workings block (inputs + formulas + audit rows)
+  renderWorkings({
+    dobISO: dob.toISOString().slice(0, 10),
+    todayISO: today.toISOString().slice(0, 10),
+    currentAgeYears,
+    accessAge,
+    months,
+    pot,
+    contribNetOrGross: contrib,
+    contribType: type,
+    grossMonthly,
+    growthMid,
+    variance,
+    growthLow,
+    growthHigh,
+    monthlyRateLow,
+    monthlyRateMid,
+    monthlyRateHigh,
+    fvLow,
+    fvMid,
+    fvHigh,
+    auditLow,
+    auditMid,
+    auditHigh
+  });
 
   document.getElementById('results').classList.remove('d-none');
 }
+
+// Ensure access age stays correct if user reloads with cached DOB
+updateAccessAgeUI();
 </script>
+
 
 </body>
 </html>
