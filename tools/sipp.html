@@ -4,19 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="description" content="SIPP Projection Tool by CyberAlex — a transparent, UK-aware pension projection tool with clear assumptions, low/mid/high outcomes, and full audit trail workings.">
+  <!-- Primary SEO -->
+  <title>SIPP Projection Tool – CyberAlex</title>
+  <meta name="description" content="UK SIPP projection calculator with transparent assumptions and a full month-by-month audit trail. Estimate low/mid/high outcomes at your chosen access age (defaulting to the earliest allowed under UK rules). Local-only, no tracking.">
   <meta name="author" content="Alex">
   <meta name="robots" content="index, follow">
-
-  <title>SIPP Projection Tool – CyberAlex</title>
   <link rel="canonical" href="https://www.cyberalex.uk/tools/sipp-projection.html">
 
   <!-- Open Graph -->
   <meta property="og:title" content="SIPP Projection Tool – CyberAlex">
-  <meta property="og:description" content="Project the future value of a UK SIPP using transparent assumptions, variance ranges, and fully auditable workings.">
+  <meta property="og:description" content="Project a UK SIPP with clear assumptions, low/mid/high outcomes, and a complete auditable month-by-month schedule. Runs locally in your browser.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CyberAlex">
   <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SIPP Projection Tool – CyberAlex">
+  <meta name="twitter:description" content="A transparent UK SIPP projection tool with full workings and a month-by-month audit trail. Local-only.">
+  <meta name="twitter:image" content="https://www.cyberalex.uk/img/social-card.png">
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -25,37 +31,39 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/logo.png" type="image/png">
 
+  <!-- Optional: small page-local tweaks without touching main.css -->
   <style>
-    /* Small helper styling that matches your existing components */
-    .mini-help-btn {
-      border: 0;
-      background: transparent;
-      padding: 0;
-      margin-left: .25rem;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .mini-help-btn svg { vertical-align: -2px; opacity: .85; }
-    .audit-box {
-      max-height: 520px;
-      overflow: auto;
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 12px;
-      padding: .75rem;
-      background: rgba(0,0,0,.18);
-    }
-    .audit-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .audit-table th, .audit-table td {
-      padding: .35rem .5rem;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      white-space: nowrap;
-      font-size: .825rem;
-    }
-    .audit-table th { position: sticky; top: 0; background: rgba(0,0,0,.35); z-index: 1; }
+    .kpi { font-variant-numeric: tabular-nums; }
+    .table-audit th, .table-audit td { vertical-align: top; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .chip {
+      display: inline-block;
+      padding: .1rem .45rem;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 999px;
+      font-size: .75rem;
+      color: rgba(255,255,255,.75);
+      margin-right: .35rem;
+    }
+    .help-q {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:18px;height:18px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.25);
+      font-size:12px;
+      line-height:1;
+      margin-left:.35rem;
+      cursor:pointer;
+      user-select:none;
+    }
+    .audit-wrap {
+      max-height: 420px;
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: .75rem;
+    }
   </style>
 </head>
 
@@ -67,7 +75,7 @@
 <main id="main-content" class="container py-4" tabindex="-1">
 
   <!-- PAGE HEADER -->
-  <section class="mb-4">
+  <section class="mb-4" aria-label="Page header">
     <nav aria-label="Breadcrumb" class="mb-2">
       <ol class="breadcrumb small mb-0">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -78,11 +86,11 @@
 
     <h1 class="h3 mb-1">SIPP Projection Tool</h1>
     <p class="text-secondary small mb-0">
-      By <a href="/about.html">Alex</a> &bull; Published: 05 December 2025 &bull; Updated: 23 December 2025
+      By <a href="/about.html">Alex</a> &bull; Published: 13 June 2025 &bull; Updated: 23 December 2025
     </p>
   </section>
 
-  <!-- HERO / SUMMARY ROW (adds At a Glance) -->
+  <!-- HERO / SUMMARY ROW (SEO-important content comes early) -->
   <section class="mb-4">
     <div class="row g-4 align-items-start">
       <div class="col-lg-7">
@@ -90,32 +98,45 @@
           A transparent, UK-aware tool for estimating what a Self-Invested Personal Pension (SIPP)
           <em>could</em> be worth at your chosen access age (defaulting to the earliest age allowed under current rules).
         </p>
-        <p class="small text-secondary mb-0">
-          Educational projection only — not regulated financial advice. The calculator shows its full assumptions and a complete month-by-month audit trail so the maths can be checked.
+        <p class="small text-secondary mb-2">
+          Educational projection only — not regulated financial advice. The calculator shows its full assumptions and a
+          complete month-by-month audit trail so the maths can be checked.
         </p>
+        <div class="small text-secondary">
+          <span class="chip">Local-only</span>
+          <span class="chip">No tracking</span>
+          <span class="chip">Low / Mid / High</span>
+          <span class="chip">Full audit trail</span>
+        </div>
       </div>
 
+      <!-- AT A GLANCE -->
       <div class="col-lg-5">
         <div class="card h-100 card-raise">
-          <div class="card-visual" aria-hidden="true">
-            <img src="/img/card-sipp.png" alt="" loading="lazy">
-          </div>
           <div class="card-body small text-secondary">
             <h2 class="h6 text-uppercase text-muted mb-2">At a Glance</h2>
             <ul class="mb-2">
-              <li>Uses your date of birth (no “rounding to nearest year” errors).</li>
-              <li>Auto-sets earliest access age (55 or 57) and lets you increase it.</li>
-              <li>Models net vs gross contributions (with basic-rate relief at source).</li>
-              <li>Shows low / mid / high outcomes (variance band).</li>
-              <li>Produces a full month-by-month audit trail + CSV download.</li>
+              <li>Uses UK minimum pension access rules (with clear limitations).</li>
+              <li>Models <strong>net vs gross</strong> contributions (basic-rate relief at source for “net”).</li>
+              <li>Outputs <strong>low / mid / high</strong> outcomes — not false precision.</li>
+              <li>Provides a <strong>month-by-month schedule</strong> you can audit or export to CSV.</li>
             </ul>
             <p class="mb-0">
-              <strong>Note:</strong> This does not model fees, inflation, or future law changes — see limitations below.
+              <strong>Privacy:</strong> everything runs in your browser. No data is sent anywhere.
             </p>
           </div>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- PRIVACY STATEMENT (short, early) -->
+  <section class="mb-5" aria-labelledby="privacy-heading">
+    <h2 id="privacy-heading" class="h5 mb-2">Privacy</h2>
+    <p class="small text-secondary mb-0">
+      This tool runs entirely on your device. Inputs (DOB, pot size, contributions, assumptions) are processed locally in JavaScript and are not transmitted to a server.
+      There are no analytics calls in this page logic.
+    </p>
   </section>
 
   <!-- TOOL UI -->
@@ -124,14 +145,14 @@
 
     <div class="card card-raise">
       <div class="card-body">
-        <form class="row g-3" onsubmit="return false;" aria-label="SIPP projection inputs">
+        <form class="row g-3" autocomplete="off" aria-label="SIPP projection input form">
 
           <!-- DOB -->
           <div class="col-md-4">
             <label class="form-label small" for="dob">Date of birth</label>
-            <input type="date" id="dob" class="form-control form-control-sm" autocomplete="bday">
+            <input type="date" id="dob" class="form-control form-control-sm">
             <div class="form-text small">
-              Used to calculate your current age and the earliest access age rule default.
+              Used to remove age-rounding errors and to auto-fill the earliest access age under current rules.
             </div>
           </div>
 
@@ -155,34 +176,27 @@
               <option value="gross">Gross (what goes into the pension)</option>
             </select>
             <div class="form-text small">
-              <strong>Net</strong> = what you pay. With “relief at source”, providers typically add 20% basic-rate tax relief (so £80 net becomes £100 gross).
-              <br>
-              <span class="text-muted">If you’re higher/additional-rate, extra relief may be claimable from HMRC — not calculated here.</span>
+              <strong>Net</strong> means “I pay £X from my bank”. SIPPs usually add basic-rate tax relief at source.
+              <strong>Gross</strong> means “£X lands in the pension after relief”.
             </div>
           </div>
 
-          <!-- Income -->
+          <!-- Income (optional) -->
           <div class="col-md-6">
             <label class="form-label small" for="income">Annual income (£) <span class="text-muted">(optional)</span></label>
             <input type="number" id="income" class="form-control form-control-sm" min="0" step="1000">
             <div class="form-text small">
-              Optional: used only for warnings (e.g., contributions can’t exceed earnings in many cases). If blank, the tool assumes only basic-rate relief at source.
+              If left blank, the tool assumes only basic-rate relief at source for net contributions.
+              This tool does not attempt to calculate higher/additional-rate relief reclaim.
             </div>
           </div>
 
           <!-- Growth -->
           <div class="col-md-4">
-            <label class="form-label small" for="growth">
-              Expected annual return (%)
-              <button class="mini-help-btn" type="button" data-bs-toggle="modal" data-bs-target="#growthHelp" aria-label="Help about expected return">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                  <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm0 12.6A5.6 5.6 0 1 1 8 2.4a5.6 5.6 0 0 1 0 11.2Zm0-9.3c-1.2 0-2.1.7-2.1 1.8h1.3c0-.4.3-.7.8-.7.5 0 .8.2.8.6 0 .4-.3.6-.7.9-.7.5-1.4 1.1-1.4 2.3v.2h1.3v-.2c0-.6.3-1 .9-1.4.6-.4 1.2-.8 1.2-1.8 0-1.1-.9-1.7-2.2-1.7Zm-.7 7.2h1.4v1.4H7.3v-1.4Z"/>
-                </svg>
-              </button>
-            </label>
+            <label class="form-label small" for="growth">Expected annual return (%)</label>
             <input type="number" id="growth" class="form-control form-control-sm" value="5.0" min="0.1" max="20.0" step="0.1">
             <div class="form-text small">
-              Default is a reasonable long-run illustration value. You should set this based on your own investment choices.
+              A modelling assumption — not a prediction.
             </div>
           </div>
 
@@ -191,25 +205,33 @@
             <label class="form-label small" for="variance">Variance (+/- %)</label>
             <input type="number" id="variance" class="form-control form-control-sm" value="3.0" min="0.0" max="10.0" step="0.1">
             <div class="form-text small">
-              Low = (return − variance), Mid = return, High = (return + variance).
+              Low = (growth − variance), High = (growth + variance).
             </div>
           </div>
 
           <!-- Access age -->
           <div class="col-md-4">
-            <label class="form-label small" for="retirementAge">SIPP access age</label>
-            <!-- IMPORTANT: user can increase it; we enforce minimum in JS -->
-            <input type="number" id="retirementAge" class="form-control form-control-sm" min="55" max="80" step="1">
+            <label class="form-label small" for="retirementAge">
+              Access age
+              <span class="help-q" role="button" tabindex="0" aria-label="Help: access age" data-help="accessAge">?</span>
+            </label>
+            <input type="number" id="retirementAge" class="form-control form-control-sm" min="55" step="1">
             <div class="form-text small">
-              Auto-fills to the <strong>earliest</strong> access age under current rules based on your DOB. You can increase this.
-              <span class="text-muted">(Protected pension ages / ill-health access are not modelled.)</span>
+              Auto-fills to the earliest access age allowed under current rules, but you can increase it.
             </div>
           </div>
 
-          <!-- Buttons -->
           <div class="col-12 d-flex flex-wrap gap-2">
-            <button type="button" class="btn btn-primary btn-sm" id="btnCalc">Calculate projection</button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" id="btnReset">Reset</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="calculate()">Calculate projection</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="downloadCSV()" id="csvBtn" disabled>Download audit trail (CSV)</button>
+          </div>
+
+          <!-- inline help toast-ish -->
+          <div class="col-12 d-none" id="inlineHelp">
+            <div class="alert alert-secondary small mb-0" role="alert">
+              <strong id="inlineHelpTitle">Help</strong>
+              <div id="inlineHelpText" class="mt-1"></div>
+            </div>
           </div>
 
         </form>
@@ -227,75 +249,134 @@
       your SIPP could be worth approximately:
     </p>
 
-    <ul class="mb-3">
+    <ul class="mb-3 kpi">
       <li><strong>Low (cautious):</strong> £<span id="lowOut"></span></li>
       <li><strong>Mid (expected):</strong> £<span id="midOut"></span></li>
       <li><strong>High (optimistic):</strong> £<span id="highOut"></span></li>
     </ul>
 
-    <details class="mb-2">
-      <summary class="mb-2">Show full audit trail (inputs, derived values, formula, month-by-month schedule)</summary>
+    <details class="mb-3">
+      <summary class="mb-2">Show workings (audit trail)</summary>
 
-      <div class="small text-secondary mb-3">
-        This is intentionally verbose so the calculation can be audited or peer-reviewed.
+      <div class="small text-secondary mb-3" id="workings"></div>
+
+      <div class="mb-2 d-flex flex-wrap gap-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setAuditView('low')">View low schedule</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setAuditView('mid')">View mid schedule</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setAuditView('high')">View high schedule</button>
       </div>
 
-      <div class="d-flex flex-wrap gap-2 mb-3">
-        <button type="button" class="btn btn-outline-secondary btn-sm" id="btnDownloadLow">Download low CSV</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" id="btnDownloadMid">Download mid CSV</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" id="btnDownloadHigh">Download high CSV</button>
+      <div class="audit-wrap">
+        <table class="table table-sm table-dark table-striped mb-0 table-audit" aria-label="Month-by-month audit table">
+          <thead>
+            <tr>
+              <th scope="col">Month</th>
+              <th scope="col">Age</th>
+              <th scope="col">Start (£)</th>
+              <th scope="col">Growth (£)</th>
+              <th scope="col">Contribution (£)</th>
+              <th scope="col">End (£)</th>
+            </tr>
+          </thead>
+          <tbody id="auditBody"></tbody>
+        </table>
       </div>
 
-      <div class="audit-box">
-        <div id="workings" class="small text-secondary"></div>
-      </div>
+      <p class="small text-secondary mt-2 mb-0">
+        Tip: use <strong>Download audit trail (CSV)</strong> to review the full schedule in Excel.
+      </p>
     </details>
-
-    <p class="small text-secondary mb-0">
-      <strong>Reminder:</strong> outcomes are not guaranteed. Real returns vary, contributions vary, fees exist, and rules can change.
-    </p>
   </section>
 
   <!-- IMPLICATIONS -->
   <section class="mb-5" aria-labelledby="meaning-heading">
     <h2 id="meaning-heading" class="h5 mb-2">What this could mean</h2>
     <p class="small text-secondary">
-      Under current UK rules, you can usually take up to <strong>25%</strong> of your pension as a tax-free lump sum
-      (subject to the <strong>Lump Sum Allowance</strong>), with the remainder typically taxed as income when withdrawn.
-      This page is a projection tool, not a withdrawal planner.
+      Under current UK rules, you can usually take up to 25% of your pension as a tax-free lump sum
+      (subject to the Lump Sum Allowance), with the remainder typically taxed as income when withdrawn.
+      This page is a projection tool, not a withdrawal planner. :contentReference[oaicite:5]{index=5}
     </p>
     <p class="small text-secondary mb-0">
       If you’re planning drawdown, annuities, or want to understand tax implications in detail, use official guidance and/or a regulated financial adviser.
+      Pension Wise (MoneyHelper) is the UK’s free, government-backed guidance route. :contentReference[oaicite:6]{index=6}
     </p>
   </section>
 
-  <!-- EVALUATION -->
-  <section class="mb-5" aria-labelledby="better-heading">
-    <h2 id="better-heading" class="h5 mb-2">Why this tool is different</h2>
+  <!-- BASIC LESSON: RULES, RISK, AND "YES BUT ALSO NO" -->
+  <section class="mb-5" aria-labelledby="basics-heading">
+    <h2 id="basics-heading" class="h5 mb-2">SIPP basics: rules, risk, and the “yes — but also no”</h2>
+
+    <p class="small text-secondary">
+      A SIPP is a type of personal pension where <em>you</em> choose (or delegate) how the money is invested. That can be powerful:
+      you can access a broad range of funds, shares, bonds, and other assets depending on the provider.
+      The trade-off is that SIPPs reward planning and discipline — and they also punish overconfidence.
+    </p>
+
+    <ul class="small text-secondary">
+      <li><strong>Yes:</strong> long time horizons + consistent contributions can make compounding do the heavy lifting.</li>
+      <li><strong>But also no:</strong> markets don’t deliver smooth returns, and legislation/tax rules can change.</li>
+      <li><strong>Yes:</strong> tax relief can materially boost contributions.</li>
+      <li><strong>But also no:</strong> withdrawal tax, allowances, charges and real-life interruptions can change outcomes.</li>
+    </ul>
+
+    <p class="small text-secondary mb-0">
+      If a SIPP feels like “too much steering wheel”, there are alternatives that can still be excellent:
+      <strong>Stocks &amp; Shares ISAs</strong> (tax-sheltered investing, different rules to pensions),
+      <strong>Cash ISAs</strong> (lower risk, lower expected return),
+      <strong>workplace pensions</strong> (often with employer contributions),
+      and “set-and-forget” <strong>managed funds</strong> inside pensions/ISAs depending on provider options.
+      Many people also factor in the <strong>State Pension</strong> as part of the baseline plan.
+    </p>
+  </section>
+
+  <!-- WHERE TO GET PROFESSIONAL HELP -->
+  <section class="mb-5" aria-labelledby="advice-heading">
+    <h2 id="advice-heading" class="h5 mb-2">Where to get guidance or professional advice</h2>
+    <ul class="small text-secondary mb-0">
+      <li><strong>Pension Wise (MoneyHelper):</strong> free, impartial guidance appointments (not regulated advice). :contentReference[oaicite:7]{index=7}</li>
+      <li><strong>GOV.UK / MoneyHelper:</strong> official explainers and next steps if you need help with a personal pension. :contentReference[oaicite:8]{index=8}</li>
+      <li><strong>FCA Register:</strong> verify whether a firm/individual is authorised before paying for advice. :contentReference[oaicite:9]{index=9}</li>
+    </ul>
+  </section>
+
+  <!-- WHY DIFFERENT -->
+  <section class="mb-5" aria-labelledby="different-heading">
+    <h2 id="different-heading" class="h5 mb-2">Why this tool is different</h2>
     <ul class="small text-secondary mb-0">
       <li>Uses DOB to remove age-rounding errors.</li>
-      <li>Separates <strong>SIPP access age</strong> from <strong>State Pension age</strong> (they are not the same).</li>
+      <li>Separates SIPP access age from State Pension age (they are not the same).</li>
       <li>Models net vs gross contributions (basic-rate relief at source for “net”).</li>
       <li>Uses low / mid / high outcomes instead of false precision.</li>
-      <li>Outputs a complete audit trail: all inputs, derived values, formula, and a month-by-month schedule.</li>
+      <li>Outputs a complete audit trail: all inputs, derived values, formulae, and a month-by-month schedule.</li>
     </ul>
+  </section>
+
+  <!-- PROVIDERS (careful wording) -->
+  <section class="mb-5" aria-labelledby="providers-heading">
+    <h2 id="providers-heading" class="h5 mb-2">Choosing a SIPP provider (briefly)</h2>
+    <p class="small text-secondary">
+      Provider choice is a “fees + features + usability” decision. Costs can include platform fees, fund OCFs, dealing charges, and FX fees.
+      This tool does not model charges — so when you compare providers, treat this projection as an optimistic baseline unless you adjust the return downwards to reflect costs.
+    </p>
+    <p class="small text-secondary mb-0">
+      If you want a mainstream starting point to research, <strong>Hargreaves Lansdown (HL)</strong> is often shortlisted because it’s widely used and publishes clear fee information —
+      but “best” depends on what you buy, how often you trade, and how much support you want. Compare against other providers for your situation. :contentReference[oaicite:10]{index=10}
+    </p>
   </section>
 
   <!-- LIMITATIONS & DISCLAIMER -->
   <section class="mb-5" aria-labelledby="limits-heading">
     <h2 id="limits-heading" class="h5 mb-2">Limitations &amp; disclaimer</h2>
     <p class="small text-secondary">
-      This tool is for educational purposes only. It does not model platform charges, fund fees, trading costs,
-      inflation, behavioural changes (e.g., stopping contributions), career breaks, health, or future tax and pension law changes.
-      It assumes a constant monthly contribution and a constant return rate, compounded monthly.
+      This tool is for educational purposes only. It does not model platform charges, fund fees, trading costs, inflation, behavioural changes (e.g., stopping contributions),
+      career breaks, health, or future tax and pension law changes. It assumes a constant monthly contribution and a constant return rate, compounded monthly.
     </p>
     <p class="small text-secondary">
-      It also does not model “protected pension ages” (scheme-specific rights), ill-health access, annual allowance tapering,
-      or claiming higher/additional-rate relief from HMRC.
+      It also does not model “protected pension ages” (scheme-specific rights), ill-health access, annual allowance tapering, or claiming higher/additional-rate relief from HMRC.
+      UK minimum access age rules can change (for example, the minimum pension age is legislated to rise to 57 from April 2028). :contentReference[oaicite:11]{index=11}
     </p>
     <p class="small text-secondary mb-0">
-      This is not regulated financial advice. If you are unsure, consider speaking to a regulated financial adviser
-      or using official guidance services such as Pension Wise.
+      This is not regulated financial advice. If you are unsure, consider speaking to a regulated financial adviser or using official guidance services such as Pension Wise. :contentReference[oaicite:12]{index=12}
     </p>
   </section>
 
@@ -326,7 +407,7 @@
           </p>
           <ul class="small text-secondary mb-0">
             <li><strong>03-06-2025</strong> – <a href="https://archive.cyberalex.uk/sipp.html" target="_blank" rel="noopener">Original Publication</a></li>
-            <li><strong>23-12-2025</strong> – Rebuilt for modern CyberAlex; added full audit trail</li>
+            <li><strong>23-12-2025</strong> – Modernised & Updated</li>
           </ul>
           <p class="small text-secondary text-muted">Dates are in UK format (day–month–year).</p>
         </div>
@@ -342,7 +423,9 @@
 
           <div class="share-url-row mb-2">
             <span class="share-url-prefix">https://www.</span>
-            <button class="share-url-main" type="button" data-share-url="https://www.zilchy.link/sipp">
+            <button class="share-url-main"
+                    type="button"
+                    data-share-url="https://www.zilchy.link/sipp">
               <span class="share-url-text">zilchy.link/sipp</span>
             </button>
           </div>
@@ -361,452 +444,431 @@
 
 <footer id="site-footer"></footer>
 
-<!-- Growth Help Modal -->
-<div class="modal fade" id="growthHelp" tabindex="-1" aria-labelledby="growthHelpLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="h6 mb-0" id="growthHelpLabel">Choosing an expected return</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body small text-secondary">
-        SIPPs can hold different investments (cash, bonds, equities, funds). Returns vary and are never guaranteed.
-        <ul class="mt-2 mb-0">
-          <li>If you don’t know what return to assume, that’s a sign you should research your intended investments.</li>
-          <li>For many people this is the point to get regulated advice, or to learn the basics of asset allocation and risk.</li>
-          <li>This tool is deliberately transparent: change the assumptions and see how sensitive the outcome is.</li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Got it</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/layout.js"></script>
 
 <script>
 /* =========================
-   SIPP Projection — auditable
+   SIPP Projection Tool (Local-only)
+   - Auto-fill earliest access age on DOB input
+   - Allow user to increase age (min = earliest allowed)
+   - Full audit trail (low/mid/high) + CSV export
    ========================= */
 
-const $ = (id) => document.getElementById(id);
-
-const state = {
-  lastRun: null,     // stores audit + schedules for download buttons
+const HELP_TEXT = {
+  accessAge: {
+    title: "Access age",
+    text: `
+      <p class="mb-1">
+        This tool defaults to the <strong>earliest age you can usually access a private pension</strong> under current UK rules.
+        You can increase it if you plan to access later.
+      </p>
+      <p class="mb-0">
+        Important: some people can access earlier via scheme-specific protected ages or ill-health. This calculator does not model those cases.
+      </p>
+    `
+  }
 };
 
-// UK NMPA rule (simplified, scheme protections not modelled):
-// NMPA rises to 57 from 6 April 2028; commonly described as affecting people born after 6 April 1971.
-function getEarliestAccessAgeFromDob(dob) {
-  // If DOB is on/before 5 April 1971 -> 55. Otherwise -> 57.
-  const cutoff = new Date(Date.UTC(1971, 3, 5)); // 1971-04-05
-  const dobUTC = new Date(Date.UTC(dob.getUTCFullYear(), dob.getUTCMonth(), dob.getUTCDate()));
-  return (dobUTC <= cutoff) ? 55 : 57;
-}
+let LAST_RUN = null; // store full outputs for CSV + audit view
+let CURRENT_AUDIT_VIEW = "mid";
 
-function yearsBetween(d1, d2) {
-  // Fractional years using 365.25-day approximation; we avoid “up to 12 months” rounding errors by using DOB directly.
-  const ms = d2 - d1;
-  return ms / (365.25 * 24 * 3600 * 1000);
-}
-
-function clampNumber(n, min, max) {
-  if (!Number.isFinite(n)) return min;
+function clamp(n, min, max) {
   return Math.min(max, Math.max(min, n));
 }
 
-function formatGBP(n) {
-  return Number(n).toLocaleString("en-GB", { maximumFractionDigits: 0 });
-}
-
-function formatPct(n) {
-  return `${(n * 100).toFixed(2)}%`;
-}
-
 function parseMoney(id) {
-  const v = parseFloat($(id).value);
-  return Number.isFinite(v) ? v : 0;
-}
-
-function parseOptionalMoney(id) {
-  const raw = ($(id).value || "").trim();
-  if (!raw) return null;
-  const v = parseFloat(raw);
-  return Number.isFinite(v) ? v : null;
+  const v = parseFloat(document.getElementById(id).value);
+  return isFinite(v) ? v : 0;
 }
 
 function parsePct(id) {
-  const v = parseFloat($(id).value);
-  return Number.isFinite(v) ? (v / 100) : 0;
+  const v = parseFloat(document.getElementById(id).value);
+  return isFinite(v) ? v : 0;
 }
 
-function currentDateLocal() {
-  // Use local timezone of the browser (user device). Tool is client-side, so “today” is the user’s today.
-  return new Date();
+function yearsBetween(d1, d2) {
+  return (d2 - d1) / (365.25 * 24 * 3600 * 1000);
 }
 
-function ensureAccessAgeAutoFill() {
-  const dobStr = $("dob").value;
-  if (!dobStr) return;
+function addMonths(date, months) {
+  const d = new Date(date.getTime());
+  const day = d.getDate();
+  d.setMonth(d.getMonth() + months);
 
-  const dob = new Date(dobStr);
-  if (isNaN(dob)) return;
-
-  const earliest = getEarliestAccessAgeFromDob(new Date(Date.UTC(dob.getFullYear(), dob.getMonth(), dob.getDate())));
-
-  const retirementAgeEl = $("retirementAge");
-  retirementAgeEl.min = String(earliest);
-
-  const currentVal = parseInt(retirementAgeEl.value, 10);
-  // If empty or below minimum, set to minimum.
-  if (!Number.isFinite(currentVal) || retirementAgeEl.value === "" || currentVal < earliest) {
-    retirementAgeEl.value = String(earliest);
+  // Handle month rollovers (e.g., Jan 31 -> Feb)
+  if (d.getDate() < day) {
+    d.setDate(0);
   }
+  return d;
 }
 
-function buildSchedule({ months, startPot, grossMonthly, monthlyRate }) {
-  // Full month-by-month audit trail.
-  // Month 0 is the starting point (before any monthly compounding/contribution).
-  // For month 1..months: interest applied, then contribution added.
-  const rows = [];
-  let pot = startPot;
+/**
+ * Earliest access age rule (simplified, explicit):
+ * - NMPA is 55 before 6 April 2028
+ * - From 6 April 2028 it is 57
+ * We compute based on the user's DOB: if their 55th birthday is on/after 6 April 2028, earliest is 57, else 55.
+ * (Does not model protected pension ages / ill-health.)
+ */
+function earliestAccessAgeFromDOB(dob) {
+  const boundary = new Date("2028-04-06T00:00:00");
+  const fiftyFifth = new Date(dob.getTime());
+  fiftyFifth.setFullYear(fiftyFifth.getFullYear() + 55);
 
-  rows.push({
-    month: 0,
-    potStart: pot,
-    interest: 0,
-    contribution: 0,
-    potEnd: pot
+  return (fiftyFifth >= boundary) ? 57 : 55;
+}
+
+function renderInlineHelp(key) {
+  const box = document.getElementById("inlineHelp");
+  const title = document.getElementById("inlineHelpTitle");
+  const text = document.getElementById("inlineHelpText");
+
+  const h = HELP_TEXT[key];
+  if (!h) return;
+
+  title.textContent = h.title;
+  text.innerHTML = h.text;
+  box.classList.remove("d-none");
+  box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function wireHelp() {
+  document.querySelectorAll("[data-help]").forEach(el => {
+    el.addEventListener("click", () => renderInlineHelp(el.dataset.help));
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        renderInlineHelp(el.dataset.help);
+      }
+    });
   });
+}
 
-  for (let m = 1; m <= months; m++) {
-    const potStart = pot;
-    const interest = potStart * monthlyRate;
-    const afterInterest = potStart + interest;
-    const potEnd = afterInterest + grossMonthly;
+function onDOBChanged() {
+  const dobRaw = document.getElementById("dob").value;
+  const dob = new Date(dobRaw);
+  const retirementAge = document.getElementById("retirementAge");
+
+  if (isNaN(dob)) {
+    retirementAge.value = "";
+    retirementAge.min = 55;
+    return;
+  }
+
+  const minAge = earliestAccessAgeFromDOB(dob);
+  retirementAge.min = minAge;
+  // If empty or below min, set to min
+  const current = parseInt(retirementAge.value || "0", 10);
+  if (!current || current < minAge) retirementAge.value = minAge;
+}
+
+function formatGBP(n) {
+  return Math.round(n).toString();
+}
+
+/**
+ * Build month-by-month schedule for a given annual rate and monthly contribution.
+ * We treat each month as:
+ *   start = balance
+ *   growth = start * monthlyRate
+ *   end = start + growth + contribution
+ */
+function buildSchedule({startPot, months, dob, annualRate, monthlyContributionGross}) {
+  const monthlyRate = annualRate / 12;
+  let balance = startPot;
+
+  const rows = [];
+  const today = new Date();
+
+  for (let i = 1; i <= months; i++) {
+    const start = balance;
+    const growth = start * monthlyRate;
+    const end = start + growth + monthlyContributionGross;
+
+    // Age at that month (approx, auditable, not used for rules)
+    const dateAtMonth = addMonths(today, i);
+    const ageAtMonth = yearsBetween(dob, dateAtMonth);
 
     rows.push({
-      month: m,
-      potStart,
-      interest,
-      contribution: grossMonthly,
-      potEnd
+      month: i,
+      age: ageAtMonth,
+      start,
+      growth,
+      contrib: monthlyContributionGross,
+      end
     });
 
-    pot = potEnd;
+    balance = end;
   }
 
   return rows;
 }
 
-function toCSV(rows) {
-  const header = ["month","pot_start","interest","contribution","pot_end"];
-  const lines = [header.join(",")];
-  for (const r of rows) {
-    lines.push([
-      r.month,
-      r.potStart.toFixed(2),
-      r.interest.toFixed(2),
-      r.contribution.toFixed(2),
-      r.potEnd.toFixed(2),
-    ].join(","));
+function calculate() {
+  const dobRaw = document.getElementById("dob").value;
+  const dob = new Date(dobRaw);
+  if (isNaN(dob)) return alert("Please enter your date of birth.");
+
+  // Ensure access age auto-filled and valid
+  onDOBChanged();
+
+  const today = new Date();
+  const ageNow = yearsBetween(dob, today);
+
+  const minAccessAge = earliestAccessAgeFromDOB(dob);
+  const chosenAccessAge = parseInt(document.getElementById("retirementAge").value, 10);
+
+  if (!isFinite(chosenAccessAge)) return alert("Please enter a valid access age.");
+  if (chosenAccessAge < minAccessAge) {
+    return alert(`Access age cannot be below the earliest allowed under current rules for your DOB (${minAccessAge}).`);
   }
-  return lines.join("\n");
+  if (chosenAccessAge > 100) {
+    return alert("Access age looks unusually high. Please check and try again.");
+  }
+
+  const yearsToAccess = chosenAccessAge - ageNow;
+  const monthsToAccess = Math.max(0, Math.round(yearsToAccess * 12));
+
+  const currentPot = parseMoney("currentPot");
+  const monthlyContrib = parseMoney("contribution");
+
+  const growthPct = parsePct("growth");
+  const variancePct = parsePct("variance");
+  const growth = clamp(growthPct, 0.1, 20.0) / 100;
+  const variance = clamp(variancePct, 0.0, 10.0) / 100;
+
+  const type = document.getElementById("contributionType").value;
+  const income = parseMoney("income"); // currently not used for additional relief; kept for transparency
+
+  // Basic-rate relief at source modelling:
+  // - If "net": user pays net, provider adds 20% to make it gross. Net = 80% of gross => gross = net / 0.8
+  // - If "gross": treat as already gross
+  const monthlyGross = (type === "net") ? (monthlyContrib / 0.8) : monthlyContrib;
+
+  const lowAnnual = growth - variance;
+  const midAnnual = growth;
+  const highAnnual = growth + variance;
+
+  // Build schedules
+  const lowRows = buildSchedule({
+    startPot: currentPot,
+    months: monthsToAccess,
+    dob,
+    annualRate: lowAnnual,
+    monthlyContributionGross: monthlyGross
+  });
+  const midRows = buildSchedule({
+    startPot: currentPot,
+    months: monthsToAccess,
+    dob,
+    annualRate: midAnnual,
+    monthlyContributionGross: monthlyGross
+  });
+  const highRows = buildSchedule({
+    startPot: currentPot,
+    months: monthsToAccess,
+    dob,
+    annualRate: highAnnual,
+    monthlyContributionGross: monthlyGross
+  });
+
+  const lowEnd = (lowRows.length ? lowRows[lowRows.length - 1].end : currentPot);
+  const midEnd = (midRows.length ? midRows[midRows.length - 1].end : currentPot);
+  const highEnd = (highRows.length ? highRows[highRows.length - 1].end : currentPot);
+
+  // Store run for audit view + CSV
+  LAST_RUN = {
+    runAtISO: new Date().toISOString(),
+    inputs: {
+      dob: dobRaw,
+      currentPot,
+      monthlyContrib,
+      contributionType: type,
+      income: income || null,
+      growthPct: growthPct,
+      variancePct: variancePct,
+      chosenAccessAge,
+      minAccessAge
+    },
+    derived: {
+      ageNow,
+      yearsToAccess,
+      monthsToAccess,
+      monthlyGross,
+      lowAnnual,
+      midAnnual,
+      highAnnual
+    },
+    schedules: {
+      low: lowRows,
+      mid: midRows,
+      high: highRows
+    },
+    outputs: {
+      lowEnd,
+      midEnd,
+      highEnd
+    }
+  };
+
+  // Render top-line result
+  document.getElementById("lowOut").textContent = formatGBP(lowEnd);
+  document.getElementById("midOut").textContent = formatGBP(midEnd);
+  document.getElementById("highOut").textContent = formatGBP(highEnd);
+  document.getElementById("outAge").textContent = chosenAccessAge;
+
+  // Render full workings: inputs + derived + formula
+  const formula = `
+    <div class="mb-2">
+      <div class="mono small">
+        <div><strong>Monthly update formula</strong></div>
+        <div>monthlyRate = annualRate / 12</div>
+        <div>growth = startBalance × monthlyRate</div>
+        <div>endBalance = startBalance + growth + monthlyGrossContribution</div>
+      </div>
+    </div>
+  `;
+
+  const inputsBlock = `
+    <div class="mb-3">
+      <h3 class="h6 text-uppercase text-muted mb-2">Inputs</h3>
+      <ul class="mb-0">
+        <li>DOB: <span class="mono">${escapeHtml(dobRaw)}</span></li>
+        <li>Current pot: £${formatGBP(currentPot)}</li>
+        <li>Monthly contribution (user-entered): £${formatGBP(monthlyContrib)} (${escapeHtml(type)})</li>
+        <li>Annual income: ${income ? "£" + formatGBP(income) : "<em>not provided</em>"}</li>
+        <li>Expected annual return: ${growthPct.toFixed(1)}%</li>
+        <li>Variance: ±${variancePct.toFixed(1)}%</li>
+        <li>Chosen access age: ${chosenAccessAge}</li>
+      </ul>
+    </div>
+  `;
+
+  const derivedBlock = `
+    <div class="mb-3">
+      <h3 class="h6 text-uppercase text-muted mb-2">Derived values</h3>
+      <ul class="mb-0">
+        <li>Age now (years, approx): ${ageNow.toFixed(3)}</li>
+        <li>Earliest access age under current rules for this DOB (simplified): ${minAccessAge}</li>
+        <li>Time horizon: ${monthsToAccess} months</li>
+        <li>Monthly gross contribution used in model: £${monthlyGross.toFixed(2)}</li>
+        <li>Annual return assumptions:
+          Low ${(lowAnnual*100).toFixed(1)}% &nbsp;|&nbsp;
+          Mid ${(midAnnual*100).toFixed(1)}% &nbsp;|&nbsp;
+          High ${(highAnnual*100).toFixed(1)}%
+        </li>
+      </ul>
+      <p class="small text-secondary mt-2 mb-0">
+        Note: if you selected <strong>net</strong>, the model converts it to gross using basic-rate relief at source (gross = net / 0.8).
+        Higher/additional-rate relief reclaim is not modelled here.
+      </p>
+    </div>
+  `;
+
+  document.getElementById("workings").innerHTML = inputsBlock + derivedBlock + formula;
+
+  // Show results + enable CSV + default audit view
+  document.getElementById("results").classList.remove("d-none");
+  document.getElementById("csvBtn").disabled = false;
+
+  setAuditView("mid");
 }
 
-function downloadText(filename, text) {
-  const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
+function setAuditView(view) {
+  if (!LAST_RUN) return;
+  CURRENT_AUDIT_VIEW = view;
+
+  const rows = LAST_RUN.schedules[view] || [];
+  const tbody = document.getElementById("auditBody");
+  tbody.innerHTML = "";
+
+  for (const r of rows) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="mono">${r.month}</td>
+      <td class="mono">${r.age.toFixed(3)}</td>
+      <td class="mono">${formatGBP(r.start)}</td>
+      <td class="mono">${formatGBP(r.growth)}</td>
+      <td class="mono">${formatGBP(r.contrib)}</td>
+      <td class="mono">${formatGBP(r.end)}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+function downloadCSV() {
+  if (!LAST_RUN) return;
+
+  // One CSV containing three scenarios stacked, with a scenario column.
+  const lines = [];
+  lines.push([
+    "scenario",
+    "month",
+    "age_years_approx",
+    "start_gbp",
+    "growth_gbp",
+    "contribution_gbp",
+    "end_gbp"
+  ].join(","));
+
+  for (const scenario of ["low","mid","high"]) {
+    const rows = LAST_RUN.schedules[scenario] || [];
+    for (const r of rows) {
+      lines.push([
+        scenario,
+        r.month,
+        r.age.toFixed(6),
+        r.start.toFixed(2),
+        r.growth.toFixed(2),
+        r.contrib.toFixed(2),
+        r.end.toFixed(2)
+      ].join(","));
+    }
+  }
+
+  // Add a short header block as comments (CSV viewers usually ignore lines starting with #)
+  const meta = [];
+  meta.push(`# run_at_utc=${LAST_RUN.runAtISO}`);
+  meta.push(`# dob=${LAST_RUN.inputs.dob}`);
+  meta.push(`# current_pot=${LAST_RUN.inputs.currentPot}`);
+  meta.push(`# monthly_contrib_entered=${LAST_RUN.inputs.monthlyContrib}`);
+  meta.push(`# contribution_type=${LAST_RUN.inputs.contributionType}`);
+  meta.push(`# monthly_gross_used=${LAST_RUN.derived.monthlyGross.toFixed(2)}`);
+  meta.push(`# growth_pct=${LAST_RUN.inputs.growthPct}`);
+  meta.push(`# variance_pct=${LAST_RUN.inputs.variancePct}`);
+  meta.push(`# chosen_access_age=${LAST_RUN.inputs.chosenAccessAge}`);
+  meta.push(`# months_to_access=${LAST_RUN.derived.monthsToAccess}`);
+
+  const csv = meta.join("\n") + "\n" + lines.join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
+
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename;
+  a.download = "sipp-audit-trail.csv";
   document.body.appendChild(a);
   a.click();
   a.remove();
+
   URL.revokeObjectURL(url);
 }
 
-function calculate() {
-  const dobStr = $("dob").value;
-  if (!dobStr) return alert("Please enter your date of birth.");
-
-  const dobLocal = new Date(dobStr);
-  if (isNaN(dobLocal)) return alert("Please enter a valid date of birth.");
-
-  // Work in UTC-normalised date for the access-age rule check
-  const dob = new Date(Date.UTC(dobLocal.getFullYear(), dobLocal.getMonth(), dobLocal.getDate()));
-
-  const today = currentDateLocal();
-  const ageYears = yearsBetween(dob, today);
-
-  const earliestAccessAge = getEarliestAccessAgeFromDob(dob);
-
-  // Read user-selected access age, enforce min = earliestAccessAge
-  const chosenAccessAgeRaw = parseInt($("retirementAge").value, 10);
-  const chosenAccessAge = clampNumber(
-    Number.isFinite(chosenAccessAgeRaw) ? chosenAccessAgeRaw : earliestAccessAge,
-    earliestAccessAge,
-    80
-  );
-  $("retirementAge").value = String(chosenAccessAge);
-  $("retirementAge").min = String(earliestAccessAge);
-
-  // Time horizon
-  const yearsToAccess = chosenAccessAge - ageYears;
-  const months = Math.max(0, Math.round(yearsToAccess * 12)); // month-level audit; rounding to nearest month is explicit + auditable
-
-  // Inputs
-  const currentPot = clampNumber(parseMoney("currentPot"), 0, 1e12);
-  const monthlyContribution = clampNumber(parseMoney("contribution"), 0, 1e9);
-  const contributionType = $("contributionType").value;
-  const income = parseOptionalMoney("income");
-
-  const annualReturnMid = clampNumber(parsePct("growth"), 0.001, 0.20);
-  const variance = clampNumber(parsePct("variance"), 0.0, 0.10);
-
-  // Net -> Gross (basic-rate relief at source): gross = net / 0.8
-  // Gross stays gross.
-  const grossMonthly = (contributionType === "net")
-    ? (monthlyContribution / 0.8)
-    : monthlyContribution;
-
-  // Rates
-  const annualLow = Math.max(0, annualReturnMid - variance);
-  const annualHigh = annualReturnMid + variance;
-
-  const monthlyLow = annualLow / 12;
-  const monthlyMid = annualReturnMid / 12;
-  const monthlyHigh = annualHigh / 12;
-
-  // Build schedules
-  const scheduleLow = buildSchedule({ months, startPot: currentPot, grossMonthly, monthlyRate: monthlyLow });
-  const scheduleMid = buildSchedule({ months, startPot: currentPot, grossMonthly, monthlyRate: monthlyMid });
-  const scheduleHigh = buildSchedule({ months, startPot: currentPot, grossMonthly, monthlyRate: monthlyHigh });
-
-  // End values
-  const endLow = scheduleLow[scheduleLow.length - 1].potEnd;
-  const endMid = scheduleMid[scheduleMid.length - 1].potEnd;
-  const endHigh = scheduleHigh[scheduleHigh.length - 1].potEnd;
-
-  // Output summary
-  $("lowOut").textContent = formatGBP(endLow);
-  $("midOut").textContent = formatGBP(endMid);
-  $("highOut").textContent = formatGBP(endHigh);
-  $("outAge").textContent = String(chosenAccessAge);
-
-  // Warnings (kept honest: we don’t enforce allowance rules, but we can flag obvious cases)
-  const annualGrossContrib = grossMonthly * 12;
-  const warnings = [];
-  if (income !== null && income >= 0) {
-    if (annualGrossContrib > income) {
-      warnings.push(`Warning: your gross annual contributions (£${formatGBP(annualGrossContrib)}) exceed the income you entered (£${formatGBP(income)}). In many cases, tax-relievable contributions are limited by relevant UK earnings.`);
-    }
-  }
-  if (months === 0) {
-    warnings.push(`Note: your selected access age is not in the future relative to your DOB and today’s date on this device, so the horizon is 0 months (no projection).`);
-  }
-  if (contributionType === "net") {
-    warnings.push(`Net-to-gross assumption: basic-rate relief at source is modelled as gross = net / 0.8 (i.e., £80 net becomes £100 gross). Extra higher-rate relief (if applicable) is not modelled.`);
-  }
-
-  // Full audit trail (everything)
-  const auditHTML = `
-    <div class="mb-3">
-      <h3 class="h6 text-uppercase text-muted mb-2">1) Inputs (exactly as used)</h3>
-      <ul class="mb-0">
-        <li>Date of birth: <span class="mono">${dob.toISOString().slice(0,10)}</span></li>
-        <li>“Today” on this device: <span class="mono">${today.toISOString()}</span></li>
-        <li>Current SIPP value: <span class="mono">£${currentPot.toFixed(2)}</span></li>
-        <li>Monthly contribution entered: <span class="mono">£${monthlyContribution.toFixed(2)}</span> (${contributionType})</li>
-        <li>Annual income (optional): <span class="mono">${income === null ? "blank" : "£" + income.toFixed(2)}</span></li>
-        <li>Expected annual return (mid): <span class="mono">${(annualReturnMid*100).toFixed(2)}%</span></li>
-        <li>Variance band: <span class="mono">±${(variance*100).toFixed(2)}%</span></li>
-        <li>Chosen SIPP access age: <span class="mono">${chosenAccessAge}</span></li>
-      </ul>
-    </div>
-
-    <div class="mb-3">
-      <h3 class="h6 text-uppercase text-muted mb-2">2) Derived values</h3>
-      <ul class="mb-0">
-        <li>Current age (fractional years from DOB to today): <span class="mono">${ageYears.toFixed(6)}</span></li>
-        <li>Earliest access age by current rule set: <span class="mono">${earliestAccessAge}</span> (simplified; protections not modelled)</li>
-        <li>Time horizon: <span class="mono">${months}</span> months (computed as <span class="mono">round((accessAge − ageYears) × 12)</span>, clamped at ≥ 0)</li>
-        <li>Monthly gross contribution used: <span class="mono">£${grossMonthly.toFixed(2)}</span> ${
-          contributionType === "net"
-            ? `(calculated as net / 0.8 = ${monthlyContribution.toFixed(2)} / 0.8)`
-            : `(gross as entered)`
-        }</li>
-        <li>Annual rates used:
-          Low <span class="mono">${(annualLow*100).toFixed(2)}%</span>,
-          Mid <span class="mono">${(annualReturnMid*100).toFixed(2)}%</span>,
-          High <span class="mono">${(annualHigh*100).toFixed(2)}%</span>
-        </li>
-        <li>Monthly rates used (annual ÷ 12):
-          Low <span class="mono">${(monthlyLow*100).toFixed(4)}%</span>,
-          Mid <span class="mono">${(monthlyMid*100).toFixed(4)}%</span>,
-          High <span class="mono">${(monthlyHigh*100).toFixed(4)}%</span>
-        </li>
-      </ul>
-      ${warnings.length ? `
-        <div class="mt-2">
-          <h3 class="h6 text-uppercase text-muted mb-2">Flags / warnings</h3>
-          <ul class="mb-0">
-            ${warnings.map(w => `<li>${w}</li>`).join("")}
-          </ul>
-        </div>
-      ` : ""}
-    </div>
-
-    <div class="mb-3">
-      <h3 class="h6 text-uppercase text-muted mb-2">3) Formula (applied every month, for each scenario)</h3>
-      <div class="mono">
-        pot[0] = currentPot<br>
-        For m = 1..months:<br>
-        &nbsp;&nbsp;interest = pot[m-1] × monthlyRate<br>
-        &nbsp;&nbsp;pot[m] = pot[m-1] + interest + grossMonthlyContribution
-      </div>
-      <div class="mt-2">
-        This produces a full month-by-month schedule (below) and the final value pot[months].
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <h3 class="h6 text-uppercase text-muted mb-2">4) Final results (from the schedules)</h3>
-      <ul class="mb-0">
-        <li>Low end value pot[${months}]: <span class="mono">£${endLow.toFixed(2)}</span></li>
-        <li>Mid end value pot[${months}]: <span class="mono">£${endMid.toFixed(2)}</span></li>
-        <li>High end value pot[${months}]: <span class="mono">£${endHigh.toFixed(2)}</span></li>
-      </ul>
-    </div>
-
-    <div class="mb-3">
-      <h3 class="h6 text-uppercase text-muted mb-2">5) Month-by-month audit schedules</h3>
-
-      <details class="mb-2">
-        <summary>Low schedule (${months} months)</summary>
-        ${renderScheduleTable(scheduleLow)}
-      </details>
-
-      <details class="mb-2">
-        <summary>Mid schedule (${months} months)</summary>
-        ${renderScheduleTable(scheduleMid)}
-      </details>
-
-      <details>
-        <summary>High schedule (${months} months)</summary>
-        ${renderScheduleTable(scheduleHigh)}
-      </details>
-
-      <div class="mt-2 text-muted">
-        Table columns: start of month pot, interest added, contribution added, end of month pot.
-      </div>
-    </div>
-  `;
-
-  $("workings").innerHTML = auditHTML;
-
-  $("results").classList.remove("d-none");
-
-  // Store for download buttons
-  state.lastRun = {
-    dob: dob.toISOString().slice(0,10),
-    accessAge: chosenAccessAge,
-    months,
-    scheduleLow,
-    scheduleMid,
-    scheduleHigh
-  };
+function escapeHtml(str) {
+  return (str || "").replace(/[&<>"']/g, (m) => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
 }
 
-function renderScheduleTable(schedule) {
-  // Render full schedule inside a scrollable wrapper (still “whole audit trail”).
-  // For very large horizons, this can be long; the box scrolls.
-  const rows = schedule.map(r => `
-    <tr>
-      <td class="mono">${r.month}</td>
-      <td class="mono">£${r.potStart.toFixed(2)}</td>
-      <td class="mono">£${r.interest.toFixed(2)}</td>
-      <td class="mono">£${r.contribution.toFixed(2)}</td>
-      <td class="mono">£${r.potEnd.toFixed(2)}</td>
-    </tr>
-  `).join("");
+// Wire events
+document.addEventListener("DOMContentLoaded", () => {
+  wireHelp();
 
-  return `
-    <div class="audit-box mt-2">
-      <table class="audit-table">
-        <thead>
-          <tr>
-            <th>Month</th>
-            <th>Pot start</th>
-            <th>Interest</th>
-            <th>Contribution</th>
-            <th>Pot end</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rows}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
+  document.getElementById("dob").addEventListener("change", onDOBChanged);
+  document.getElementById("dob").addEventListener("blur", onDOBChanged);
 
-/* ====== Wiring ====== */
-$("dob").addEventListener("change", () => {
-  ensureAccessAgeAutoFill();
+  // In case browser autofills date value
+  onDOBChanged();
 });
-
-$("retirementAge").addEventListener("input", () => {
-  // Enforce min dynamically
-  const dobStr = $("dob").value;
-  if (!dobStr) return;
-
-  const dobLocal = new Date(dobStr);
-  if (isNaN(dobLocal)) return;
-
-  const dob = new Date(Date.UTC(dobLocal.getFullYear(), dobLocal.getMonth(), dobLocal.getDate()));
-  const earliest = getEarliestAccessAgeFromDob(dob);
-
-  const v = parseInt($("retirementAge").value, 10);
-  if (Number.isFinite(v) && v < earliest) $("retirementAge").value = String(earliest);
-});
-
-$("btnCalc").addEventListener("click", () => calculate());
-
-$("btnReset").addEventListener("click", () => {
-  $("dob").value = "";
-  $("currentPot").value = "0";
-  $("contribution").value = "0";
-  $("contributionType").value = "net";
-  $("income").value = "";
-  $("growth").value = "5.0";
-  $("variance").value = "3.0";
-  $("retirementAge").value = "";
-  $("retirementAge").min = "55";
-  $("results").classList.add("d-none");
-  $("workings").innerHTML = "";
-  state.lastRun = null;
-});
-
-// CSV downloads
-$("btnDownloadLow").addEventListener("click", () => {
-  if (!state.lastRun) return alert("Run a calculation first.");
-  downloadText(`sipp-audit-low-dob_${state.lastRun.dob}-age_${state.lastRun.accessAge}.csv`, toCSV(state.lastRun.scheduleLow));
-});
-$("btnDownloadMid").addEventListener("click", () => {
-  if (!state.lastRun) return alert("Run a calculation first.");
-  downloadText(`sipp-audit-mid-dob_${state.lastRun.dob}-age_${state.lastRun.accessAge}.csv`, toCSV(state.lastRun.scheduleMid));
-});
-$("btnDownloadHigh").addEventListener("click", () => {
-  if (!state.lastRun) return alert("Run a calculation first.");
-  downloadText(`sipp-audit-high-dob_${state.lastRun.dob}-age_${state.lastRun.accessAge}.csv`, toCSV(state.lastRun.scheduleHigh));
-});
-
-// Run once on load in case browser pre-fills DOB
-ensureAccessAgeAutoFill();
 </script>
 
 </body>
