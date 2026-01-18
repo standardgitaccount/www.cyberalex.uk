@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | CyberAlex</title>
+  <meta name="description" content="About CyberAlex — a timeline of projects, learning, and practical tooling, built with a security-first mindset.">
+
+  <!-- Bootstrap 3 (as per site standard) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="/assets/css/hacker.css">
+  <link rel="icon" href="/favicon.ico">
+
+  <!-- Template manager (header/footer web components) -->
+  <script src="/assets/js/templatemanager.js"></script>
+
+  <style>
+    /* ------------------------------------------------------------
+       Timeline layout (Bootstrap 3 friendly)
+       - Alternating image/text left/right, with a centre line.
+       - Collapses to stacked layout on small screens.
+       ------------------------------------------------------------ */
+
+    :root{
+      /* Site-wide accent / glow */
+      --ca-primary: #38bdf8;
+      --ca-bg: rgba(0,0,0,0.35);
+      --ca-line: rgba(56,189,248,0.45);
+      --ca-soft: rgba(56,189,248,0.15);
+    }
+
+    .about-hero {
+      margin-top: 10px;
+      margin-bottom: 18px;
+      padding: 18px;
+      border: 1px solid var(--ca-line);
+      border-radius: 10px;
+      background: var(--ca-bg);
+      box-shadow: 0 0 18px rgba(56,189,248,0.12);
+    }
+    .about-hero h1 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .about-hero .lead {
+      margin-bottom: 0;
+      opacity: 0.95;
+    }
+
+    .timeline {
+      position: relative;
+      margin: 18px 0 30px;
+      padding: 10px 0;
+    }
+
+    /* Centre line */
+    .timeline:before{
+      content:"";
+      position:absolute;
+      top:0;
+      bottom:0;
+      left:50%;
+      width:2px;
+      background: linear-gradient(transparent, var(--ca-line), transparent);
+      transform: translateX(-1px);
+    }
+
+    .timeline-item{
+      position: relative;
+      margin: 22px 0;
+    }
+
+    /* A little "node" on the centre line */
+    .timeline-item:before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top: 18px;
+      width: 12px;
+      height: 12px;
+      margin-left: -6px;
+      border-radius: 50%;
+      border: 1px solid var(--ca-primary);
+      background: rgba(0,0,0,0.9);
+      box-shadow: 0 0 12px rgba(56,189,248,0.35);
+      z-index: 3;
+    }
+
+    .timeline-panel{
+      background: var(--ca-bg);
+      border: 1px solid var(--ca-line);
+      border-radius: 10px;
+      padding: 14px 14px 12px;
+      box-shadow: 0 0 18px rgba(56,189,248,0.10);
+    }
+
+    .timeline-panel h3{
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .timeline-meta{
+      font-size: 12px;
+      opacity: 0.85;
+      margin-bottom: 10px;
+    }
+
+    .timeline-panel p{
+      margin-bottom: 10px;
+    }
+
+    .timeline-tags{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .timeline-tags li{
+      display: inline-block;
+      font-size: 12px;
+      margin: 0 6px 6px 0;
+      padding: 2px 8px;
+      border: 1px solid var(--ca-line);
+      border-radius: 999px;
+      background: rgba(56,189,248,0.08);
+    }
+
+    .timeline-photo{
+      border: 1px solid var(--ca-line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.65);
+      box-shadow: 0 0 18px rgba(56,189,248,0.10);
+    }
+    .timeline-photo img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .timeline-photo .caption{
+      padding: 8px 10px;
+      font-size: 12px;
+      opacity: 0.85;
+      border-top: 1px solid var(--ca-line);
+      background: rgba(0,0,0,0.35);
+    }
+
+    /* Two-column alternating layout */
+    .timeline-row{
+      display: flex;
+      align-items: stretch;
+      gap: 18px;
+    }
+
+    .timeline-col{
+      width: calc(50% - 9px);
+    }
+
+    /* Left/right alignment relative to centre line */
+    .timeline-item.left .timeline-row{
+      flex-direction: row; /* [photo] | [text] */
+    }
+    .timeline-item.right .timeline-row{
+      flex-direction: row-reverse; /* [text] | [photo] */
+    }
+
+    /* Make the panels "point" toward the centre line with a subtle glow edge */
+    .timeline-item.left .timeline-panel{
+      border-right: 2px solid rgba(56,189,248,0.55);
+    }
+    .timeline-item.right .timeline-panel{
+      border-left: 2px solid rgba(56,189,248,0.55);
+    }
+
+    /* Small screens: stack and move line to left */
+    @media (max-width: 767px){
+      .timeline:before{
+        left: 18px;
+        transform: none;
+      }
+      .timeline-item:before{
+        left: 18px;
+        margin-left: -6px;
+      }
+      .timeline-row{
+        display: block;
+        gap: 0;
+      }
+      .timeline-col{
+        width: 100%;
+      }
+      .timeline-item.left .timeline-row,
+      .timeline-item.right .timeline-row{
+        flex-direction: column;
+      }
+      .timeline-panel{
+        margin-left: 38px;
+      }
+      .timeline-photo{
+        margin-left: 38px;
+        margin-bottom: 12px;
+      }
+      .timeline-item.left .timeline-panel,
+      .timeline-item.right .timeline-panel{
+        border-left: 2px solid rgba(56,189,248,0.55);
+        border-right: 1px solid var(--ca-line);
+      }
+    }
+
+    /* Utility (optional) */
+    .muted { opacity: 0.9; }
+  </style>
+</head>
+
+<body>
+  <the-header></the-header>
+
+  <div class="container">
+    <!-- Breadcrumb row (site standard) -->
+    <div class="row">
+      <div class="col-xs-12">
+        <ol class="breadcrumb">
+          <li><a href="/">Home</a></li>
+          <li class="active">About</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Published / Author row (site standard) -->
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="muted"><strong>Published:</strong> 18 January 2026</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="muted"><strong>Author:</strong> Alex</p>
+      </div>
+    </div>
+
+    <div class="about-hero">
+      <h1>About</h1>
+      <p class="lead">
+        CyberAlex is where I publish practical tools, write-ups, and notes at the intersection of
+        security, risk, and real-world engineering. This page runs <strong>backwards in time</strong> — the newest work first.
+      </p>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="timeline" aria-label="CyberAlex timeline">
+
+      <!-- 2026 -->
+      <section class="timeline-item left">
+        <div class="timeline-row">
+          <div class="timeline-col">
+            <div class="timeline-photo">
+              <!-- Replace with your own image path -->
+              <img src="/assets/img/about/2026-lab.jpg" alt="A dark desk setup with a laptop and notes, suggesting research and hands-on work.">
+              <div class="caption">2026 — building depth: risk, resilience, and practical tooling.</div>
+            </div>
+          </div>
+          <div class="timeline-col">
+            <div class="timeline-panel">
+              <h3>2026 — Refinement &amp; real-world focus</h3>
+              <div class="timeline-meta">Current chapter</div>
+              <p>
+                This year is about turning knowledge into repeatable practice: clearer write-ups, better tooling,
+                and a sharper focus on how security decisions behave in the real world (cost, trade-offs, and impact).
+              </p>
+              <ul class="timeline-tags">
+                <li>Risk &amp; resilience</li>
+                <li>Practical tools</li>
+                <li>Clear documentation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2025 -->
+      <section class="timeline-item right">
+        <div class="timeline-row">
+          <div class="timeline-col">
+            <div class="timeline-photo">
+              <img src="/assets/img/about/2025-tools.jpg" alt="A stylised terminal window and UI mockups, representing tool-building and web development.">
+              <div class="caption">2025 — tool-building with a privacy-first mindset.</div>
+            </div>
+          </div>
+          <div class="timeline-col">
+            <div class="timeline-panel">
+              <h3>2025 — Shipping tools people can actually use</h3>
+              <div class="timeline-meta">Projects &amp; publishing</div>
+              <p>
+                A big push on creating small, trustworthy utilities: transparent assumptions, client-side processing where possible,
+                and pages that explain the “why” as clearly as the “how”.
+              </p>
+              <p class="muted">
+                Think: reference generators, encryption helpers, calculators, and little workflow tools — built to be understandable
+                and easy to audit.
+              </p>
+              <ul class="timeline-tags">
+                <li>Client-side privacy</li>
+                <li>Static site tools</li>
+                <li>Auditability</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2024 -->
+      <section class="timeline-item left">
+        <div class="timeline-row">
+          <div class="timeline-col">
+            <div class="timeline-photo">
+              <img src="/assets/img/about/2024-notes.jpg" alt="Open notebook with structured notes and a pen, representing study and methodical learning.">
+              <div class="caption">2024 — tightening method: structure, evidence, and communication.</div>
+            </div>
+          </div>
+          <div class="timeline-col">
+            <div class="timeline-panel">
+              <h3>2024 — Structure, evidence, and better thinking</h3>
+              <div class="timeline-meta">Foundations &amp; frameworks</div>
+              <p>
+                This period is where the habits sharpened: documenting assumptions, separating opinion from evidence,
+                and presenting technical ideas in a way that non-specialists can trust.
+              </p>
+              <ul class="timeline-tags">
+                <li>Evidence-led</li>
+                <li>Frameworks</li>
+                <li>Clarity</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Earlier -->
+      <section class="timeline-item right">
+        <div class="timeline-row">
+          <div class="timeline-col">
+            <div class="timeline-photo">
+              <img src="/assets/img/about/early-inspiration.jpg" alt="A minimal road at night with a faint glow, representing curiosity and momentum over time.">
+              <div class="caption">Earlier — curiosity first, then craft.</div>
+            </div>
+          </div>
+          <div class="timeline-col">
+            <div class="timeline-panel">
+              <h3>Earlier — Curiosity → craft</h3>
+              <div class="timeline-meta">Origin story</div>
+              <p>
+                CyberAlex started as a place to collect notes and experiments — and grew into a public, maintained space:
+                tools, write-ups, and small utilities that I’d want to use myself.
+              </p>
+              <ul class="timeline-tags">
+                <li>Learning in public</li>
+                <li>Iteration</li>
+                <li>Build &amp; reflect</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-8">
+        <h2>What I care about</h2>
+        <ul>
+          <li><strong>Trust by design:</strong> clear assumptions, visible maths, and predictable behaviour.</li>
+          <li><strong>Security that’s usable:</strong> tools that normal people can operate correctly.</li>
+          <li><strong>Transparent thinking:</strong> show the working, not just the output.</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h2>Contact</h2>
+        <p>
+          If you want to collaborate, sanity-check a tool, or suggest an improvement, head to the
+          <a href="/contact.html">contact page</a>.
+        </p>
+      </div>
+    </div>
+
+    <br>
+  </div>
+
+  <the-footer></the-footer>
+
+  <!-- Bootstrap JS (optional, if your template uses it) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
