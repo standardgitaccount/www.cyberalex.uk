@@ -2,157 +2,206 @@
 <html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="About Alex: cyber security, risk and resilience, driving, photography and the projects behind CyberAlex.">
+  <meta name="description" content="About Alex — cyber security, risk, resilience, and the CyberAlex philosophy.">
   <meta name="author" content="Alex">
   <meta name="robots" content="index, follow">
 
-  <title>About Alex - CyberAlex</title>
+  <title>About – CyberAlex</title>
 
-  <link rel="canonical" href="https://www.cyberalex.uk/about.html">
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.cyberalex.uk/about1.html">
 
-  <meta property="og:title" content="About Alex - CyberAlex">
-  <meta property="og:description" content="Learn more about Alex: cyber security, advanced driving, photography and practical tools.">
-  <meta property="og:url" content="https://www.cyberalex.uk/about.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="About – CyberAlex">
+  <meta property="og:description" content="A cyber-first about page and reflective timeline: learning milestones, skills development, qualifications, and notable moments.">
+  <meta property="og:url" content="https://www.cyberalex.uk/about1.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CyberAlex">
   <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="About Alex - CyberAlex">
-  <meta name="twitter:description" content="Cyber security, risk, driving, photography and how Alex approaches them.">
+  <meta name="twitter:title" content="About – CyberAlex">
+  <meta name="twitter:description" content="Cyber-first about page and reflective timeline.">
   <meta name="twitter:image" content="https://www.cyberalex.uk/img/social-card.png">
 
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles -->
   <link rel="stylesheet" href="/css/main.css">
+
   <link rel="icon" href="/logo.png" type="image/png">
 
   <style>
-    /*
-      CyberAlex timeline (Bootstrap 5)
-      - Chapters go backwards in time (newest first)
-      - Alternating image/text either side of a centre line
-      - Mobile collapses to a single column with the line on the left
+    /* Page-local styling: timeline layout + nodes.
+       Keep palette aligned with main.css (subtle borders, no loud custom fills).
     */
-
-    :root{
-      /* Site-wide glow accent (you mentioned this is your site accent) */
-      --ca-primary: #38bdf8;
-      --ca-line: rgba(56,189,248,0.45);
-      --ca-soft: rgba(56,189,248,0.12);
-      --ca-node: rgba(0,0,0,0.9);
+    :root {
+      --ca-primary: #38bdf8; /* fallback */
+      --ca-text-dim: rgba(255,255,255,.72);
+      --ca-border: rgba(255,255,255,.12);
+      --ca-border-2: rgba(255,255,255,.18);
+      --rail: rgba(255,255,255,.18);
+      --rail-strong: rgba(56,189,248,.40);
     }
 
-    .about-hero {
-      border: 1px solid var(--ca-line);
-      border-radius: 14px;
-      background: rgba(0,0,0,0.25);
-      box-shadow: 0 0 22px rgba(56,189,248,0.10);
+    /* HERO should feel like your other raised cards, but bigger */
+    .about-hero.card {
+      border-radius: 18px;
+      border: 1px solid var(--ca-border);
+      background: rgba(255,255,255,.02);
     }
 
-    .timeline {
-      position: relative;
-      padding: 0.25rem 0;
+    .about-hero .kicker {
+      letter-spacing: .08em;
+    }
+
+    /* Timeline */
+    .year-stamp {
+      font-weight: 800;
+      line-height: 1;
       margin: 0;
+      font-size: clamp(3.8rem, 8vw, 7.2rem);
+      letter-spacing: -2px;
+
+      /* CyberAlex-ish gradient, but restrained */
+      background: linear-gradient(180deg, rgba(56,189,248,.95), rgba(56,189,248,.35));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 22px rgba(56,189,248,.12);
     }
 
-    /* Centre line */
-    .timeline::before{
-      content:"";
-      position:absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 2px;
-      transform: translateX(-1px);
-      background: linear-gradient(transparent, var(--ca-line), transparent);
-      pointer-events: none;
-    }
-
-    .timeline-item {
+    /* Per-year rail: starts at year node, ends at last card node */
+    .timeline-rail {
       position: relative;
-      padding: 1.25rem 0;
+      padding-left: 76px;          /* room for rail + nodes + connector */
+      --rail-x: 34px;              /* x position inside this column */
+      --rail-top: 22px;            /* start point = year node centre */
+      --rail-bottom: 32px;         /* end point = last node-ish */
     }
 
-    /* Node / dot on the line */
-    .timeline-item::before{
-      content:"";
-      position:absolute;
-      left: 50%;
-      top: 2.1rem; /* aligns roughly with first row content */
-      width: 14px;
-      height: 14px;
-      transform: translateX(-50%);
+    .timeline-rail::before {
+      content: "";
+      position: absolute;
+      left: var(--rail-x);
+      top: var(--rail-top);
+      bottom: var(--rail-bottom);
+      width: 2px;
+      background: linear-gradient(180deg, var(--rail-strong), var(--rail) 40%, rgba(56,189,248,.18));
+      border-radius: 2px;
+    }
+
+    /* Anchor row at top of each year: node + connector towards the year */
+    .year-anchor {
+      position: relative;
+      height: 44px;
+      margin-bottom: 10px;
+    }
+
+    .year-node {
+      position: absolute;
+      left: var(--rail-x);
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: var(--ca-node);
-      border: 1px solid var(--ca-primary);
-      box-shadow: 0 0 14px rgba(56,189,248,0.35);
-      z-index: 2;
-      pointer-events: none;
+      background: rgba(0,0,0,.45);
+      border: 2px solid rgba(56,189,248,.70);
+      box-shadow: 0 0 0 4px rgba(56,189,248,.10);
+    }
+
+    /* Connector that ties the year to the rail.
+       Draw a clean horizontal run from the rail back toward the year (into the gutter).
+       Keeping it simple avoids the "floating" node/line look.
+    */
+    .year-anchor::before {
+      content: "";
+      position: absolute;
+      left: var(--rail-x);
+      top: 50%;
+      width: 140px;
+      height: 2px;
+      background: rgba(56,189,248,.28);
+      transform: translate(-140px, -50%);
+      border-radius: 2px;
     }
 
     .timeline-card {
-      border: 1px solid var(--ca-line);
-      background: rgba(0,0,0,0.22);
-      box-shadow: 0 0 22px rgba(56,189,248,0.08);
+      position: relative;
+      border-radius: 18px;
+      border: 1px solid var(--ca-border);
+      background: rgba(255,255,255,.02);
     }
 
-    .timeline-kicker {
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: .72rem;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: .4rem;
+    /* Card node aligned precisely to rail (pixel-correct) */
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      /* rail position relative to card = (rail-x - padding-left) */
+      left: calc(var(--rail-x) - 76px - 7px); /* -7px = half of 14px node */
+      top: 30px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.45);
+      border: 2px solid rgba(56,189,248,.65);
+      box-shadow: 0 0 0 4px rgba(56,189,248,.08);
     }
 
-    .timeline-tags .badge{
-      border: 1px solid var(--ca-line);
-      background: rgba(56,189,248,0.08);
-      color: rgba(255,255,255,0.85);
-      font-weight: 500;
+    /* Connector from rail (at rail-x) to card edge */
+    .timeline-card::after {
+      content: "";
+      position: absolute;
+      left: calc(var(--rail-x) - 76px);
+      top: 30px;
+      width: calc(76px - var(--rail-x));
+      height: 2px;
+      background: rgba(56,189,248,.26);
+      transform: translateY(-50%);
+      border-radius: 2px;
     }
 
-    .timeline-photo {
-      border: 1px solid var(--ca-line);
-      border-radius: 14px;
-      overflow: hidden;
-      background: rgba(0,0,0,0.35);
-      box-shadow: 0 0 22px rgba(56,189,248,0.08);
+    .timeline-left ul {
+      margin-bottom: 0;
+      padding-left: 1.1rem;
+      color: var(--ca-text-dim);
     }
 
-    .timeline-photo img{
-      display:block;
-      width:100%;
-      height:auto;
+    .timeline-right p {
+      color: var(--ca-text-dim);
     }
 
-    .timeline-photo .caption{
-      border-top: 1px solid var(--ca-line);
-      padding: .55rem .75rem;
-      font-size: .85rem;
-      color: rgba(255,255,255,0.75);
-      background: rgba(0,0,0,0.25);
+    .btn-ca {
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,.35);
+      background: rgba(56,189,248,.10);
+      color: rgba(255,255,255,.92);
     }
 
-    /* Keep columns away from the centre line */
-    .timeline-side-left  { padding-right: 2rem; }
-    .timeline-side-right { padding-left: 2rem; }
+    .btn-ca:hover,
+    .btn-ca:focus {
+      border-color: rgba(56,189,248,.55);
+      background: rgba(56,189,248,.14);
+      color: rgba(255,255,255,.98);
+    }
 
-    /* Mobile: move line left and stack content */
-    @media (max-width: 991.98px){
-      .timeline::before{
-        left: 1.0rem;
-        transform: none;
+    /* Mobile: keep year big, simplify rail/nodes like requested */
+    @media (max-width: 767.98px) {
+      .timeline-rail {
+        padding-left: 0;
       }
-      .timeline-item::before{
-        left: 1.0rem;
-        transform: translateX(-50%);
+      .timeline-rail::before,
+      .year-anchor,
+      .timeline-card::before,
+      .timeline-card::after {
+        display: none;
       }
-      .timeline-side-left,
-      .timeline-side-right{
-        padding-left: 2.0rem;
-        padding-right: 0;
+      .year-stamp {
+        margin-bottom: .35rem;
       }
     }
   </style>
@@ -161,12 +210,13 @@
 <body class="theme-dark">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
+  <!-- Header -->
   <header id="site-header"></header>
 
   <main id="main-content" class="container py-4" tabindex="-1">
 
-    <!-- PAGE HEADER -->
-    <section class="mb-4">
+    <!-- Breadcrumb + title -->
+    <section class="mb-4" aria-label="Page header">
       <nav aria-label="Breadcrumb" class="mb-2">
         <ol class="breadcrumb small mb-0">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -174,247 +224,141 @@
         </ol>
       </nav>
 
-      <h1 class="h3 mb-1">About Alex</h1>
+      <h1 class="h3 mb-1">About</h1>
       <p class="text-secondary small mb-0">
-        By Alex • Published: 18 January 2026 • Updated: 18 January 2026
+        By <a href="/about.html">Alex</a> &bull; Published: 22 January 2026 &bull; Updated: 22 January 2026
       </p>
     </section>
 
-    <!-- INTRODUCTION (kept CyberAlex tone) -->
-    <section class="about-hero p-3 p-md-4 mb-5">
-      <p class="lead mb-2">
-        Alex likes understanding how things really work. That includes systems, policies, cars, cameras
-        and sometimes coins. Curiosity tends to pull things together rather than apart, which is how this site
-        ended up mixing cyber security, advanced driving, photography and practical tools.
-      </p>
-      <p class="small text-secondary mb-0">
-        This page now runs as a backwards timeline — newest first — with the chapters that shaped CyberAlex.
-      </p>
-    </section>
-
-    <!-- TIMELINE (newest first) -->
-    <section class="timeline mb-5" aria-label="About timeline">
-
-      <!-- CHAPTER: 2026 (LEFT image | RIGHT text) -->
-      <article class="timeline-item">
-        <div class="row g-4 align-items-stretch">
-          <!-- Left side (image) -->
-          <div class="col-lg-5 timeline-side-left">
-            <div class="timeline-photo">
-              <!-- Replace with your real image -->
-              <img src="/img/about/2026.jpg" alt="A low-light desk scene representing focused work and iteration.">
-              <div class="caption">2026 — Refinement, clarity, and building in public.</div>
-            </div>
-          </div>
-
-          <!-- Right side (text) -->
-          <div class="col-lg-7 timeline-side-right">
-            <div class="card timeline-card card-raise h-100">
-              <div class="card-body">
-                <div class="timeline-kicker">Current chapter</div>
-                <h2 class="h5 mb-2">2026 — Turning depth into repeatable practice</h2>
-                <p class="small text-secondary mb-3">
-                  The focus now is on work that holds up under scrutiny: clearer write-ups, tighter assumptions,
-                  and tools that are easy to audit. Not “security theatre” — the kind of thinking that remains useful
-                  when pressure, people, and imperfect information enter the room.
-                </p>
-                <div class="timeline-tags d-flex flex-wrap gap-2">
-                  <span class="badge rounded-pill">Risk &amp; resilience</span>
-                  <span class="badge rounded-pill">Tooling</span>
-                  <span class="badge rounded-pill">Clear communication</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CHAPTER: 2025 (LEFT text | RIGHT image) -->
-      <article class="timeline-item">
-        <div class="row g-4 align-items-stretch">
-          <!-- Left side (text) -->
-          <div class="col-lg-7 timeline-side-left order-lg-1 order-2">
-            <div class="card timeline-card card-raise h-100">
-              <div class="card-body">
-                <div class="timeline-kicker">Projects &amp; publishing</div>
-                <h2 class="h5 mb-2">2025 — Shipping practical, trustworthy tools</h2>
-                <p class="small text-secondary mb-2">
-                  CyberAlex became more than notes. This is where the site leaned into small utilities that people can actually use —
-                  especially where transparency matters: what’s assumed, what’s calculated, what’s stored (ideally nothing),
-                  and what can be verified.
-                </p>
-                <p class="small text-secondary mb-3">
-                  It’s the same philosophy across everything: make the work legible, so others can build on it.
-                </p>
-                <div class="timeline-tags d-flex flex-wrap gap-2">
-                  <span class="badge rounded-pill">Client-side privacy</span>
-                  <span class="badge rounded-pill">Auditability</span>
-                  <span class="badge rounded-pill">FOSS mindset</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right side (image) -->
-          <div class="col-lg-5 timeline-side-right order-lg-2 order-1">
-            <div class="timeline-photo">
-              <img src="/img/about/2025.jpg" alt="A stylised terminal and interface mockups, representing tool-building.">
-              <div class="caption">2025 — Tools, write-ups, and a security-first mindset.</div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CHAPTER: 2024 (LEFT image | RIGHT text) -->
-      <article class="timeline-item">
-        <div class="row g-4 align-items-stretch">
-          <!-- Left side (image) -->
-          <div class="col-lg-5 timeline-side-left">
-            <div class="timeline-photo">
-              <img src="/img/about/2024.jpg" alt="Notebook notes and diagrams representing structured learning.">
-              <div class="caption">2024 — Method, structure, and better reasoning.</div>
-            </div>
-          </div>
-
-          <!-- Right side (text) -->
-          <div class="col-lg-7 timeline-side-right">
-            <div class="card timeline-card card-raise h-100">
-              <div class="card-body">
-                <div class="timeline-kicker">Foundations</div>
-                <h2 class="h5 mb-2">2024 — Frameworks that survive reality</h2>
-                <p class="small text-secondary mb-3">
-                  This chapter sharpened the “how”: separating opinion from evidence, documenting assumptions,
-                  and getting comfortable explaining decisions in plain language. It’s also where the theme of
-                  risk became practical — not abstract — because it always lives in messy systems.
-                </p>
-                <div class="timeline-tags d-flex flex-wrap gap-2">
-                  <span class="badge rounded-pill">Evidence-led</span>
-                  <span class="badge rounded-pill">Systems thinking</span>
-                  <span class="badge rounded-pill">Communication</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CHAPTER: Earlier (LEFT text | RIGHT image) -->
-      <article class="timeline-item">
-        <div class="row g-4 align-items-stretch">
-          <!-- Left side (text) -->
-          <div class="col-lg-7 timeline-side-left order-lg-1 order-2">
-            <div class="card timeline-card card-raise h-100">
-              <div class="card-body">
-                <div class="timeline-kicker">Origin story</div>
-                <h2 class="h5 mb-2">Earlier — Curiosity → craft</h2>
-                <p class="small text-secondary mb-3">
-                  CyberAlex started as a place to put things that would otherwise get lost: notes, experiments,
-                  small scripts, and ideas worth keeping. Over time, it grew into a public space where the standard
-                  is simple: build things that are useful, and explain them well.
-                </p>
-                <div class="timeline-tags d-flex flex-wrap gap-2">
-                  <span class="badge rounded-pill">Learning in public</span>
-                  <span class="badge rounded-pill">Iteration</span>
-                  <span class="badge rounded-pill">Craft</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right side (image) -->
-          <div class="col-lg-5 timeline-side-right order-lg-2 order-1">
-            <div class="timeline-photo">
-              <img src="/img/about/early.jpg" alt="A quiet road at night, representing momentum and curiosity.">
-              <div class="caption">Earlier — the habit of asking “how does this really work?”</div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-    </section>
-
-    <!-- OPTIONAL: keep your existing sections as “anchors” after the timeline -->
-    <section class="mb-5" aria-labelledby="cyber-heading">
-      <div class="row g-4">
-        <div class="col-lg-8">
-          <h2 class="h4 mb-2">Cyber Security, Risk and Resilience</h2>
-          <p class="small text-secondary">
-            Alex studied Computer Security at undergraduate level and graduated with a First Class BSc. Postgraduate work in Cyber Security,
-            Risk and Resilience builds on that foundation with a deeper focus on how organisations cope with real pressure — where people
-            miscommunicate, controls drift, systems fail at the wrong moment and someone has to make a decision before the damage spreads.
+    <!-- HERO (full-width, no At-a-Glance) -->
+    <section class="mb-5" aria-label="Introduction">
+      <div class="card card-raise about-hero">
+        <div class="card-body p-4 p-md-5">
+          <p class="small text-secondary text-uppercase mb-2 kicker">CyberAlex</p>
+          <h2 class="display-6 fw-bold mb-3">Cyber-first, practical, systems-minded.</h2>
+          <p class="lead mb-3">
+            I’m Alex — a cyber security practitioner with a First Class BSc (Hons) in Computer Security, focused on translating complex technical risk into decisions that stand up in the real world.
           </p>
-          <p class="small text-secondary mb-0">
-            The approach is simple: look at people, technology and process as a system. Understand what is supposed to happen, then look at what
-            actually happens. The gap between those two things is where most risk lives.
+          <p class="text-secondary mb-0">
+            CyberAlex is both a portfolio and a living knowledge base: tools, write-ups, frameworks, and notes that prioritise clarity, evidence, and usefulness.
           </p>
-        </div>
-
-        <div class="col-lg-4">
-          <div class="card h-100 card-raise">
-            <div class="card-body small text-secondary">
-              <h3 class="h6 text-uppercase text-muted mb-2">Request CV or More Information</h3>
-              <p class="mb-2">
-                Alex's CV is kept offline for privacy and to avoid outdated versions circulating.
-                If you’d like a copy for legitimate hiring or collaboration purposes, feel free to get in touch.
-              </p>
-              <p class="mb-0">
-                <a href="mailto:&#97;&#108;&#101;&#120;&#64;&#99;&#121;&#98;&#101;&#114;&#97;&#108;&#101;&#120;&#46;&#117;&#107;"
-                   class="btn btn-outline-light btn-sm">
-                  &#97;&#108;&#101;&#120;&#64;&#99;&#121;&#98;&#101;&#114;&#97;&#108;&#101;&#120;&#46;&#117;&#107;
-                </a>
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <section class="mb-5" aria-labelledby="automotive-heading">
-      <h2 id="automotive-heading" class="h4 mb-3">Automotive and Advanced Driving</h2>
-      <div class="row g-4">
-        <div class="col-lg-8">
-          <p class="small text-secondary mb-0">
-            That mindset eventually led to
-            <a href="https://www.velosophy.org.uk" class="link-light">Velosophy</a> — a separate site where the more detailed write-ups live.
-            It covers advanced driving, car control, the High Performance Course, examiner feedback, and the broader philosophy behind driving well.
-          </p>
-        </div>
-        <div class="col-lg-4">
-          <div class="card h-100 card-raise">
-            <div class="card-body small text-secondary">
-              <h3 class="h6 text-uppercase text-muted mb-2">Where to Read More</h3>
-              <a href="https://www.velosophy.org.uk" class="btn btn-outline-light btn-sm">Visit Velosophy</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- TIMELINE -->
+    <section class="mb-5" aria-label="Timeline">
 
-    <section class="mb-5" aria-labelledby="photo-heading">
-      <h2 id="photo-heading" class="h4 mb-3">Photography</h2>
-      <div class="row g-4">
-        <div class="col-lg-8">
-          <p class="small text-secondary mb-0">
-            Lumasphere is the dedicated portfolio — a cleaner space away from the tools and tech of CyberAlex.
-            Visit at <a href="https://lumasphere.art" class="link-light">lumasphere.art</a>.
-          </p>
+      <!-- 2026 -->
+      <div class="row g-4 align-items-start mb-5">
+        <div class="col-md-3">
+          <p class="year-stamp" aria-label="Year 2026">2026</p>
         </div>
-        <div class="col-lg-4">
-          <div class="card h-100 card-raise">
-            <div class="card-body small text-secondary">
-              <h3 class="h6 text-uppercase text-muted mb-2">Lumasphere</h3>
-              <a href="https://lumasphere.art" class="btn btn-outline-light btn-sm">Visit Lumasphere</a>
+
+        <div class="col-md-9">
+          <div class="timeline-rail" style="--rail-top: 22px; --rail-bottom: 28px;">
+
+            <!-- Rail start node tied to the year -->
+            <div class="year-anchor" aria-hidden="true">
+              <span class="year-node"></span>
             </div>
+
+            <div class="card timeline-card card-raise mb-4">
+              <div class="card-body">
+                <div class="row g-4 align-items-start">
+                  <div class="col-lg-4 timeline-left">
+                    <h3 class="h5 mb-2">MSc: Cyber Security, Risk &amp; Resilience</h3>
+                    <ul class="small">
+                      <li>Postgraduate study</li>
+                      <li>Strategic risk focus</li>
+                      <li>Governance and resilience</li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-8 timeline-right">
+                    <p class="small mb-3">
+                      Postgraduate work extending technical foundations into organisational resilience, leadership, and systemic risk — including how cyber security operates at board, regulatory, and societal levels.
+                    </p>
+                    <a class="btn btn-ca btn-sm" href="#">Find out more</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card timeline-card card-raise">
+              <div class="card-body">
+                <div class="row g-4 align-items-start">
+                  <div class="col-lg-4 timeline-left">
+                    <h3 class="h5 mb-2">Advanced Driving Development</h3>
+                    <ul class="small">
+                      <li>Observation and planning</li>
+                      <li>Risk assessment under pressure</li>
+                      <li>Continuous refinement</li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-8 timeline-right">
+                    <p class="small mb-3">
+                      Continued practice in advanced/high-performance driving: discipline, situational awareness, and decision-making. The methods map surprisingly well onto cyber: anticipate, verify, and avoid single points of failure.
+                    </p>
+                    <a class="btn btn-ca btn-sm" href="#">Find out more</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
+
+      <!-- 2025 -->
+      <div class="row g-4 align-items-start">
+        <div class="col-md-3">
+          <p class="year-stamp" aria-label="Year 2025">2025</p>
+        </div>
+
+        <div class="col-md-9">
+          <div class="timeline-rail" style="--rail-top: 22px; --rail-bottom: 28px;">
+
+            <!-- Rail start node tied to the year -->
+            <div class="year-anchor" aria-hidden="true">
+              <span class="year-node"></span>
+            </div>
+
+            <div class="card timeline-card card-raise">
+              <div class="card-body">
+                <div class="row g-4 align-items-start">
+                  <div class="col-lg-4 timeline-left">
+                    <h3 class="h5 mb-2">CyberAlex Platform Expansion</h3>
+                    <ul class="small">
+                      <li>Tools and practical pages</li>
+                      <li>Public references and write-ups</li>
+                      <li>Clear, client-side, privacy-first</li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-8 timeline-right">
+                    <p class="small mb-3">
+                      Built out CyberAlex as a practical platform: small tools, readable frameworks, and writing intended to be useful to real people — not just impressive on paper.
+                    </p>
+                    <a class="btn btn-ca btn-sm" href="#">Find out more</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </section>
 
   </main>
 
+  <!-- Footer -->
   <footer id="site-footer"></footer>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Layout loader -->
   <script src="/js/layout.js"></script>
 </body>
 </html>
