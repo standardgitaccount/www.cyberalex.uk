@@ -9,13 +9,12 @@
 
   <title>About – CyberAlex</title>
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://www.cyberalex.uk/about1.html">
+  <link rel="canonical" href="https://www.cyberalex.uk/about.html">
 
   <!-- Open Graph -->
   <meta property="og:title" content="About – CyberAlex">
-  <meta property="og:description" content="A cyber-first about page and reflective timeline: learning milestones, skills development, qualifications, and notable moments.">
-  <meta property="og:url" content="https://www.cyberalex.uk/about1.html">
+  <meta property="og:description" content="Cyber-first about page and reflective timeline: milestones, skills development, qualifications, and notable moments.">
+  <meta property="og:url" content="https://www.cyberalex.uk/about.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CyberAlex">
   <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
@@ -35,145 +34,129 @@
   <link rel="icon" href="/logo.png" type="image/png">
 
   <style>
-    /* Page-local styling: timeline layout + nodes.
-       Keep palette aligned with main.css (subtle borders, no loud custom fills).
-    */
     :root {
       --ca-primary: #38bdf8; /* fallback */
       --ca-text-dim: rgba(255,255,255,.72);
       --ca-border: rgba(255,255,255,.12);
-      --ca-border-2: rgba(255,255,255,.18);
-      --rail: rgba(255,255,255,.18);
-      --rail-strong: rgba(56,189,248,.40);
+      --ca-border-soft: rgba(255,255,255,.08);
     }
 
-    /* HERO should feel like your other raised cards, but bigger */
+    /* HERO */
     .about-hero.card {
       border-radius: 18px;
       border: 1px solid var(--ca-border);
       background: rgba(255,255,255,.02);
     }
 
-    .about-hero .kicker {
-      letter-spacing: .08em;
-    }
+    .about-hero .kicker { letter-spacing: .08em; }
 
-    /* Timeline */
+    /* Year styling */
     .year-stamp {
       font-weight: 800;
-      line-height: 1;
+      /* Give the glyphs a little breathing room so the bottoms of 5/6 never clip */
+      line-height: 1.08;
       margin: 0;
-      font-size: clamp(3.8rem, 8vw, 7.2rem);
+      display: inline-block;
+      padding-bottom: .08em;
+      font-size: clamp(4.2rem, 9vw, 7.8rem);
       letter-spacing: -2px;
-
-      /* CyberAlex-ish gradient, but restrained */
       background: linear-gradient(180deg, rgba(56,189,248,.95), rgba(56,189,248,.35));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       text-shadow: 0 0 22px rgba(56,189,248,.12);
+      user-select: none;
     }
 
-    /* Per-year rail: starts at year node, ends at last card node */
-    .timeline-rail {
-      position: relative;
-      padding-left: 76px;          /* room for rail + nodes + connector */
-      --rail-x: 34px;              /* x position inside this column */
-      --rail-top: 22px;            /* start point = year node centre */
-      --rail-bottom: 32px;         /* end point = last node-ish */
-    }
+    /*
+      What you asked for (literally):
 
-    .timeline-rail::before {
-      content: "";
-      position: absolute;
-      left: var(--rail-x);
-      top: var(--rail-top);
-      bottom: var(--rail-bottom);
-      width: 2px;
-      background: linear-gradient(180deg, var(--rail-strong), var(--rail) 40%, rgba(56,189,248,.18));
-      border-radius: 2px;
-    }
+      [ 2026 ]
+               |  [ Card 1 ]
+               |  [ Card 2 ]
 
-    /* Anchor row at top of each year: node + connector towards the year */
-    .year-anchor {
-      position: relative;
-      height: 44px;
-      margin-bottom: 10px;
-    }
-
-    .year-node {
-      position: absolute;
-      left: var(--rail-x);
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: rgba(0,0,0,.45);
-      border: 2px solid rgba(56,189,248,.70);
-      box-shadow: 0 0 0 4px rgba(56,189,248,.10);
-    }
-
-    /* Connector that ties the year to the rail.
-       Draw a clean horizontal run from the rail back toward the year (into the gutter).
-       Keeping it simple avoids the "floating" node/line look.
+      Implementation: two-row grid per year.
+      Row 1: year label.
+      Row 2: spine + cards.
     */
-    .year-anchor::before {
+    .year-block {
+      display: grid;
+      /* Year | spine | cards */
+      grid-template-columns: 280px 22px 1fr;
+      /* two rows so the spine has something to stretch through */
+      grid-template-rows: auto 1fr;
+      column-gap: 22px;
+      row-gap: 0;
+      align-items: start;
+    }
+    }
+
+    .year-col {
+      grid-column: 1;
+      grid-row: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+.year-spine {
+      grid-column: 2;
+      /* span from the year row into the cards row */
+      grid-row: 1 / span 2;
+      position: relative;
+      align-self: stretch;
+      min-height: 100%;
+    }
+
+    .year-spine::before {
       content: "";
       position: absolute;
-      left: var(--rail-x);
-      top: 50%;
-      width: 140px;
-      height: 2px;
-      background: rgba(56,189,248,.28);
-      transform: translate(-140px, -50%);
+      /* start on the year line */
+      top: 0.55em;
+      bottom: 6px;
+      width: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(56,189,248,.7), rgba(56,189,248,.35));
+      box-shadow: 0 0 10px rgba(56,189,248,.45);
       border-radius: 2px;
     }
 
+    .cards-col { grid-column: 3; grid-row: 2; }
+
+    /* Timeline cards */
     .timeline-card {
-      position: relative;
       border-radius: 18px;
       border: 1px solid var(--ca-border);
       background: rgba(255,255,255,.02);
     }
 
-    /* Card node aligned precisely to rail (pixel-correct) */
-    .timeline-card::before {
-      content: "";
-      position: absolute;
-      /* rail position relative to card = (rail-x - padding-left) */
-      left: calc(var(--rail-x) - 76px - 7px); /* -7px = half of 14px node */
-      top: 30px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: rgba(0,0,0,.45);
-      border: 2px solid rgba(56,189,248,.65);
-      box-shadow: 0 0 0 4px rgba(56,189,248,.08);
+    /* Reference look: split layout + vertical divider INSIDE the card (unchanged) */
+    .timeline-split {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 22px;
+      align-items: start;
+      width: 100%;
     }
 
-    /* Connector from rail (at rail-x) to card edge */
-    .timeline-card::after {
-      content: "";
-      position: absolute;
-      left: calc(var(--rail-x) - 76px);
-      top: 30px;
-      width: calc(76px - var(--rail-x));
-      height: 2px;
-      background: rgba(56,189,248,.26);
-      transform: translateY(-50%);
-      border-radius: 2px;
-    }
+    .timeline-split .split-left h3 { margin-bottom: .5rem; }
 
-    .timeline-left ul {
+    .timeline-split .split-left ul {
       margin-bottom: 0;
       padding-left: 1.1rem;
       color: var(--ca-text-dim);
     }
 
-    .timeline-right p {
-      color: var(--ca-text-dim);
+    .timeline-split .split-right {
+      border-left: 1px solid var(--ca-border);
+      padding-left: 22px;
     }
+
+    .timeline-split .split-right p { color: var(--ca-text-dim); }
+
+    .timeline-split .btn-row { margin-top: .75rem; }
+
+    .timeline-card .card-body { padding: 1.25rem 1.5rem; }
 
     .btn-ca {
       border-radius: 999px;
@@ -189,20 +172,30 @@
       color: rgba(255,255,255,.98);
     }
 
-    /* Mobile: keep year big, simplify rail/nodes like requested */
-    @media (max-width: 767.98px) {
-      .timeline-rail {
+    /* Responsive */
+    @media (max-width: 991.98px) {
+      /* Stack year above spine+cards; hide spine */
+      .year-block {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        row-gap: 12px;
+      }
+      .year-gap { display: none; }
+      .year-spine { display: none; }
+      .cards-col { grid-column: 1; grid-row: 2; }
+
+      /* Card split stacks on mobile/tablet */
+      .timeline-split { grid-template-columns: 1fr; }
+      .timeline-split .split-right {
+        border-left: 0;
         padding-left: 0;
-      }
-      .timeline-rail::before,
-      .year-anchor,
-      .timeline-card::before,
-      .timeline-card::after {
-        display: none;
-      }
-      .year-stamp {
-        margin-bottom: .35rem;
-      }
+        padding-top: .9rem;
+        border-top: 1px solid var(--ca-border-soft);
+    }
+
+
+    @media (max-width: 767.98px) {
+      .year-stamp { font-size: clamp(3.4rem, 16vw, 5.2rem); }
     }
   </style>
 </head>
@@ -210,12 +203,10 @@
 <body class="theme-dark">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <!-- Header -->
   <header id="site-header"></header>
 
   <main id="main-content" class="container py-4" tabindex="-1">
 
-    <!-- Breadcrumb + title -->
     <section class="mb-4" aria-label="Page header">
       <nav aria-label="Breadcrumb" class="mb-2">
         <ol class="breadcrumb small mb-0">
@@ -230,7 +221,6 @@
       </p>
     </section>
 
-    <!-- HERO (full-width, no At-a-Glance) -->
     <section class="mb-5" aria-label="Introduction">
       <div class="card card-raise about-hero">
         <div class="card-body p-4 p-md-5">
@@ -240,110 +230,99 @@
             I’m Alex — a cyber security practitioner with a First Class BSc (Hons) in Computer Security, focused on translating complex technical risk into decisions that stand up in the real world.
           </p>
           <p class="text-secondary mb-0">
-            CyberAlex is both a portfolio and a living knowledge base: tools, write-ups, frameworks, and notes that prioritise clarity, evidence, and usefulness.
+            CyberAlex is both a portfolio and a living knowledge base: tools, write-ups, frameworks, and notes that prioritise clarity, evidence, and usefulness. You’ll also see a small amount of non-cyber material (advanced driving, photography, collections) — included because it reflects the same underlying habits: discipline, precision, and continuous improvement.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- TIMELINE -->
     <section class="mb-5" aria-label="Timeline">
 
       <!-- 2026 -->
-      <div class="row g-4 align-items-start mb-5">
-        <div class="col-md-3">
+      <div class="year-block mb-5">
+        <div class="year-col">
           <p class="year-stamp" aria-label="Year 2026">2026</p>
         </div>
+        <div class="year-spine" aria-hidden="true"></div>
 
-        <div class="col-md-9">
-          <div class="timeline-rail" style="--rail-top: 22px; --rail-bottom: 28px;">
-
-            <!-- Rail start node tied to the year -->
-            <div class="year-anchor" aria-hidden="true">
-              <span class="year-node"></span>
-            </div>
-
-            <div class="card timeline-card card-raise mb-4">
-              <div class="card-body">
-                <div class="row g-4 align-items-start">
-                  <div class="col-lg-4 timeline-left">
-                    <h3 class="h5 mb-2">MSc: Cyber Security, Risk &amp; Resilience</h3>
-                    <ul class="small">
-                      <li>Postgraduate study</li>
-                      <li>Strategic risk focus</li>
-                      <li>Governance and resilience</li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-8 timeline-right">
-                    <p class="small mb-3">
-                      Postgraduate work extending technical foundations into organisational resilience, leadership, and systemic risk — including how cyber security operates at board, regulatory, and societal levels.
-                    </p>
+        <div class="cards-col">
+          <div class="card timeline-card card-raise mb-4">
+            <div class="card-body">
+              <div class="timeline-split">
+                <div class="split-left">
+                  <h3 class="h5 mb-2">MSc: Cyber Security, Risk &amp; Resilience</h3>
+                  <ul class="small">
+                    <li>Postgraduate study</li>
+                    <li>Strategic risk focus</li>
+                    <li>Governance and resilience</li>
+                  </ul>
+                </div>
+                <div class="split-right">
+                  <p class="small mb-0">
+                    Postgraduate work extending technical foundations into organisational resilience, leadership, and systemic risk — including how cyber security operates at board, regulatory, and societal levels.
+                  </p>
+                  <div class="btn-row">
                     <a class="btn btn-ca btn-sm" href="#">Find out more</a>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="card timeline-card card-raise">
-              <div class="card-body">
-                <div class="row g-4 align-items-start">
-                  <div class="col-lg-4 timeline-left">
-                    <h3 class="h5 mb-2">Advanced Driving Development</h3>
-                    <ul class="small">
-                      <li>Observation and planning</li>
-                      <li>Risk assessment under pressure</li>
-                      <li>Continuous refinement</li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-8 timeline-right">
-                    <p class="small mb-3">
-                      Continued practice in advanced/high-performance driving: discipline, situational awareness, and decision-making. The methods map surprisingly well onto cyber: anticipate, verify, and avoid single points of failure.
-                    </p>
+          <div class="card timeline-card card-raise">
+            <div class="card-body">
+              <div class="timeline-split">
+                <div class="split-left">
+                  <h3 class="h5 mb-2">Advanced Driving Development</h3>
+                  <ul class="small">
+                    <li>Observation and planning</li>
+                    <li>Risk assessment under pressure</li>
+                    <li>Continuous refinement</li>
+                  </ul>
+                </div>
+                <div class="split-right">
+                  <p class="small mb-0">
+                    Continued practice in advanced/high-performance driving: discipline, situational awareness, and decision-making. The methods map surprisingly well onto cyber: anticipate, verify, and avoid single points of failure.
+                  </p>
+                  <div class="btn-row">
                     <a class="btn btn-ca btn-sm" href="#">Find out more</a>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
 
       <!-- 2025 -->
-      <div class="row g-4 align-items-start">
-        <div class="col-md-3">
+      <div class="year-block">
+        <div class="year-col">
           <p class="year-stamp" aria-label="Year 2025">2025</p>
         </div>
+        <div class="year-spine" aria-hidden="true"></div>
 
-        <div class="col-md-9">
-          <div class="timeline-rail" style="--rail-top: 22px; --rail-bottom: 28px;">
-
-            <!-- Rail start node tied to the year -->
-            <div class="year-anchor" aria-hidden="true">
-              <span class="year-node"></span>
-            </div>
-
-            <div class="card timeline-card card-raise">
-              <div class="card-body">
-                <div class="row g-4 align-items-start">
-                  <div class="col-lg-4 timeline-left">
-                    <h3 class="h5 mb-2">CyberAlex Platform Expansion</h3>
-                    <ul class="small">
-                      <li>Tools and practical pages</li>
-                      <li>Public references and write-ups</li>
-                      <li>Clear, client-side, privacy-first</li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-8 timeline-right">
-                    <p class="small mb-3">
-                      Built out CyberAlex as a practical platform: small tools, readable frameworks, and writing intended to be useful to real people — not just impressive on paper.
-                    </p>
+        <div class="cards-col">
+          <div class="card timeline-card card-raise">
+            <div class="card-body">
+              <div class="timeline-split">
+                <div class="split-left">
+                  <h3 class="h5 mb-2">CyberAlex Platform Expansion</h3>
+                  <ul class="small">
+                    <li>Tools and practical pages</li>
+                    <li>Public references and write-ups</li>
+                    <li>Clear, client-side, privacy-first</li>
+                  </ul>
+                </div>
+                <div class="split-right">
+                  <p class="small mb-0">
+                    Built out CyberAlex as a practical platform: small tools, readable frameworks, and writing intended to be useful to real people — not just impressive on paper.
+                  </p>
+                  <div class="btn-row">
                     <a class="btn btn-ca btn-sm" href="#">Find out more</a>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -352,13 +331,9 @@
 
   </main>
 
-  <!-- Footer -->
   <footer id="site-footer"></footer>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Layout loader -->
   <script src="/js/layout.js"></script>
 </body>
 </html>
