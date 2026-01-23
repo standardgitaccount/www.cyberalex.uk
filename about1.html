@@ -38,39 +38,28 @@
 
 .timeline-card.is-gold {
   position: relative;
-  border: 1px solid rgba(212, 175, 55, 0.9);
-  background: rgba(10, 10, 10, 0.95);
-  box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.timeline-card.is-gold::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 6px;
-  width: 100%;
+  border: 2px solid rgba(212, 175, 55, 0.85);
   background:
     linear-gradient(
-      90deg,
-      #b08d2a 0%,
-      #d4af37 18%,
-      #f6e27a 50%,
-      #d4af37 82%,
-      #b08d2a 100%
+      180deg,
+      rgba(18, 18, 18, 0.98),
+      rgba(8, 8, 8, 0.98)
     );
   box-shadow:
-    0 0 12px rgba(212, 175, 55, 0.9);
+    /* outer mass */
+    0 18px 48px rgba(0, 0, 0, 0.7),
+    /* gold edge depth */
+    0 0 0 1px rgba(212, 175, 55, 0.35),
+    /* internal weight */
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    /* subtle gold aura */
+    0 0 28px rgba(212, 175, 55, 0.18);
 }
     
 .timeline-card.is-gold .split-right {
-  border-left: 2px solid rgba(212, 175, 55, 0.85);
+  border-left: 2px solid rgba(212, 175, 55, 0.75);
 }
-
-
-
 
 
     :root {
