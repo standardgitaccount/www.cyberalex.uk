@@ -61,10 +61,63 @@
   border-left: 2px solid rgba(212, 175, 55, 0.75);
 }
 
-    /* Gold bar button */
+/* Gold bar button — heavy, toned back */
 .btn-ca.is-gold {
   position: relative;
-  border: 1px solid rgba(212, 175, 55, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.8);
+  background:
+    linear-gradient(
+      180deg,
+      #e9cf6a 0%,
+      #d4af37 50%,
+      #b8942f 100%
+    );
+  color: #0b0b0b;
+  font-weight: 600;
+  box-shadow:
+    0 3px 0 #8c6f1e,
+    0 9px 20px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.28);
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease,
+    filter 0.08s ease;
+}
+
+/* Hover / focus — stays gold, slightly calmer */
+.btn-ca.is-gold:hover,
+.btn-ca.is-gold:focus,
+.btn-ca.is-gold:focus-visible {
+  border-color: rgba(212, 175, 55, 0.85);
+  background:
+    linear-gradient(
+      180deg,
+      #e3c862 0%,
+      #d0ab34 50%,
+      #b08d2a 100%
+    );
+  color: #0b0b0b;
+  box-shadow:
+    0 3px 0 #8c6f1e,
+    0 8px 18px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.24);
+}
+
+/* Active — still feels heavy, just less travel */
+.btn-ca.is-gold:active {
+  transform: translateY(1.5px);
+  box-shadow:
+    0 1.5px 0 #8c6f1e,
+    0 5px 12px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+
+    /* Prevent blue hover/focus from btn-ca */
+.btn-ca.is-gold:hover,
+.btn-ca.is-gold:focus,
+.btn-ca.is-gold:focus-visible {
+  border-color: rgba(212, 175, 55, 0.9);
   background:
     linear-gradient(
       180deg,
@@ -73,29 +126,12 @@
       #b08d2a 100%
     );
   color: #0b0b0b;
-  font-weight: 600;
   box-shadow:
-    0 4px 0 #8c6f1e,                 /* physical base */
-    0 10px 22px rgba(0,0,0,0.55),    /* weight */
+    0 4px 0 #8c6f1e,
+    0 10px 22px rgba(0,0,0,0.55),
     inset 0 1px 0 rgba(255,255,255,0.35);
-  transition:
-    transform 0.08s ease,
-    box-shadow 0.08s ease;
 }
 
-/* Pressed state  */
-.btn-ca.is-gold:active {
-  transform: translateY(2px);
-  box-shadow:
-    0 2px 0 #8c6f1e,
-    0 6px 14px rgba(0,0,0,0.55),
-    inset 0 1px 0 rgba(255,255,255,0.25);
-}
-
-/* Hover, no glow */
-.btn-ca.is-gold:hover {
-  filter: brightness(1.03);
-}
 
 
     :root {
