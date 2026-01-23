@@ -61,6 +61,42 @@
   border-left: 2px solid rgba(212, 175, 55, 0.75);
 }
 
+    /* Gold bar button */
+.btn-ca.is-gold {
+  position: relative;
+  border: 1px solid rgba(212, 175, 55, 0.85);
+  background:
+    linear-gradient(
+      180deg,
+      #f6e27a 0%,
+      #d4af37 45%,
+      #b08d2a 100%
+    );
+  color: #0b0b0b;
+  font-weight: 600;
+  box-shadow:
+    0 4px 0 #8c6f1e,                 /* physical base */
+    0 10px 22px rgba(0,0,0,0.55),    /* weight */
+    inset 0 1px 0 rgba(255,255,255,0.35);
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
+}
+
+/* Pressed state  */
+.btn-ca.is-gold:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 2px 0 #8c6f1e,
+    0 6px 14px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+/* Hover, no glow */
+.btn-ca.is-gold:hover {
+  filter: brightness(1.03);
+}
+
 
     :root {
       --ca-primary: #38bdf8; /* fallback */
@@ -96,17 +132,6 @@
       user-select: none;
     }
 
-    /*
-      What you asked for (literally):
-
-      [ 2026 ]
-               |  [ Card 1 ]
-               |  [ Card 2 ]
-
-      Implementation: two-row grid per year.
-      Row 1: year label.
-      Row 2: spine + cards.
-    */
     .year-block {
       display: grid;
       /* Year | spine | cards */
@@ -313,7 +338,7 @@
                     Continued practice in advanced/high-performance driving: discipline, situational awareness, and decision-making. The methods map surprisingly well onto cyber: anticipate, verify, and avoid single points of failure.
                   </p>
                   <div class="btn-row">
-                    <a class="btn btn-ca btn-sm" href="#">Find out more</a>
+                    <a class="btn btn-ca btn-sm is-gold" href="#">Find out more</a>
                   </div>
                 </div>
               </div>
