@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Projects & Tools on CyberAlex – practical tools, linked projects, and earlier archived work presented in a clear, curated format.">
+  <meta name="author" content="Alex">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="CyberAlex, projects, tools, cyber security, utilities, portfolio, archive, referencing helper, encryption, password tester">
+
+  <title>Projects &amp; Tools - CyberAlex</title>
+
+  <link rel="canonical" href="https://www.cyberalex.uk/projects.html">
+
+  <meta property="og:title" content="Projects &amp; Tools - CyberAlex">
+  <meta property="og:description" content="A curated view of CyberAlex tools, related projects, and earlier archived work.">
+  <meta property="og:url" content="https://www.cyberalex.uk/projects.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CyberAlex">
+  <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Projects &amp; Tools - CyberAlex">
+  <meta name="twitter:description" content="Practical tools, related projects, and a progression archive from CyberAlex.">
+  <meta name="twitter:image" content="https://www.cyberalex.uk/img/social-card.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Projects & Tools - CyberAlex",
+    "url": "https://www.cyberalex.uk/projects.html",
+    "description": "A curated view of CyberAlex tools, related projects, and earlier archived work.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "CyberAlex",
+      "url": "https://www.cyberalex.uk/"
+    }
+  }
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="logo.png" type="image/png">
+
+  <style>
+    .page-meta {
+      color: var(--ca-muted);
+    }
+
+    .page-meta a {
+      color: var(--ca-primary);
+      text-decoration: none;
+    }
+
+    .page-meta a:hover,
+    .page-meta a:focus {
+      text-decoration: underline;
+    }
+
+    .project-visual {
+      min-height: 10.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--ca-border-soft);
+      border-radius: 0.9rem 0.9rem 0 0;
+      background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 42%),
+        linear-gradient(135deg, rgba(3, 11, 36, 0.98), rgba(2, 8, 27, 0.96));
+      overflow: hidden;
+      position: relative;
+    }
+
+    .project-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -30% auto;
+      width: 10rem;
+      height: 10rem;
+      border-radius: 50%;
+      background: rgba(56, 189, 248, 0.08);
+      filter: blur(10px);
+    }
+
+    .project-mark {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #dff5ff;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      background: rgba(56, 189, 248, 0.1);
+      box-shadow: 0 0 1.5rem rgba(56, 189, 248, 0.08);
+    }
+
+    .card-kicker {
+      display: inline-block;
+      margin-bottom: 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ca-primary);
+    }
+
+    .card-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid var(--ca-border-soft);
+      background: rgba(3, 11, 36, 0.9);
+      color: #cbd5e1;
+    }
+
+    .card-status-live {
+      color: #d9f99d;
+      border-color: rgba(163, 230, 53, 0.25);
+      background: rgba(54, 83, 20, 0.22);
+    }
+
+    .card-status-new {
+      color: #dff5ff;
+      border-color: rgba(56, 189, 248, 0.28);
+      background: rgba(56, 189, 248, 0.14);
+    }
+
+    .card-status-linked {
+      color: #ddd6fe;
+      border-color: rgba(167, 139, 250, 0.24);
+      background: rgba(76, 29, 149, 0.18);
+    }
+
+    .section-note {
+      color: var(--ca-muted);
+    }
+
+    .archive-panel {
+      background: var(--ca-surface);
+      border: 1px solid var(--ca-border-soft);
+      border-radius: 0.9rem;
+      overflow: hidden;
+      box-shadow: 0 1.25rem 2.5rem rgba(15, 23, 42, 0.55);
+    }
+
+    .archive-table-wrap {
+      overflow-x: auto;
+    }
+
+    .archive-table {
+      width: 100%;
+      margin: 0;
+      border-collapse: collapse;
+    }
+
+    .archive-table thead th {
+      padding: 0.95rem 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ca-muted);
+      background: rgba(2, 6, 23, 0.92);
+      border-bottom: 1px solid var(--ca-border-soft);
+      white-space: nowrap;
+    }
+
+    .archive-table tbody tr:nth-child(odd) {
+      background: rgba(2, 8, 27, 0.92);
+    }
+
+    .archive-table tbody tr:nth-child(even) {
+      background: rgba(3, 11, 36, 0.96);
+    }
+
+    .archive-table tbody tr:hover,
+    .archive-table tbody tr:focus-within {
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .archive-table td {
+      padding: 1rem;
+      vertical-align: top;
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      color: var(--ca-text);
+    }
+
+    .archive-title {
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .archive-date {
+      white-space: nowrap;
+      color: var(--ca-muted);
+    }
+
+  .projects-footer-card {
+    background: var(--ca-surface);
+    border: 1px solid var(--ca-border-soft);
+    box-shadow: 0 1.25rem 2.5rem rgba(15, 23, 42, 0.55);
+  }
+  
+  .projects-footer-share {
+    background:
+      radial-gradient(circle at top right, rgba(56, 189, 248, 0.16), transparent 36%),
+      radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.14), transparent 34%),
+      linear-gradient(135deg, rgba(3, 11, 36, 0.98), rgba(2, 8, 27, 0.96));
+    border-color: rgba(56, 189, 248, 0.28) !important;
+  }
+  
+  .projects-share-link {
+    background: rgba(2, 6, 23, 0.9);
+    color: #dff5ff;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    font-family: var(--bs-font-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    font-size: 0.95rem;
+    word-break: break-all;
+  }
+
+    @media (max-width: 767.98px) {
+      .archive-table thead {
+        display: none;
+      }
+
+      .archive-table,
+      .archive-table tbody,
+      .archive-table tr,
+      .archive-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .archive-table tbody tr {
+        padding: 0.35rem 0;
+      }
+
+      .archive-table td {
+        border-top: 0;
+        padding: 0.45rem 1rem 0.45rem;
+      }
+
+      .archive-table td:first-child {
+        padding-top: 1rem;
+      }
+
+      .archive-table td:last-child {
+        padding-bottom: 1rem;
+      }
+
+      .archive-table td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 0.2rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ca-muted);
+      }
+    }
+  </style>
+</head>
+<body class="theme-dark">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header id="site-header" aria-label="Main site header"></header>
+
+  <main id="main-content" class="container py-4" tabindex="-1">
+    <nav aria-label="Breadcrumb" class="small mb-3">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Projects &amp; Tools</li>
+      </ol>
+    </nav>
+
+    <div class="page-meta small mb-4">
+      By Alex • Published: 11 March 2026 • Updated: 11 March 2026
+    </div>
+
+    <section class="hero mb-5" aria-labelledby="projects-hero-title">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <p class="text-uppercase small text-muted mb-1">Projects, Tools &amp; Progression</p>
+          <h1 id="projects-hero-title" class="display-5 fw-semibold mb-2">Projects &amp; Tools</h1>
+          <p class="lead mb-2">A curated view of practical work, live tools, and related projects.</p>
+          <p class="mb-3 text-secondary">
+            This page brings together current flagship work, selected live utilities, and the wider body of supporting projects around them.
+            It is intended to make the scope of the work clear without burying the most relevant pieces under everything else.
+          </p>
+          <div class="d-flex flex-wrap gap-2 hero-actions">
+            <a class="btn btn-primary btn-sm" href="#highlighted-projects">Highlighted work</a>
+            <a class="btn btn-outline-primary btn-sm" href="#current-projects">Current tools &amp; projects</a>
+            <a class="btn btn-outline-secondary btn-sm" href="#archive-projects">Wider portfolio &amp; repository</a>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <section aria-label="How to use this page" class="p-3 rounded-3 bg-surface border focus-panel">
+            <h2 class="h6 text-uppercase text-muted mb-2">How to read this page</h2>
+            <ul class="small mb-3 ps-3">
+              <li><strong>Highlighted work</strong> shows the clearest current examples.</li>
+              <li><strong>The main grid</strong> is curated and intentionally capped rather than exhaustive.</li>
+              <li><strong>The lower table</strong> surfaces earlier tools, linked repositories, and supporting work without competing with the current highlights.</li>
+            </ul>
+
+            <h3 class="h6 text-uppercase text-muted mb-2">Main themes</h3>
+            <ul class="list-inline mb-0 small">
+              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Security Tooling</li>
+              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Privacy</li>
+              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Automation</li>
+              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Usable Systems</li>
+              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Progression</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section id="highlighted-projects" aria-labelledby="highlighted-projects-heading" class="mb-5">
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-3">
+        <div>
+          <h2 id="highlighted-projects-heading" class="h4 mb-1">Highlighted Tools &amp; Projects</h2>
+          <p class="section-note small mb-0">Three strong entry points for visitors who want the quickest sense of what this site is about.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true">
+              <span class="project-mark">AES</span>
+            </div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Featured tool</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0">
+                  <a href="/tools/encrypt.html" class="stretched-link card-title-link">Encryption Tool</a>
+                </h3>
+                <span class="card-status card-status-live">Live</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">
+                Encrypt and decrypt text locally in the browser using AES, with a simple interface for demonstrations, experiments and privacy-aware quick use.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true">
+              <span class="project-mark">PWD</span>
+            </div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Featured tool</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0">
+                  <a href="/tools/password-tester.html" class="stretched-link card-title-link">Password Generator &amp; Tester</a>
+                </h3>
+                <span class="card-status card-status-live">Live</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">
+                A practical password utility focused on generating stronger passwords and testing entropy, while still being understandable to non-specialists.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true">
+              <span class="project-mark">REF</span>
+            </div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Featured tool</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0">
+                  <a href="/tools/ref.html" class="stretched-link card-title-link">Referencing Helper</a>
+                </h3>
+                <span class="card-status card-status-new">New</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">
+                A structured academic helper designed to reduce formatting mistakes, speed up writing, and make referencing less tedious during study and research.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="current-projects" aria-labelledby="current-projects-heading" class="mb-5">
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-3">
+        <div>
+          <h2 id="current-projects-heading" class="h4 mb-1">Current Tools &amp; Projects</h2>
+          <p class="section-note small mb-0">Keep this grid curated and capped at no more than 15 cards in total.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-xl-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true"><span class="project-mark">SIP</span></div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Tool</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0"><a href="/tools/sipp.html" class="stretched-link card-title-link">SIPP Calculator</a></h3>
+                <span class="card-status card-status-live">Live</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">A practical pension-focused calculator built to explore contributions, tax treatment and long-term retirement planning.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true"><span class="project-mark">LV</span></div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Tool</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0"><a href="/tools/labour-value.html" class="stretched-link card-title-link">Labour Value Tool</a></h3>
+                <span class="card-status card-status-live">Live</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">A calculator-style utility for exploring labour, time and value in a more structured and transparent way.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true"><span class="project-mark">ZL</span></div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Tool / Service</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0"><a href="/tools/zilchy-link.html" class="stretched-link card-title-link">Zilchy Link</a></h3>
+                <span class="card-status card-status-live">Live</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">A lightweight short-link project tied to the wider CyberAlex ecosystem, intended to stay simple, controlled and low-noise.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true"><span class="project-mark">CA</span></div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Project</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0"><a href="/" class="stretched-link card-title-link">CyberAlex Website</a></h3>
+                <span class="card-status">Current</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">The site itself is part of the work: a practical portfolio, publishing space and public-facing record of how projects develop over time.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true"><span class="project-mark">LS</span></div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Linked project</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0"><a href="https://lumasphere.art" class="stretched-link card-title-link">Lumasphere</a></h3>
+                <span class="card-status card-status-linked">External</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">A quieter photography space separated from the tools and technical writing, focused on presentation rather than features.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+          <article class="card h-100 card-raise">
+            <div class="project-visual" aria-hidden="true"><span class="project-mark">VP</span></div>
+            <div class="card-body position-relative">
+              <span class="card-kicker">Linked project</span>
+              <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h3 class="h5 card-title mb-0"><a href="https://velosophy.org.uk" class="stretched-link card-title-link">Velosophy</a></h3>
+                <span class="card-status card-status-linked">External</span>
+              </div>
+              <p class="card-text small text-secondary mb-0">A dedicated site for advanced driving, motoring reflections and more formal write-ups that sit outside the main CyberAlex focus.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="archive-projects" aria-labelledby="archive-projects-heading" class="mb-5">
+      <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-3">
+        <div>
+          <h2 id="archive-projects-heading" class="h4 mb-1">Wider Portfolio &amp; Repository</h2>
+          <p class="section-note small mb-0">Earlier tools, linked repositories, and supporting work are listed in a simpler full-width format so they remain visible without competing with the current grid.</p>
+        </div>
+      </div>
+
+      <div class="archive-panel">
+        <div class="archive-table-wrap">
+          <table class="archive-table" aria-describedby="archive-projects-note">
+            <thead>
+              <tr>
+                <th scope="col">Hypertext title</th>
+                <th scope="col">Publication date</th>
+                <th scope="col">Short description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Hypertext title">
+                  <a href="https://repository.cyberalex.uk" class="archive-title">CyberAlex Software Repository</a>
+                </td>
+                <td data-label="Publication date" class="archive-date">December 2025</td>
+                <td data-label="Short description">A separate software distribution hub for packaged releases and pre-release builds, including the Linux System Monitor beta and Waypoint Android preview.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title">
+                  <a href="https://archive.cyberalex.uk" class="archive-title">Pre-2025 CyberAlex Archive</a>
+                </td>
+                <td data-label="Publication date" class="archive-date">Pre-2025</td>
+                <td data-label="Short description">The previous version of the site, retained as a public record of earlier layouts, tools, experiments and design progression.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/sipp.html" class="archive-title">SIPP Calculator</a></td>
+                <td data-label="Publication date" class="archive-date">13 June 2025</td>
+                <td data-label="Short description">An earlier retirement projection calculator focused on UK SIPPs, tax relief and compound growth.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/Interest.html" class="archive-title">Compound Interest Calculator</a></td>
+                <td data-label="Publication date" class="archive-date">13 June 2025</td>
+                <td data-label="Short description">A general forecasting tool for savings and investment growth with annual contributions and compound returns.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/lisa.html" class="archive-title">LISA Calculator</a></td>
+                <td data-label="Publication date" class="archive-date">11 June 2025</td>
+                <td data-label="Short description">A Lifetime ISA projection tool covering the annual bonus, age limits and long-term growth assumptions.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/ip.html" class="archive-title">IP Information Tool</a></td>
+                <td data-label="Publication date" class="archive-date">14 April 2025</td>
+                <td data-label="Short description">An archived IP lookup page that presents geolocation-style information, with results dependent on an external API.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/encryption.html" class="archive-title">Encryption Tool (Beta)</a></td>
+                <td data-label="Publication date" class="archive-date">14 April 2025</td>
+                <td data-label="Short description">An earlier browser-based AES file encryption experiment, preserved mainly as progression work rather than a recommended primary solution.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/qrcode.html" class="archive-title">QR Code Generator</a></td>
+                <td data-label="Publication date" class="archive-date">13 April 2025</td>
+                <td data-label="Short description">A local QR generator with colour controls and export options for PNG and SVG output.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/metadata.html" class="archive-title">Image Metadata Viewer</a></td>
+                <td data-label="Publication date" class="archive-date">12 April 2025</td>
+                <td data-label="Short description">A browser-based metadata viewer for common image formats, intended to keep image inspection local and private.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/generator.html" class="archive-title">Password Generator</a></td>
+                <td data-label="Publication date" class="archive-date">5 April 2025</td>
+                <td data-label="Short description">An earlier configurable password generator using browser cryptography to create random passwords locally.</td>
+              </tr>
+              <tr>
+                <td data-label="Hypertext title"><a href="https://archive.cyberalex.uk/password.html" class="archive-title">Password Tester</a></td>
+                <td data-label="Publication date" class="archive-date">4 April 2025</td>
+                <td data-label="Short description">An archived password entropy estimator focused on quick local checks and plain-language recommendations.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+<section class="mb-5" aria-labelledby="meta-row-heading">
+  <hr>
+  <h2 id="meta-row-heading" class="visually-hidden">Questions, about and sharing</h2>
+
+ <div class="row g-4 align-items-stretch">
+    <!-- QUESTIONS -->
+    <div class="col-lg-4">
+      <div class="questions-box h-100">
+        <h3 class="h6 text-uppercase text-muted mb-2">Questions</h3>
+        <p class="small text-secondary mb-1">
+          If you have feedback, spot an issue, or want to suggest improvements
+          to this page or tool, you’re welcome to get in touch.
+        </p>
+        <a href="/contact.html" class="btn btn-primary btn-sm mt-auto">Contact Alex</a>
+      </div>
+    </div>
+
+    <!-- QUESTIONS -->
+    <div class="col-lg-4">
+      <div class="questions-box h-100">
+        <h3 class="h6 text-uppercase text-muted mb-2">About</h3>
+        <p class="small text-secondary mb-1">
+          This page sits within a wider body of work covering cyber security, tools, structured writing, and related projects.
+          For more about my background, approach, and current direction, visit the About page.
+        </p>
+        <a href="/about.html" class="btn btn-primary btn-sm mt-auto">About Alex</a>
+      </div>
+    </div>
+
+   <!-- SHARE -->
+    <div class="col-lg-4">
+      <div class="share-card h-100">
+        <h3 class="h6 text-uppercase text-muted mb-2">Share</h3>
+        <p class="small text-secondary mb-2">
+          If you’d like to share this page with someone else, you can use the short link below.
+        </p>
+
+        <div class="share-url-row mb-2">
+          <span class="share-url-prefix">https://www.</span>
+          <button class="share-url-main"
+                  type="button"
+                  data-share-url="https://www.zilchy.link/projects">
+            <span class="share-url-text">zilchy.link/project</span>
+          </button>
+        </div>
+
+        <p class="small text-secondary share-status mb-2" aria-live="polite"></p>
+
+        <p class="small text-secondary mb-0">
+          Zilchy.link is my own open-source short-link service. Links are hand-curated, do not track or log users, and this one simply redirects back to this page.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <footer id="site-footer" aria-label="Main site footer"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="js/layout.js"></script>
+</body>
+</html>
