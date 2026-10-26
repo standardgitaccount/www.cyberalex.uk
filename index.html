@@ -1,394 +1,928 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en-GB" class="no-js">
 <head>
-  <meta charset="utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="CyberAlex – early-career cyber security, risk and resilience practitioner. Building practical tools, models and writing that focus on real-world systems, people and risk.">
-  <meta name="author" content="Alex">
-  <meta name="robots" content="index, follow">
-  <meta name="keywords" content="CyberAlex, cyberalex, cyber alex, cyber security, risk, resilience, MSc, Wales, UK, cyberalex.uk">
-
-  <title>CyberAlex – Cyber Security, Risk &amp; Resilience</title>
-
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://www.cyberalex.uk/">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="CyberAlex – Cyber Security, Risk &amp; Resilience">
-  <meta property="og:description" content="CyberAlex is an early-career cyber security, risk and resilience practitioner building tools, models and writing focused on real-world systems and people.">
-  <meta property="og:url" content="https://www.cyberalex.uk/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="CyberAlex">
-  <meta property="og:image" content="https://www.cyberalex.uk/img/social-card.png">
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CyberAlex – Cyber Security, Risk &amp; Resilience">
-  <meta name="twitter:description" content="Early-career cyber security, risk and resilience practitioner focused on real-world systems, tools and people.">
-  <meta name="twitter:image" content="https://www.cyberalex.uk/img/social-card.png">
-
-  <!-- JSON-LD: Person + Website -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Alex",
-    "alternateName": "CyberAlex",
-    "url": "https://www.cyberalex.uk/",
-    "jobTitle": "Cyber Security, Risk and Resilience Practitioner",
-    "sameAs": [
-      "https://archive.cyberalex.uk/"
-    ]
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alex · Cyber Security &amp; IT</title>
+<meta name="description" content="First Class BSc (Hons) Computer Security graduate who has completed an MSc in Cyber Security, Risk and Resilience at the University of South Wales National Cyber Security Academy. Open to IT, infrastructure, cyber security, GRC and data protection roles.">
+<link rel="canonical" href="https://cyberalex.uk/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cyberalex.uk">
+<meta property="og:title" content="Alex · Cyber Security &amp; IT">
+<meta property="og:description" content="First Class Computer Security graduate with a newly completed MSc, open to IT, infrastructure and cyber security roles. Practical security skills, plus software built by directing AI coding agents.">
+<meta property="og:url" content="https://cyberalex.uk/">
+<meta property="og:image" content="https://cyberalex.uk/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alex · Cyber Security &amp; IT">
+<meta name="twitter:description" content="First Class Computer Security graduate with a newly completed MSc, open to IT, infrastructure and cyber security roles. Practical security skills, plus software built by directing AI coding agents.">
+<meta name="twitter:image" content="https://cyberalex.uk/og-cover.jpg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:image:alt" content="The CyberAlex logo beside the text: Hi, I'm Alex. Cyber Security and IT.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a0c">
+<meta name="author" content="Alex">
+<script>document.documentElement.className="js";</script>
+<style>
+  :root{
+    --ink:#0a0a0c; --ink-raised:#101015; --ink-hover:#14141a;
+    --paper:#ece8e1; --paper-soft:#d9d4cb; --paper-mute:#cfcabf; --paper-dim:#9a958c;
+    --hair:rgba(236,232,225,.12); --hair-soft:rgba(236,232,225,.07); --hair-strong:rgba(236,232,225,.22);
+    --accent:#ece8e1; --maxw:1120px; --radius:6px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    --security-green:#3fcf7f;
+    --ease:cubic-bezier(.2,.7,.2,1);
   }
-  </script>
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:4.5rem}
+  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+  body{margin:0;
+    background:var(--ink);
+    color:var(--paper);font-family:var(--sans);
+    font-size:clamp(1rem,.96rem + .2vw,1.075rem);line-height:1.65;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:rgba(236,232,225,.85);color:var(--ink)}
+  .skip{position:absolute;left:-999px;top:0;z-index:60;background:var(--paper);color:var(--ink);
+    padding:.6rem 1rem;border-radius:3px;font:600 .9rem/1 var(--sans)}
+  .skip:focus{left:1rem;top:1rem}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(1.25rem,5vw,3rem)}
+  .visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  /* ---------- Masthead ---------- */
+  .masthead{padding-block:clamp(3rem,8vh,5.5rem) 0}
+  .eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--paper-dim);margin:0 0 1.2rem}
+  .wordmark{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,2rem + 3.5vw,4rem);
+    line-height:1;letter-spacing:-.01em;margin:0}
+  .wordmark .tld{color:var(--paper-dim)}
+  .tagline{max-width:60ch;margin:1.5rem 0 0;color:var(--paper-soft);
+    font-size:clamp(1.02rem,1rem + .35vw,1.18rem);line-height:1.6}
+  .tagline em{font-family:var(--serif);font-style:italic;color:var(--paper)}
+  .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.75rem;margin-top:1.6rem}
+  .btn{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--sans);font-size:.92rem;font-weight:500;
+    text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--paper);
+    border-radius:3px;padding:.75rem 1.15rem;line-height:1.2;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+  .btn:hover{background:#fff;border-color:#fff}
+  .btn--ghost{background:transparent;color:var(--paper);border-color:var(--hair-strong)}
+  .btn--ghost:hover{background:rgba(236,232,225,.06);border-color:var(--paper)}
 
-  <!-- Custom styles -->
-  <link rel="stylesheet" href="css/main.css">
+  /* Highlights strip */
+  .highlights{display:grid;grid-template-columns:repeat(3,1fr);margin:clamp(2.5rem,6vh,3.5rem) 0 0;padding:0;list-style:none;
+    border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .highlights li{padding:1.3rem 1.25rem 1.3rem 0}
+  .highlights li+li{padding-left:1.25rem;border-left:1px solid var(--hair-soft)}
+  .highlights strong{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(1.45rem,1.2rem + .9vw,1.9rem);line-height:1.1;color:var(--paper)}
+  .highlights span{display:block;margin-top:.35rem;font-size:.85rem;color:var(--paper-dim)}
 
-  <link rel="icon" href="logo.png" type="image/png">
-  <!--link rel="alternate icon" href="logo.svg" type="image/svg+xml"-->
+  /* Sticky nav */
+  .nav{position:sticky;top:0;z-index:40;background:rgba(10,10,12,.82);
+    -webkit-backdrop-filter:saturate(140%) blur(12px);backdrop-filter:saturate(140%) blur(12px);
+    border-bottom:1px solid transparent;transition:border-color .25s}
+  .nav.is-stuck{border-bottom-color:var(--hair)}
+  .nav ul{list-style:none;margin:0 auto;padding-block:1rem .65rem;display:flex;gap:1rem 2rem;overflow-x:auto;scrollbar-width:none}
+  .nav ul::-webkit-scrollbar{display:none}
+  .nav li{flex:0 0 auto}
+  .nav ul{align-items:center}
+  .nav .nav__logo a{display:block;padding:0;border:0;line-height:0}
+  .nav__logo img{width:32px;height:32px;display:block;transition:transform .25s var(--ease)}
+  .nav__logo a:hover img{transform:rotate(-12deg)}
+  .nav li:last-child{margin-left:auto}
+  .nav a,.nav__btn{font-family:var(--sans);font-size:.9rem;letter-spacing:0;
+    text-decoration:none;color:var(--paper-dim);padding:0 0 .35rem;border:0;border-bottom:1px solid transparent;
+    background:none;cursor:pointer;transition:color .2s,border-color .2s}
+  .nav a:hover,.nav__btn:hover{color:var(--paper)}
+  .nav a[aria-current="true"]{color:var(--paper);border-color:var(--paper)}
+  .nav__btn{color:var(--paper)}
+
+  /* ---------- Sections ---------- */
+  .set{border-top:1px solid var(--hair)}
+  .set:first-child{border-top:0}
+  .set__inner{padding-block:clamp(3.75rem,10vh,6.5rem) clamp(1rem,3vh,2rem)}
+  .chapter{max-width:60ch;margin-bottom:clamp(2rem,5vh,3rem)}
+  .chapter__kicker{display:flex;align-items:center;gap:.7rem;margin:0 0 1rem;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+  .chapter__kicker::before{content:"";width:.55rem;height:.55rem;background:var(--accent);transform:rotate(45deg);flex:0 0 auto}
+  .chapter__title{font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:clamp(2.6rem,2rem + 3.2vw,4.2rem);line-height:.98;letter-spacing:-.01em;margin:0}
+  .chapter__lede{margin:1.2rem 0 0;color:var(--paper-soft);max-width:56ch}
+  .chapter__note{font-style:normal;font-size:.38em;color:var(--paper-dim);vertical-align:.45em;letter-spacing:0}
+  .chapter__row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.25rem 2rem;margin-bottom:clamp(2rem,5vh,3rem)}
+  .chapter__row .chapter{margin-bottom:0}
+
+  /* Generic card */
+  .card{position:relative;background:var(--ink-raised);border:1px solid var(--hair);border-radius:var(--radius);
+    padding:clamp(1.5rem,2.5vw,2rem);display:flex;flex-direction:column;
+    transition:border-color .25s var(--ease),background .25s var(--ease),transform .25s var(--ease)}
+  .card::before{content:"";position:absolute;top:-1px;left:clamp(1.5rem,2.5vw,2rem);width:2.25rem;height:2px;background:var(--accent);opacity:.75}
+  .card:hover{border-color:var(--hair-strong);background:var(--ink-hover)}
+  .card__kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;color:var(--accent);margin:0 0 .9rem}
+  .card h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.25rem,1.05rem + .55vw,1.55rem);line-height:1.2;margin:0 0 .9rem}
+  .card p{margin:0 0 1rem;color:var(--paper-soft);font-size:.95rem;line-height:1.6}
+  .ticks{margin:0;padding:0;list-style:none}
+  .ticks li{position:relative;padding-left:1.1rem;margin:0 0 .55rem;color:var(--paper-mute);font-size:.9rem;line-height:1.5}
+  .ticks li:last-child{margin-bottom:0}
+  .ticks li::before{content:"›";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.1rem,2.5vw,1.75rem)}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1.1rem,2.5vw,1.75rem)}
+
+  /* Profile */
+  .profile{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem);align-items:start}
+  .profile-content p{margin:0 0 1.2rem;color:var(--paper-soft)}
+  .profile-content .lead{font-size:1.12em;color:var(--paper)}
+  .facts{margin:0;padding:clamp(1.4rem,2.5vw,1.8rem);list-style:none;border:1px solid var(--hair);border-radius:var(--radius);background:var(--ink-raised)}
+  .facts li{display:grid;gap:.15rem;padding:.85rem 0;border-bottom:1px solid var(--hair-soft)}
+  .facts li:first-child{padding-top:0}
+  .facts li:last-child{padding-bottom:0;border-bottom:0}
+  .facts dt,.facts .k{font-size:.8rem;color:var(--paper-dim)}
+  .facts .v{font-size:.93rem;color:var(--paper)}
+
+  /* Skills (expandable) */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.9rem,2vw,1.25rem);align-items:start}
+  .skill{background:var(--ink-raised);border:1px solid var(--hair);border-radius:var(--radius);transition:border-color .25s var(--ease),background .25s var(--ease)}
+  .skill:hover{border-color:var(--hair-strong);background:var(--ink-hover)}
+  .skill[open]{border-color:var(--hair-strong)}
+  .skill summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;column-gap:1rem;align-items:start;align-content:start;
+    padding:clamp(1.2rem,2vw,1.45rem);border-radius:var(--radius)}
+  .skill summary::-webkit-details-marker{display:none}
+  .skill__kicker{grid-column:1;font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;color:var(--accent);margin-bottom:.55rem}
+  .skill__title{grid-column:1;font-family:var(--serif);font-size:clamp(1.1rem,.95rem + .45vw,1.28rem);line-height:1.25;color:var(--paper)}
+  .skill__teaser{grid-column:1;margin-top:.4rem;font-size:.85rem;color:var(--paper-dim);line-height:1.45}
+  .skill__chev{grid-column:2;grid-row:1 / span 3;align-self:start;width:1.9rem;height:1.9rem;border:1px solid var(--hair);border-radius:50%;
+    position:relative;transition:transform .3s var(--ease),border-color .2s}
+  .skill__chev::before,.skill__chev::after{content:"";position:absolute;left:50%;top:50%;width:.65rem;height:1px;background:var(--paper);transform:translate(-50%,-50%)}
+  .skill__chev::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .3s var(--ease)}
+  .skill[open] .skill__chev{border-color:var(--accent)}
+  .skill[open] .skill__chev::after{transform:translate(-50%,-50%) rotate(0deg)}
+  .skill__body{padding:0 clamp(1.2rem,2vw,1.45rem) clamp(1.2rem,2vw,1.45rem)}
+  .skill__body .ticks{border-top:1px solid var(--hair-soft);padding-top:1rem}
+  @media (prefers-reduced-motion:no-preference){
+    .skill[open] .skill__body{animation:drop .35s var(--ease)}
+  }
+  @keyframes drop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .toggle-all{font-family:var(--sans);font-size:.88rem;color:var(--paper-dim);
+    background:none;border:1px solid var(--hair);border-radius:3px;padding:.6rem .95rem;cursor:pointer;transition:color .2s,border-color .2s}
+  .toggle-all:hover{color:var(--paper);border-color:var(--hair-strong)}
+
+  /* Projects */
+  .proj-list{display:grid;gap:clamp(1.1rem,2.5vw,1.75rem)}
+  .proj h3{font-size:clamp(1.5rem,1.2rem + 1vw,2rem)}
+  .proj__lede{max-width:72ch}
+  .proj .metrics{margin:0}
+  .more{margin-top:1.4rem;border-top:1px solid var(--hair-soft)}
+  .more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;margin-top:1.1rem;
+    font-size:.88rem;color:var(--paper);border:1px solid var(--hair-strong);border-radius:3px;padding:.55rem .95rem;transition:border-color .2s,background .2s}
+  .more summary::-webkit-details-marker{display:none}
+  .more summary:hover{border-color:var(--paper);background:rgba(236,232,225,.05)}
+  .more summary::after{content:"";width:.45rem;height:.45rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+    transform:translateY(-2px) rotate(45deg);transition:transform .25s var(--ease)}
+  .more[open] summary::after{transform:translateY(2px) rotate(-135deg)}
+  .more__body{padding-top:1.4rem}
+  .more__body > p{max-width:72ch}
+  .more__title{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--paper)!important}
+  .ticks--cols{columns:2;column-gap:clamp(1.5rem,4vw,3rem)}
+  .ticks--cols li{break-inside:avoid;margin-bottom:.8rem}
+  @media (prefers-reduced-motion:no-preference){.more[open] .more__body{animation:drop .35s var(--ease)}}
+  .metrics{display:flex;flex-wrap:wrap;gap:.6rem;margin:.4rem 0 0;padding:0;list-style:none}
+  .metrics li{font-family:var(--mono);font-size:.74rem;letter-spacing:0;color:var(--paper);
+    border:1px solid var(--hair-strong);border-radius:999px;padding:.38rem .8rem}
+  .tag-live{display:inline-flex;align-items:center;gap:.45rem}
+  .tag-live::before{content:"";width:.4rem;height:.4rem;border-radius:50%;background:var(--security-green)}
+
+  /* Education */
+  .edu-card__header{display:flex;flex-direction:column-reverse;align-items:flex-start;gap:.55rem;margin-bottom:.6rem}
+  .edu-card__meta{font-family:var(--mono);font-size:.75rem;color:var(--paper-dim);letter-spacing:.02em}
+  .edu-card__inst{color:var(--paper-dim)!important;font-size:.9rem!important}
+  .badge{align-self:flex-start;display:inline-block;font-family:var(--mono);font-size:.75rem;letter-spacing:.02em;
+    color:var(--security-green);border:1px solid rgba(63,207,127,.55);padding:.32rem .7rem;border-radius:3px;margin:0 0 1.1rem}
+  .card p strong{color:var(--paper);font-weight:600}
+  .modules{margin-top:.2rem}
+  .modules__year{font-family:var(--mono);font-size:.74rem;letter-spacing:.02em;color:var(--accent)!important;margin:1.1rem 0 .45rem!important}
+  .modules ul{margin:0;padding:0;list-style:none}
+  .modules li{padding:.32rem 0;border-bottom:1px solid var(--hair-soft);font-size:.9rem;color:var(--paper-mute)}
+  .modules li:last-child{border-bottom:0}
+  .modules li{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+  .modules .dist,.modules .merit,.modules .pass,.modules .pend{flex:0 0 auto;text-align:right;font-family:var(--mono);font-size:.7rem;letter-spacing:.02em}
+  .modules .dist{color:var(--security-green)}
+  .modules .merit{color:#e0a23a}
+  .modules .pass{color:var(--paper-soft)}
+  .modules .pend{color:var(--paper-dim)}
+
+  /* Outside work */
+  .grid-hobby{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:clamp(1.1rem,2.5vw,1.75rem)}
+  .hobby-parts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem clamp(1.1rem,2.5vw,1.75rem);margin-top:.2rem}
+  .hobby-parts > div{border-top:1px solid var(--hair-soft);padding-top:1rem}
+  .hobby-parts h4{font-family:var(--mono);font-size:.74rem;font-weight:400;letter-spacing:.02em;color:var(--accent);margin:0 0 .5rem}
+  .hobby-parts p{font-size:.9rem;color:var(--paper-mute);margin:0}
+  .card .hobby-link{margin-top:auto;padding-top:.4rem;font-size:.92rem}
+  .hobby-link a{text-decoration:none;border-bottom:1px solid var(--hair-strong);padding-bottom:1px;color:var(--paper)}
+  .hobby-link a:hover{border-color:var(--paper)}
+
+  /* ---------- Contact modal ---------- */
+  dialog.modal{border:0;padding:0;margin:0;max-width:100vw;max-height:100dvh;width:100vw;height:100dvh;background:transparent;color:var(--paper)}
+  dialog.modal::backdrop{background:rgba(6,6,8,.9);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .modal__close{position:fixed;top:.8rem;right:1rem;z-index:2;background:transparent;border:0;color:var(--paper);font-size:1.6rem;line-height:1;cursor:pointer;width:2.8rem;height:2.8rem;border-radius:50%}
+  .modal__close:hover{background:rgba(236,232,225,.12)}
+  .modal__wrap{width:100%;height:100%;display:grid;place-items:center;padding:clamp(1.2rem,4vw,2.5rem)}
+  .modal__panel{max-width:60ch;max-height:86dvh;overflow:auto;background:var(--ink-raised);border:1px solid var(--hair);border-radius:var(--radius);padding:clamp(1.7rem,4vw,2.9rem);box-shadow:0 30px 90px rgba(0,0,0,.6)}
+  .modal__kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--paper-dim);margin:0 0 .8rem}
+  .modal__title{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(2rem,1.6rem + 1.6vw,2.7rem);line-height:1;margin:0 0 1.4rem}
+  .modal__body p{margin:0 0 1.1rem;color:var(--paper-soft)}
+  .modal__note{font-size:.88rem;color:var(--paper-dim)!important}
+  .terms{margin:.2rem 0 1.4rem;padding-left:1.2rem}
+  .terms li{margin:0 0 .5rem;color:var(--paper-mute);font-size:.9rem;line-height:1.5}
+  .agree{display:flex;gap:.6rem;align-items:flex-start;font-size:.92rem;color:var(--paper-soft);cursor:pointer;margin:0 0 1.15rem}
+  .agree input{margin-top:.25rem;accent-color:#9fb0bd;flex:0 0 auto}
+  .c-email{margin:.4rem 0 0;font-family:var(--mono);font-size:1.02rem}
+  .c-email a{color:var(--paper);text-decoration:none;border-bottom:1px solid var(--hair-strong)}
+  .c-email a:hover{border-color:var(--paper)}
+  .link-btn{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;border-bottom:1px solid var(--hair);padding-bottom:1px}
+  .link-btn:hover{color:var(--paper);border-color:var(--paper)}
+
+  /* Floating contact button */
+  .fab{position:fixed;right:clamp(1rem,3vw,1.75rem);bottom:clamp(1rem,3vw,1.75rem);z-index:45;
+    box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(10px);pointer-events:none;
+    transition:opacity .25s var(--ease),transform .25s var(--ease),background .2s}
+  .fab.is-visible{opacity:1;transform:none;pointer-events:auto}
+  .fab svg{width:1rem;height:1rem;flex:0 0 auto}
+
+  /* Closing CTA + footer */
+  .cta{text-align:left;padding-block:clamp(3.5rem,9vh,5.5rem);border-top:1px solid var(--hair)}
+  .cta h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(2rem,1.6rem + 2vw,3rem);line-height:1.05;margin:0 0 1rem;max-width:22ch}
+  .cta p{color:var(--paper-soft);max-width:54ch;margin:0 0 1.75rem}
+  footer{padding-block:0 clamp(2.5rem,6vh,4rem)}
+  .foot-rule{height:1px;background:var(--hair);border:0;margin:0 0 1.75rem}
+  .colophon{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between;align-items:baseline;margin:0;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;color:var(--paper-dim)}
+  .colophon a{text-decoration:none;border-bottom:1px solid var(--hair);padding-bottom:1px}
+  .colophon a:hover{color:var(--paper);border-color:var(--paper)}
+
+  @media (prefers-reduced-motion:no-preference){
+    .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s var(--ease)}
+    .js .reveal.in{opacity:1;transform:none}
+    .card:hover{transform:translateY(-2px)}
+  }
+  @media (max-width:960px){
+    .grid-3,.skills-grid{grid-template-columns:repeat(2,1fr)}
+    .profile,.grid-hobby{grid-template-columns:1fr}
+  }
+  @media (max-width:680px){
+    .grid-3,.grid-2,.skills-grid,.hobby-parts{grid-template-columns:1fr}
+    .ticks--cols{columns:1}
+    .highlights{grid-template-columns:1fr}
+    .highlights li,.highlights li+li{padding:1rem 0;border-left:0}
+    .highlights li+li{border-top:1px solid var(--hair-soft)}
+    .nav li:last-child{margin-left:0}
+  }
+  @media print{
+    body{background:#fff;color:#111;font-size:11pt}
+    .nav,.hero-actions,.toggle-all,.cta,dialog,.skip,.fab{display:none!important}
+    .card,.skill,.facts{background:#fff;border-color:#ccc;break-inside:avoid}
+    .card p,.ticks li,.profile-content p,.chapter__lede,.tagline,.facts .v,.skill__title{color:#222!important}
+    .skill__body{display:block!important}
+    .js .reveal{opacity:1!important;transform:none!important}
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Alex",
+  "url": "https://cyberalex.uk/",
+  "jobTitle": "Cyber Security Graduate",
+  "description": "First Class BSc (Hons) Computer Security graduate who has completed an MSc in Cyber Security, Risk and Resilience.",
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "University of South Wales, National Cyber Security Academy"
+  },
+  "knowsAbout": ["Data Protection","UK GDPR","Governance, Risk and Compliance","Incident Response","Penetration Testing","Networking","Software Development with AI Agents","Linux Servers"]
+}
+</script>
 </head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
 
-<body class="theme-dark">
-  <!-- Skip link for accessibility -->
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+<nav class="nav" aria-label="Sections">
+  <ul class="wrap">
+    <li class="nav__logo"><a href="#top" aria-label="Back to top"><img src="logo.png" alt="" width="32" height="32"></a></li>
+    <li><a href="#profile">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#interests">Outside work</a></li>
+    <li><button type="button" class="nav__btn" onclick="openContact()">Contact →</button></li>
+  </ul>
+</nav>
 
-  <!-- Header loaded via JS -->
-  <header id="site-header" aria-label="Main site header"></header>
+<header class="masthead wrap" id="top">
+  <p class="eyebrow">cyberalex.uk</p>
+  <h1 class="wordmark">Hi, I'm Alex.</h1>
+  <p class="tagline">I have a First in Computer Security from the University of South Wales and I've just finished an MSc in Cyber Security, Risk and Resilience. Now I'm looking for work experience or a first role in IT or cyber security to start my career. I like finding out why something's broken, then fixing it properly.</p>
+  <div class="hero-actions">
+    <button type="button" class="btn" onclick="openContact()">Get in touch</button>
+    <a class="btn btn--ghost" href="#projects">View projects</a>
+  </div>
+  <ul class="highlights" aria-label="At a glance">
+    <li><strong>First Class</strong><span>BSc (Hons) Computer Security</span></li>
+    <li><strong>MSc</strong><span>Cyber Security, Risk &amp; Resilience</span></li>
+    <li><strong>Available now</strong><span>Remote across the UK, or in person locally</span></li>
+  </ul>
+</header>
 
-  <main id="main-content" class="container py-4" tabindex="-1">
-    <!-- HERO SECTION -->
-    <section class="hero mb-5" aria-labelledby="hero-title">
-      <div class="row align-items-center g-4">
-        <div class="col-lg-8">
-          <p class="text-uppercase small text-muted mb-1">Tools, Projects & Writing</p>
-          <h1 id="hero-title" class="display-5 fw-semibold mb-2">CyberAlex</h1>
-          <p class="lead mb-2">Cyber Security, Risk &amp; Resilience</p>
-          
-          <p class="mb-3 text-secondary" id="hero-desc">
-            Early-career cyber security practitioner interested in how real organisations manage security, risk and resilience when things aren’t ideal.
-            I build practical tools, explore real-world systems, and study at MSc level with a long-term goal of moving into security leadership.
-          </p>
 
-          <div class="d-flex flex-wrap gap-2 hero-actions">
-            <a class="btn btn-primary btn-sm" href="about.html">
-              About &amp; CV
-            </a>
-            <a class="btn btn-outline-primary btn-sm" href="projects.html">
-              Tools &amp; Projects
-            </a>
-            <a class="btn btn-outline-secondary btn-sm" href="blog.html">
-              Writing &amp; Notes
-            </a>
+<main id="main">
+
+  <!-- ============ PROFILE ============ -->
+  <section id="profile" class="set" style="--accent:#5e8cf0" aria-labelledby="s-profile">
+    <div class="set__inner wrap">
+      <header class="chapter reveal">
+        <h2 class="chapter__title" id="s-profile">About me</h2>
+      </header>
+
+      <div class="profile reveal">
+        <div class="profile-content">
+          <p class="lead">Whether it's a server, a network or a car, I want to know how it works, find the real cause when it doesn't, and fix that rather than patch over it.</p>
+
+          <p>At university I got hands on with penetration testing, incident response and networking, and spent just as long on the side that keeps organisations safe day to day: governance, risk and data protection. Both my dissertations were on data protection, and for each one I built a working tool.</p>
+
+          <p>Outside the course I run my own Linux servers with Docker, and I'm building two Android apps by directing AI coding agents. I was also elected course rep three years running and helped set up a BCS student chapter, so I'm used to working with people as well as systems.</p>
+
+          <p>I'm after my first step into the industry, work experience or a first role, somewhere I can learn from an experienced team and be useful from the start.</p>
+        </div>
+
+        <ul class="facts" aria-label="Key details">
+          <li><span class="k">Looking for</span><span class="v">Work experience or a first role in IT support, infrastructure, cyber security, GRC or data protection</span></li>
+          <li><span class="k">Work preference</span><span class="v">Remote roles anywhere in the UK, or in person roles within commuting distance (location shared on request)</span></li>
+          <li><span class="k">Availability</span><span class="v">Available immediately</span></li>
+          <li><span class="k">Driving</span><span class="v">Full UK manual licence · own transport</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education" class="set" style="--accent:#c44fb0" aria-labelledby="s-education">
+    <div class="set__inner wrap">
+      <header class="chapter reveal">
+        <h2 class="chapter__title" id="s-education">Education</h2>
+      </header>
+
+      <div class="grid-2 reveal">
+        <article class="card">
+          <div class="edu-card__header">
+            <h3 style="margin:0">BSc (Hons) Computer Security</h3>
+            <span class="edu-card__meta">Graduated 2025</span>
           </div>
-        </div>
-
-        <div class="col-lg-4">
-          <section aria-label="Current focus and key themes" class="p-3 rounded-3 bg-surface border focus-panel">
-            <h2 class="h6 text-uppercase text-muted mb-2">Current Focus</h2>
-            <p class="mb-2 small">
-              MSc Cyber Security, Risk &amp; Resilience (USW), with a focus on building practical security tools and models
-              where technology, people and financial constraints intersect.
-            </p>
-            <h3 class="h6 text-uppercase text-muted mb-2">Key Themes</h3>
-            <ul class="list-inline mb-0 small">
-              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Risk &amp; Resilience</li>
-              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Security Tooling</li>
-              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Usable Security</li>
-              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Automation</li>
-              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Privacy</li>
-              <li class="list-inline-item badge rounded-pill text-bg-primary mb-1">Real-World Systems</li>
+          <p class="edu-card__inst">University of South Wales (USW), Treforest</p>
+          <span class="badge">First Class Honours</span>
+          <div class="modules">
+            <p class="modules__year">Year 1 Modules</p>
+            <ul>
+              <li>Computer Systems and Network Technologies</li>
+              <li>Professionalism and Employability</li>
+              <li>Information Engineering</li>
+              <li>Cyber Tools and Processes</li>
+              <li>Secure Design, Testing and Programming</li>
+              <li>Mathematical Tools for Computer Forensics and Security</li>
             </ul>
-          </section>
-        
-          <p class="mt-3 mb-0 small text-muted">
-            Looking for the previous version of this site and older tools?<br>
-            <a href="https://archive.cyberalex.uk">Visit the pre-2025 CyberAlex Archive</a>
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- PROFESSIONAL PROFILE -->
-<section aria-labelledby="professional-profile-heading" class="mb-5">
-  <h2 id="professional-profile-heading" class="h4 mb-3">Professional Profile</h2>
-
-  <div class="row g-4">
-
-    <!-- What I Work On -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <!-- Update the src to your new 1200x600 image -->
-          <img src="whatiworkon.png" alt="" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3 class="h5 card-title">What I Work On</h3>
-          <p class="card-text small text-secondary">
-            I focus on how organisations manage security, risk and resilience in real conditions, not idealised ones. My work sits across systems,
-            people and process, with a strong emphasis on:
-          </p>
-          <ul class="small mb-0">
-            <li>Turning frameworks into practical workflows and tools.</li>
-            <li>Analysing risk in realistic, business-driven scenarios.</li>
-            <li>Improving repeatability through automation and clear documentation.</li>
-          </ul>
-        </div>
-      </article>
-    </div>
-
-    <!-- How I Tend to Work -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <!-- Update the src to your new 1200x600 image -->
-          <img src="howiwork.png" alt="" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3 class="h5 card-title">How I Tend to Work</h3>
-            <p class="card-text small text-secondary">
-              I like to work end-to-end — understanding a system, questioning its assumptions, and iterating until it makes sense. In reality, this looks like:
-            </p>
-            <ul class="small mb-0">
-              <li>Breaking messy problems down into their moving parts.</li>
-              <li>Exploring, testing, refining, and simplifying.</li>
-              <li>Avoiding blame but communicating limitations honestly.</li>
-              <li>Taking feedback seriously and adjusting quickly.</li>
+            <p class="modules__year">Year 2 Modules</p>
+            <ul>
+              <li>Project Management and Professional Practice</li>
+              <li>Operating System Theory and Implementation</li>
+              <li>Applied Computer Networking</li>
+              <li>Team Project Pen Testing</li>
+              <li>Internet Applications Security</li>
+              <li>Securing Data with Cryptography</li>
             </ul>
+            <p class="modules__year">Year 3 Modules</p>
+            <ul>
+              <li>Ethical Hacking</li>
+              <li>Cyber Dissertation Project</li>
+              <li>Secure Operations and Incident Management</li>
+              <li>The Cyber Professional in Practice</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="edu-card__header">
+            <h3 style="margin:0">MSc Cyber Security, Risk and Resilience</h3>
+            <span class="edu-card__meta">Completed 2026 · graduating 2027</span>
+          </div>
+          <p class="edu-card__inst">USW, National Cyber Security Academy, Newport</p>
+          <span class="badge">Distinction in 4 of 6 taught modules</span>
+          <div class="modules">
+            <p class="modules__year">Modules</p>
+            <ul>
+              <li>Networking Technologies<span class="dist">Distinction</span></li>
+              <li>Leadership and Transformational Change in a Digital Era<span class="dist">Distinction</span></li>
+              <li>Crisis and Operational Resilience<span class="merit">Merit</span></li>
+              <li>Protecting Critical National Infrastructure<span class="pass">Pass</span></li>
+              <li>Legislation, Risk and Governance<span class="dist">Distinction</span></li>
+              <li>Security Management and Incident Response<span class="dist">Distinction</span></li>
+              <li>MSc Dissertation Project<span class="pend">result due November 2026</span></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience" class="set" style="--accent:#3fcf7f" aria-labelledby="s-experience">
+    <div class="set__inner wrap">
+      <header class="chapter reveal">
+        <h2 class="chapter__title" id="s-experience">Practical Experience <span class="chapter__note">(university)</span></h2>
+      </header>
+
+      <div class="grid-3 reveal">
+        <article class="card">
+          <p class="card__kicker">MSc · Incident Response</p>
+          <h3>Incident Investigation in Splunk</h3>
+          <p>I loaded a log set from a compromised network into Splunk Enterprise and traced the attack from start to finish.</p>
+          <ul class="ticks">
+            <li>Identified 25 MITRE ATT&amp;CK techniques, including LSASS credential dumping, DCSync, Kerberoasting, golden tickets and pass the hash</li>
+            <li>Found and verified the attacker's tools (Mimikatz, Rubeus) and three phishing domains</li>
+            <li>Recommended mitigations aligned to the NCSC Cyber Assessment Framework</li>
           </ul>
-        </div>
-      </article>
-    </div>
+        </article>
 
-    <!-- What I'm Looking For -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <!-- Update the src to your new 1200x600 image -->
-          <img src="whatimlookingfor.png" alt="" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3 class="h5 card-title">What I’m Looking For</h3>
-          <p class="card-text small text-secondary">
-            I’m looking for early-career roles that blend technical security work with risk, governance or resilience. Long-term, I’m aiming for
-            security architecture or leadership pathways where:
-          </p>
-          <ul class="small mb-2">
-            <li>Trade-offs and constraints are taken seriously.</li>
-            <li>Communication is as important as tooling.</li>
-            <li>Good reasoning is valued over buzzwords.</li>
+        <article class="card">
+          <p class="card__kicker">MSc · Critical Infrastructure</p>
+          <h3>OT Security Assessment</h3>
+          <p>I investigated unauthorised remote access to an engineering workstation at a petrochemical plant, using the GRFICSv2 industrial control system lab.</p>
+          <ul class="ticks">
+            <li>Assessed the OT network for remote access exposure, weak authentication, over permissive firewalls and missing logging</li>
+            <li>Wrote firewall rules and preventative controls for the engineering workstation</li>
+            <li>Mapped a simulated attack to the attacker's tactics, techniques and procedures</li>
           </ul>
-          <p class="small mb-0">
-            If you’d like to talk about roles, collaboration or projects:<br>
-            <a class="email-link" data-user="YWxleA==" data-domain="Y3liZXJhbGV4LnVr" aria-label="Email Alex">
-              Email Alex
-            </a>
-          </p>
-        </div>
-      </article>
-    </div>
+        </article>
 
+        <article class="card">
+          <p class="card__kicker">MSc · Network Design</p>
+          <h3>Hospital Intrusion Detection</h3>
+          <p>I designed a network intrusion detection system for a hospital's medical devices, after a denial of service attack disrupted a pathology analyser.</p>
+          <ul class="ticks">
+            <li>Segmented the hospital network and placed the detection sensors</li>
+            <li>Sent alerts securely to a remote security operations centre</li>
+            <li>Compared wireless options for medical devices and covered DNS and DHCP security</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <p class="card__kicker">BSc · Team Lead</p>
+          <h3>Penetration Testing Engagement</h3>
+          <p>I led our four person team through a full pen test for a mock client played by a tutor, from the first meeting to the final report. We ran it like a real engagement, suits and ties included.</p>
+          <ul class="ticks">
+            <li>Led the first client meeting to agree the scope, then the interim presentation and the final report, and was commended by the tutor for my pacing</li>
+            <li>Drafted the service contract and NDA, and was the team's main point of contact for the client</li>
+            <li>Presented our reconnaissance of the client's network: Nmap, Nessus and OpenVAS scans, scored with CVSS</li>
+            <li>Allocated work across the team and managed deadlines</li>
+            <li>Wrote the final report in plain English for the client, a company director with no technical background</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <p class="card__kicker">BSc · Group Director</p>
+          <h3>Incident Response Cyber Drill</h3>
+          <p>A live cyber drill in the university's Hydra suite. Our five person incident response team handled a breach at a bank after customer data turned up online, and I was group director.</p>
+          <ul class="ticks">
+            <li>Directed the team's discussion, decisions and timing as five injects came in</li>
+            <li>Wrote our incident response playbook with the team, covering malware, ransomware, denial of service, phishing and unauthorised access</li>
+            <li>Traced the attack through the logs afterwards: a root SSH login, cron job persistence, a known distcc exploit (CVE-2004-2687) and access to HR files</li>
+            <li>Checked the attacker IPs on VirusTotal and recommended fixes, from SSH hardening to better monitoring</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <p class="card__kicker">BSc · Ethical Hacking</p>
+          <h3>Attacking a Vulnerable Windows Machine</h3>
+          <p>I attacked a deliberately vulnerable Windows 7 machine from Kali Linux in an isolated lab, then mapped every step to the Cyber Kill Chain.</p>
+          <ul class="ticks">
+            <li>Scanned it with Nmap and Nessus and documented 14 vulnerabilities, each with its severity and fix</li>
+            <li>Bypassed VNC authentication with Metasploit (CVE-2006-2369) to take control, then escalated to administrator</li>
+            <li>Reached the attack's objectives: accessed the sensitive files, then deployed ransomware to show the impact</li>
+            <li>Recommended patching, VNC hardening and network controls to stop it happening again</li>
+            <li>In a separate assessment, used Burp Suite to intercept and change live web requests, and Ghidra to repair a broken decompiled function and crack a password protected program</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="set" style="--accent:#9fb0bd" aria-labelledby="s-projects">
+    <div class="set__inner wrap">
+      <header class="chapter reveal">
+        <h2 class="chapter__title" id="s-projects">Projects</h2>
+      </header>
+
+      <div class="proj-list reveal">
+        <article class="card proj">
+          <p class="card__kicker">MSc Dissertation · c.16,000 words</p>
+          <h3>Privacy Nutrition Labels for UK Web Users</h3>
+          <p class="proj__lede">Reading every privacy policy you meet in a year would take around 244 hours, so most people don't. I built a browser extension that uses an LLM to read a website's privacy policy and turn it into a standardised "nutrition label", with every claim linked back to the part of the policy it came from. Tested on four live policies, its labels agreed with a manual reading on 23 of 24 criteria.</p>
+          <ul class="metrics" aria-label="Methods and technology">
+            <li>Design Science Research</li><li>LLM</li><li>Browser extension</li><li>UK GDPR</li><li>Surveys &amp; interviews</li>
+          </ul>
+          <details class="more">
+            <summary><span class="more__label">More info</span></summary>
+            <div class="more__body">
+              <p class="more__title">Designing, Evaluating, and Publishing an Evidence-Referenced Website Privacy Nutrition Label for UK End Users</p>
+              <ul class="ticks ticks--cols">
+                <li><strong>The problem:</strong> online consent relies on people reading privacy policies, and that system is broken. Most people agree without reading, and tools run by volunteers, like ToS;DR, can't keep up</li>
+                <li><strong>Research:</strong> reviewed research on privacy policies, GDPR requirements and LLM reliability studies. LLM tools can automate this, but show error rates of around 16%, so a fixed approach grounded in evidence was needed</li>
+                <li><strong>Method:</strong> Design Science Research, with a survey of 25 users and interviews with 3 extension users, developed through iterative design phases</li>
+                <li><strong>Design:</strong> every policy is scored against the same fixed GDPR rubric so labels are comparable. Risky findings get extra friction, and missing information is shown honestly rather than guessed</li>
+                <li><strong>Safeguards:</strong> a check that verifies each clause, to catch hallucinated claims, and cryptographic consent snapshots</li>
+                <li><strong>Evaluation:</strong> tested on four live policies against a manual reading. The labels agreed on 23 of 24 criteria, and every quoted clause matched the policy word for word. All three test users rated the label highly for clarity, and pointed to sideloading as a barrier to adoption</li>
+                <li><strong>Outcome:</strong> delivered a working extension, and recommended a seeded error trust study and entailment checking as next steps</li>
+                <li><strong>Now:</strong> it works, but free LLMs aren't reliable enough yet for a public release, so I'm polishing it into something consumer ready first. A walkthrough is available on request</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
+        <article class="card proj">
+          <p class="card__kicker">BSc Dissertation · c.10,000 words</p>
+          <h3>A Data Protection Framework for UK SMEs</h3>
+          <p class="proj__lede">The UK has around 5.6 million small and medium businesses, and existing frameworks are often too costly or complex for them. I built a free website that turns UK GDPR obligations into clear guidance, templates and training they can actually use.</p>
+          <ul class="metrics" aria-label="Methods and technology">
+            <li>Mixed methods</li><li>UK GDPR</li><li>DPA 2018</li><li>Surveys &amp; interviews</li><li>GitHub Pages</li>
+          </ul>
+          <details class="more">
+            <summary><span class="more__label">More info</span></summary>
+            <div class="more__body">
+              <p class="more__title">Data Protection Strategies: Creating an Actionable Framework for Improving Data Protection Compliance in Small to Medium Sized Enterprises (SME) in the United Kingdom</p>
+              <ul class="ticks ticks--cols">
+                <li><strong>Research:</strong> critically analysed UK GDPR and the Data Protection Act 2018 against SME obligations, including how hard principles like Article 5 are to apply with limited resources. Found a clear gap in guidance written for SMEs</li>
+                <li><strong>Method:</strong> mixed methods. Surveyed around 50 SMEs, interviewed 2 SMEs and a web developer, and built the framework in three iterative phases</li>
+                <li><strong>Design:</strong> free templates, guides and training resources, hosted on GitHub Pages with no tracking or data collection. Designed to complement legal advice, not replace it</li>
+                <li><strong>Evaluation:</strong> SME and expert feedback confirmed it was clear, relevant and practical. Suggested improvements included FAQs, more depth and interface upgrades, and developer input improved link behaviour and image loading</li>
+                <li><strong>Limitations:</strong> a small sample and no data on performance over time</li>
+                <li><strong>Recognition:</strong> presented the poster at GradEx, where it was selected for display at the 8th International Conference on Emerging Technologies in Computing (IAER), 2025</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
+        <article class="card proj">
+          <p class="card__kicker"><span class="tag-live">In active development</span></p>
+          <h3>ScenicRoute</h3>
+          <p class="proj__lede">An Android app for planning scenic drives and driving them as a group. Routes are calculated on the phone from a downloaded routing graph, so it can plan a drive with no signal at all, and it has meetups, convoys and push to talk for driving with other people. I built the app and the server behind it.</p>
+          <ul class="metrics" aria-label="Technology stack">
+            <li>Kotlin / Java</li><li>Android SDK</li><li>MapLibre</li><li>GraphHopper</li><li>Matrix Rust SDK</li><li>Docker</li><li>Linux</li>
+          </ul>
+          <details class="more">
+            <summary><span class="more__label">More info</span></summary>
+            <div class="more__body">
+              <p>It's around 30,000 lines of app code so far, plus the server. It was built by AI coding agents under my direction: I decide how it should work, they write it in small steps, and I test each step in a working build before moving on. I didn't know Kotlin when I started. A demo is available on request.</p>
+              <ul class="ticks ticks--cols">
+                <li><strong>Offline routing:</strong> GraphHopper runs on the phone, so routes are planned without a connection. Getting it to run on Android's runtime meant designing a custom weighting system, then testing and reworking it until it held up</li>
+                <li><strong>Vector maps:</strong> moved from raster tiles to MapLibre vector maps hosted on my own server. The whole app shares one map, with a focused Drive Mode for use at the wheel</li>
+                <li><strong>Group driving:</strong> meetups, convoys and push to talk voice between drivers, tested on real devices</li>
+                <li><strong>Encrypted messaging:</strong> chat built on Matrix, with read receipts, grouped notifications, video and recovery key setup during onboarding</li>
+                <li><strong>My own server:</strong> a Docker stack on Linux (Matrix, voice relay and map tile serving) that I deploy and run myself</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
+        <article class="card proj">
+          <p class="card__kicker"><span class="tag-live">In development · F-Droid, early 2027</span></p>
+          <h3>Open Widget</h3>
+          <p class="proj__lede">A free Android app for building your own home screen widgets from live data, which I'll release as open source. You point it at a web address, feed or API, tap the values you want, and lay them out in an editor. Nothing needs to be coded. It can take most data sources, show them on a widget and update them in near real time.</p>
+          <ul class="metrics" aria-label="Technology stack">
+            <li>Kotlin</li><li>Jetpack Compose</li><li>Glance</li><li>Go</li><li>Tailscale</li><li>WorkManager</li><li>Docker</li>
+          </ul>
+          <details class="more">
+            <summary><span class="more__label">More info</span></summary>
+            <div class="more__body">
+              <p>It's for people who want their car's battery level, a server's status or a feed on their home screen without a dedicated app for each one. I built it for my own use and shared a template with a friend.</p>
+              <p>It's over 11,000 lines so far, built the same way as ScenicRoute: AI coding agents write it in small steps under my direction, and I test every step on a real phone before moving on. It's aimed at F-Droid, so there's no Google Play Services anywhere.</p>
+              <ul class="ticks ticks--cols">
+                <li><strong>Tap to map editor:</strong> fetch any JSON or RSS source, tap a value to bind it, then style it with layers, formats and colour rules. Widgets resize to fit any launcher grid</li>
+                <li><strong>Live updates:</strong> a background service holds WebSocket, SSE or Traccar connections open, so widgets update within seconds of an event. Data that has gone stale is dimmed and labelled, never shown as current</li>
+                <li><strong>Templates:</strong> prebuilt widgets, like a car battery monitor with lead acid and AGM curves and an optional second battery. Templates can update without overwriting your own edits</li>
+                <li><strong>Private hub:</strong> a small Go server the phone pairs with over a Tailscale connection built into the app, with no VPN app and nothing exposed to the internet. Certificates are pinned, and each device can be revoked</li>
+                <li><strong>Agent control:</strong> AI agents can propose widget changes through the hub using signed change sets. You review them on the phone, deletions always need your approval, and every change can be undone</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="set" style="--accent:#e0a23a" aria-labelledby="s-skills">
+    <div class="set__inner wrap">
+      <div class="chapter__row reveal">
+        <header class="chapter">
+          <h2 class="chapter__title" id="s-skills">Skills</h2>
+        </header>
+        <button type="button" class="toggle-all" id="toggle-skills" aria-pressed="false">Expand all</button>
+      </div>
+
+      <div class="skills-grid reveal">
+        <details class="skill">
+          <summary><span class="skill__kicker">Governance</span><span class="skill__title">Privacy, Risk &amp; Compliance</span><span class="skill__teaser">UK GDPR, risk, resilience</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>UK GDPR &amp; Data Protection Act 2018</li>
+            <li>International data transfers: asked the ICO directly how the UK's test compares with the EU's</li>
+            <li>Risk assessment &amp; business impact analysis</li>
+            <li>Business continuity planning &amp; crisis management</li>
+            <li>Operational technology &amp; critical national infrastructure security</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">Frameworks</span><span class="skill__title">Standards &amp; Frameworks</span><span class="skill__teaser">MITRE ATT&amp;CK, NCSC CAF, NIST, ISO 22301</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>MITRE ATT&amp;CK, used to map a full attack in Splunk</li>
+            <li>NCSC CAF, used to shape incident recommendations</li>
+            <li>NIST CSF, critically evaluated against the CAF</li>
+            <li>ISO 22301, used to write a business continuity plan</li>
+            <li>Mock Cyber Essentials assessment in class</li>
+            <li>Familiar with ISO/IEC 27001</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">Defensive</span><span class="skill__title">Security Operations</span><span class="skill__teaser">Splunk investigations, ATT&amp;CK, IOCs</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>Investigating attacks in Splunk Enterprise</li>
+            <li>Mapping attacker behaviour to MITRE ATT&amp;CK</li>
+            <li>Verifying indicators of compromise (tools, domains)</li>
+            <li>Network intrusion detection design</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">Offensive</span><span class="skill__title">Ethical Hacking</span><span class="skill__teaser">Pen testing, Kill Chain, cryptography</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>Penetration testing, from scoping to report</li>
+            <li>Cyber Kill Chain methodology</li>
+            <li>Reconnaissance, exploitation &amp; privilege escalation</li>
+            <li>Windows security assessment</li>
+            <li>Classical &amp; symmetric ciphers, cryptanalysis</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">Infrastructure</span><span class="skill__title">Systems &amp; Networking</span><span class="skill__teaser">Windows, Linux, Docker, Cisco</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>Windows Server: Active Directory &amp; user accounts</li>
+            <li>Running my own Linux servers with Docker</li>
+            <li>Virtual machines &amp; isolated lab networks (VMware)</li>
+            <li>Basic Cisco router, switch &amp; VLAN setup</li>
+            <li>TCP/IP, DNS &amp; DHCP</li>
+            <li>Least privilege &amp; patching</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">IT Support</span><span class="skill__title">IT Support</span><span class="skill__teaser">Troubleshooting, Microsoft 365, docs</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>Hardware &amp; software troubleshooting</li>
+            <li>Microsoft 365 (Word, Excel, PowerPoint, Teams)</li>
+            <li>Technical documentation &amp; LaTeX</li>
+            <li>Explaining technical problems in plain English</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">Tools</span><span class="skill__title">Security Toolkit</span><span class="skill__teaser">Wireshark, Nmap, Metasploit, Burp, Splunk</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>Wireshark &amp; Nmap</li>
+            <li>Ghidra (reverse engineering)</li>
+            <li>Metasploit &amp; Burp Suite</li>
+            <li>Nessus</li>
+            <li>Autopsy (digital forensics)</li>
+            <li>Splunk</li>
+            <li>Kali Linux &amp; Cisco Packet Tracer</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">Development</span><span class="skill__title">Programming &amp; Apps</span><span class="skill__teaser">C++, basic Python, AI built Android apps</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>C++ (secure programming module)</li>
+            <li>Basic Python (cryptography module)</li>
+            <li>Taking an idea to working software by directing AI coding agents</li>
+            <li>Writing clear requirements &amp; design specs</li>
+            <li>Testing every build &amp; feeding back fixes</li>
+            <li>Android apps (Kotlin, Jetpack Compose)</li>
+            <li>Browser extension with LLM integration</li>
+          </ul></div>
+        </details>
+        <details class="skill">
+          <summary><span class="skill__kicker">Professional</span><span class="skill__title">Communication &amp; Delivery</span><span class="skill__teaser">Reports, presenting, project management</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <div class="skill__body"><ul class="ticks">
+            <li>Penetration test &amp; incident reports</li>
+            <li>Explaining technical risk to a non technical client</li>
+            <li>Client scoping interviews &amp; presentations</li>
+            <li>c.16,000 word MSc &amp; c.10,000 word BSc dissertations</li>
+            <li>Planning &amp; Gantt charts, waterfall &amp; iterative</li>
+            <li>Taking formal minutes</li>
+          </ul></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEADERSHIP ============ -->
+  <section id="leadership" class="set" style="--accent:#b98cf0" aria-labelledby="s-leadership">
+    <div class="set__inner wrap">
+      <header class="chapter reveal">
+        <h2 class="chapter__title" id="s-leadership">Leadership &amp; Professionalism</h2>
+      </header>
+
+      <div class="grid-3 reveal">
+        <article class="card">
+          <p class="card__kicker">Elected · 3 years</p>
+          <h3>Course Representative</h3>
+          <p>My cohort voted me in as course rep three years running, so I was the link between students and staff.</p>
+          <ul class="ticks">
+            <li>Sat on the Student Staff Course Liaison Group with the programme leader, course leader and lecturers</li>
+            <li>Raised my cohort's issues, from timetable errors to rooms changing mid class, and got actions agreed with staff</li>
+            <li>Took the formal minutes for the group, recording each decision and who owned the action</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <p class="card__kicker">Committee Lead</p>
+          <h3>Cyber Security Society</h3>
+          <p>A small society run by a few of us on the committee. We met after hours in the university's cyber labs to work through labs and capture the flag (CTF) challenges together.</p>
+          <ul class="ticks">
+            <li>Helped get a student chapter of BCS, The Chartered Institute for IT, running alongside the society</li>
+            <li>Helped write the society's constitution</li>
+            <li>Later advised students from the 2024/25 cohort who wanted to start a society of their own</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <p class="card__kicker">2025 · Mentor</p>
+          <h3>Undergraduate Mentor &amp; Assessor</h3>
+          <p>I mentored a team of first year students through their professionalism assessment, then sat on the panel that assessed their presentations.</p>
+          <ul class="ticks">
+            <li>Helped the team work through problems within the group</li>
+            <li>Gave them detailed feedback on their work before they submitted</li>
+            <li>Invited onto the assessment panel to mark the presentations and give written feedback</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OUTSIDE WORK ============ -->
+  <section id="interests" class="set" style="--accent:#e07b54" aria-labelledby="s-interests">
+    <div class="set__inner wrap">
+      <header class="chapter reveal">
+        <h2 class="chapter__title" id="s-interests">Outside work</h2>
+      </header>
+
+      <div class="grid-hobby reveal">
+        <article class="card">
+          <p class="card__kicker">Creative</p>
+          <h3>Photography</h3>
+          <p>I studied photography at GCSE and A level, and my work was printed for a college open day. These days I shoot as a hobby, mostly close ups set up at home.</p>
+          <p class="hobby-link">A selection of my favourites is at <a href="https://lumasphere.art" target="_blank" rel="noopener">lumasphere.art</a></p>
+        </article>
+
+        <article class="card">
+          <p class="card__kicker">Automotive</p>
+          <h3>Cars</h3>
+          <p>I treat cars the same way I treat tech: do the research first, then the work.</p>
+          <div class="hobby-parts">
+            <div>
+              <h4>Mechanics</h4>
+              <p>I service my own cars to OE specification, using well researched OE equivalent parts fitted to the manufacturer's procedures.</p>
+            </div>
+            <div>
+              <h4>Driving</h4>
+              <p>I hold IAM Advanced and Masters certificates and am a graduate of the High Performance Course. Club members, friends and family trust me to drive their cars. It's also why I'm building <a href="#projects">ScenicRoute</a>.</p>
+            </div>
+            <div>
+              <h4>Detailing</h4>
+              <p>I research paint correction and build the skills through practice on my own cars, including machine polishing, paint touch ups and close attention to detail.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta wrap" aria-labelledby="s-cta">
+    <h2 id="s-cta">Say hello.</h2>
+    <p>If you're hiring, or think I'd be a good fit for your team, I'd love to hear from you.</p>
+    <button type="button" class="btn" onclick="openContact()">Get in touch</button>
+  </section>
+
+</main>
+
+<button type="button" class="btn fab" id="fab" onclick="openContact()" aria-label="Get in touch" tabindex="-1">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+  Get in touch
+</button>
+
+<dialog id="contact" class="modal" aria-labelledby="contact-title">
+  <button class="modal__close" type="button" aria-label="Close (Esc)">&times;</button>
+  <div class="modal__wrap">
+    <div class="modal__panel">
+            <h2 class="modal__title" id="contact-title">Get in touch</h2>
+      <div class="modal__body">
+        <p>Happy to hear from you, whether it's about a job, a project or just a chat. I'll get back to you as soon as I can.</p>
+        <p id="c-email" class="c-email"></p>
+        <p class="modal__note">Please don't share or publish it, and no marketing or bulk email.</p>
+      </div>
+    </div>
   </div>
-</section>
+</dialog>
 
-<!-- TOOLS & PROJECTS HIGHLIGHT -->
-<section aria-labelledby="tools-projects-heading" class="mb-5">
-  <h2 id="tools-projects-heading" class="h4 mb-3">Highlighted Tools &amp; Projects</h2>
+<footer class="wrap">
+  <hr class="foot-rule">
+  <p class="colophon">
+    <span>© 2026 <a href="https://cyberalex.uk">cyberalex.uk</a></span>
+    <span><button type="button" class="link-btn" onclick="openContact()">Contact</button></span>
+  </p>
+</footer>
 
-  <!-- BIG 3 HERO CARDS -->
-  <div class="row g-4">
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+  }
 
-    <!-- Encryption Tool -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <img src="encryption.png" alt="" loading="lazy">
-        </div>
-        <div class="card-body position-relative">
-          <h3 class="h6 card-title mb-1">
-            <a href="/tools/encrypt.html" class="stretched-link card-title-link">Encryption Tool</a>
-          </h3>
-          <p class="card-text small text-secondary mb-0">
-            Encrypt and decrypt text directly in your browser using AES, with all processing performed locally to keep your data private, secure, and fully offline.
-          </p>
-        </div>
-      </article>
-    </div>
+  // Scroll-spy + sticky border
+  (function(){
+    var links={},navEl=document.querySelector('.nav'),nav=navEl.querySelectorAll('a');
+    nav.forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+    var spy=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
+      nav.forEach(function(a){a.removeAttribute('aria-current');});
+      if(links[e.target.id])links[e.target.id].setAttribute('aria-current','true');}});},{rootMargin:'-40% 0px -55% 0px',threshold:0});
+    document.querySelectorAll('main .set').forEach(function(s){spy.observe(s);});
+    function stuck(){navEl.classList.toggle('is-stuck',navEl.getBoundingClientRect().top<=0);}
+    addEventListener('scroll',stuck,{passive:true}); stuck();
+  })();
 
-    <!-- Password Entropy Tester -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <img src="password.png" alt="" loading="lazy">
-        </div>
-        <div class="card-body position-relative">
-          <h3 class="h6 card-title mb-1">
-            <a href="/tools/password-tester.html" class="stretched-link card-title-link">Password Generator and Tester</a>
-          </h3>
-          <p class="card-text small text-secondary mb-0">
-            A secure password generator and a dedicated entropy tester. Both tools run locally and also test the quality of the source randomness.
-          </p>
-        </div>
-      </article>
-    </div>
-  
-  <!-- Referencing Helper -->
-  <div class="col-md-4">
-    <article class="card h-100 card-raise position-relative">
-  
-      <!-- • new badge -->
-      <span class="position-absolute top-0 start-0 m-2 badge bg-primary rounded-pill">
-        • New
-      </span>
-  
-      <div class="card-visual" aria-hidden="true">
-        <img src="ref.png" alt="" loading="lazy">
-      </div>
-  
-      <div class="card-body position-relative">
-        <h3 class="h6 card-title mb-1">
-          <a href="/tools/ref.html" class="stretched-link card-title-link">Referencing Helper</a>
-        </h3>
-        <p class="card-text small text-secondary mb-0">
-            Generate consistent academic references with validation, structured lists, and export options, designed to save time and reduce formatting errors during writing and research.
-        </p>
-      </div>
-  
-    </article>
-  </div>
+  // Skills: expand / collapse all
+  (function(){
+    var btn=document.getElementById('toggle-skills'),items=document.querySelectorAll('#skills details');
+    function sync(){var all=Array.prototype.every.call(items,function(d){return d.open;});
+      btn.textContent=all?'Collapse all':'Expand all'; btn.setAttribute('aria-pressed',all);}
+    btn.addEventListener('click',function(){var open=btn.getAttribute('aria-pressed')!=='true';
+      items.forEach(function(d){d.open=open;}); sync();});
+    items.forEach(function(d){d.addEventListener('toggle',sync);});
 
+    // Give every card the same closed height, based on the tallest one
+    var heads=document.querySelectorAll('#skills summary');
+    function equalise(){
+      heads.forEach(function(h){h.style.minHeight='';});
+      var max=0; heads.forEach(function(h){max=Math.max(max,h.offsetHeight);});
+      heads.forEach(function(h){h.style.minHeight=max+'px';});
+    }
+    equalise(); addEventListener('resize',equalise);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(equalise);
+  })();
 
-  </div>
+  // Floating contact button: shown once the hero buttons are off screen, hidden at the closing call-to-action
+  (function(){
+    var fab=document.getElementById('fab'),hero=document.querySelector('.hero-actions'),cta=document.querySelector('.cta');
+    if(!('IntersectionObserver' in window)){fab.classList.add('is-visible');fab.tabIndex=0;return;}
+    var heroVis=true,ctaVis=false;
+    function update(){var show=!heroVis&&!ctaVis;fab.classList.toggle('is-visible',show);fab.tabIndex=show?0:-1;}
+    new IntersectionObserver(function(es){heroVis=es[0].isIntersecting;update();}).observe(hero);
+    new IntersectionObserver(function(es){ctaVis=es[0].isIntersecting;update();}).observe(cta);
+  })();
 
-  <!-- SIX SMALL BUTTONS (PIXEL-PERFECT EQUAL WIDTH)
-  <div class="mt-4">
-    <div class="row g-2">
-  
-      <div class="col-6 col-md-2">
-        <a href="/tools/exif.html" class="btn btn-outline-primary btn-sm w-100">
-          Image Metadata Viewer
-        </a>
-      </div>
-  
-      <div class="col-6 col-md-2">
-        <a href="/tools/ip.html" class="btn btn-outline-primary btn-sm w-100">
-          IP Information Tool
-        </a>
-      </div>
-  
-      <div class="col-6 col-md-2">
-        <a href="/tools/viewer.html" class="btn btn-outline-primary btn-sm w-100">
-          Document Viewer
-        </a>
-      </div>
-  
-      <div class="col-6 col-md-2">
-        <a href="/tools/interest.html" class="btn btn-outline-primary btn-sm w-100">
-          Loan &amp; Interest Visualiser
-        </a>
-      </div>
-  
-      <div class="col-6 col-md-2">
-        <a href="/tools/qr.html" class="btn btn-outline-primary btn-sm w-100">
-          QR Code Generator
-        </a>
-      </div>
-  
-      <div class="col-6 col-md-2">
-        <a href="/projects.html" class="btn btn-primary btn-sm w-100">
-          Tools & Projects Page
-        </a>
-      </div>
-  
-    </div>
-  </div> -->
+  // Project "More info" toggles
+  document.querySelectorAll('.more').forEach(function(d){
+    var l=d.querySelector('.more__label');
+    d.addEventListener('toggle',function(){l.textContent=d.open?'Less info':'More info';});
+  });
+  addEventListener('beforeprint',function(){document.querySelectorAll('.more,#skills details').forEach(function(d){d.open=true;});});
 
-
-</section>
-
-
-
-
-<!-- BEYOND CYBER -->
-<section aria-labelledby="beyond-cyber-heading" class="mb-5">
-  <h2 id="beyond-cyber-heading" class="h4 mb-3">Beyond Cyber</h2>
-
-  <div class="row g-4">
-
-    <!-- Photography -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <img src="photography.png" alt="Stylised moonlit landscape representing photography" loading="lazy">
-        </div>
-        <div class="card-body position-relative">
-          <h3 class="h5 card-title mb-1">
-            <a href="https://lumasphere.art" class="stretched-link card-title-link">
-              Photography - lumasphere.art
-            </a>
-          </h3>
-          <p class="card-text small text-secondary mb-0">
-             I once planned a career in photography, but it just was not financially realistic. I still take photos when I can, and sometimes they turn out far better than I could ever anticipate, even to the point where people occasionally doubt that I took them.
-          </p>
-        </div>
-      </article>
-    </div>
-
-    <!-- Velosophy -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <img src="velosophy.png" alt="Night-drive scene with car silhouette representing Velosophy" loading="lazy">
-        </div>
-        <div class="card-body position-relative">
-          <h3 class="h5 card-title mb-1">
-            <a href="https://velosophy.org.uk" class="stretched-link card-title-link">
-              Automotive - velosophy.org.uk
-            </a>
-          </h3>
-          <p class="card-text small text-secondary mb-0">
-            Velosophy is where my motoring hobby got a bit out of hand. I started by jotting down thoughts and asking why we do things the way we do, and before long I was creating fully referenced formal reports to grasp their underlying principles.
-          </p>
-        </div>
-      </article>
-    </div>
-
-    <!-- Numismatics / Coin -->
-    <div class="col-md-4">
-      <article class="card h-100 card-raise">
-        <div class="card-visual" aria-hidden="true">
-          <img src="curations.png" alt="Stack of coins with a silver coin featuring the Queen’s profile" loading="lazy">
-        </div>
-        <div class="card-body position-relative">
-          <h3 class="h5 card-title mb-1">
-            <a href="#" class="stretched-link card-title-link">
-              Interests
-            </a>
-          </h3>
-          <p class="card-text small text-secondary mb-0">
-            I have a long-standing interest in British coinage, particularly the design and history of the decimal era. I also have an interest in watches, especially pieces with distinctive design or historical context.
-          </p>
-        </div>
-      </article>
-    </div>
-
-  </div>
-</section>
-
-  </main>
-
-  <!-- Footer loaded via JS -->
-  <footer id="site-footer" aria-label="Main site footer"></footer>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-  <!-- Layout loader -->
-  <script src="js/layout.js"></script>
+  // Contact
+  var contact=document.getElementById('contact');
+  var C_EML=[44,23,84,77,16,33,107,55,50,40,92,70,83,74,117,40,109,119,49,146];
+  // The address is only assembled when the dialog opens, keyed on its own title text
+  function openContact(){
+    var k=document.getElementById('contact-title').textContent.trim(), out=document.getElementById('c-email');
+    var addr=C_EML.map(function(n,i){return String.fromCharCode(n^k.charCodeAt(i%k.length)^(i*7&255));}).reverse().join('');
+    var a=document.createElement('a'); a.href='mail'+'to:'+addr; a.textContent=addr;
+    out.textContent=''; out.appendChild(a);
+    if(typeof contact.showModal==='function') contact.showModal(); else contact.setAttribute('open','');
+  }
+  contact.querySelector('.modal__close').addEventListener('click',function(){contact.close();});
+  contact.addEventListener('click',function(e){ if(e.target.closest('.modal__panel')) return; contact.close(); });
+  contact.addEventListener('close',function(){ document.getElementById('c-email').textContent=''; });
+</script>
 </body>
 </html>
