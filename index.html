@@ -9,14 +9,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cyberalex.uk">
 <meta property="og:title" content="Alex · Cyber Security &amp; IT">
-<meta property="og:description" content="First Class Computer Security graduate with a newly completed MSc, open to IT, infrastructure and cyber security roles. Practical security skills, plus software built by directing AI coding agents.">
+<meta property="og:description" content="First Class Computer Security graduate with a newly completed MSc, open to IT, infrastructure and cyber security roles. Practical skills in penetration testing, incident response and data protection.">
 <meta property="og:url" content="https://cyberalex.uk/">
 <meta property="og:image" content="https://cyberalex.uk/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Alex · Cyber Security &amp; IT">
-<meta name="twitter:description" content="First Class Computer Security graduate with a newly completed MSc, open to IT, infrastructure and cyber security roles. Practical security skills, plus software built by directing AI coding agents.">
+<meta name="twitter:description" content="First Class Computer Security graduate with a newly completed MSc, open to IT, infrastructure and cyber security roles. Practical skills in penetration testing, incident response and data protection.">
 <meta name="twitter:image" content="https://cyberalex.uk/og-cover.jpg">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
@@ -304,7 +304,7 @@
     "@type": "CollegeOrUniversity",
     "name": "University of South Wales, National Cyber Security Academy"
   },
-  "knowsAbout": ["Data Protection","UK GDPR","Governance, Risk and Compliance","Incident Response","Penetration Testing","Networking","Software Development with AI Agents","Linux Servers"]
+  "knowsAbout": ["Data Protection","UK GDPR","Governance, Risk and Compliance","Incident Response","Penetration Testing","Networking","Linux Servers"]
 }
 </script>
 </head>
@@ -352,9 +352,9 @@
 
       <div class="profile reveal">
         <div class="profile-content">
-          <p class="lead">I'm a cyber security graduate with hands on experience on both sides of the field: penetration testing, incident response and SIEM investigation, alongside UK GDPR, risk and resilience.</p>
+          <p class="lead">I'm a cyber security graduate with hands on experience on both sides of the field: penetration testing, incident response and network security, alongside UK GDPR, risk and resilience.</p>
 
-          <p>I've investigated a full network compromise in Splunk and identified 25 MITRE ATT&amp;CK techniques, led a four person pen test team from the first client meeting to the final report, and directed a five person incident response team through a live cyber drill. My MSc dissertation produced a privacy tool whose labels matched a manual review on 23 of 24 criteria.</p>
+          <p>I've led a four person pen test team from the first client meeting to the final report, directed a five person incident response team through a live cyber drill, and attacked a vulnerable Windows machine from start to finish in a lab. My MSc dissertation produced a privacy tool whose labels matched a manual review on 23 of 24 criteria.</p>
 
           <p>Alongside my studies I was elected course rep three years running and mentored first year students, and I run my own Linux servers.</p>
 
@@ -447,16 +447,6 @@
       </header>
 
       <div class="grid-3 reveal">
-        <article class="card">
-          <p class="card__kicker">MSc · Incident Response</p>
-          <h3>Incident Investigation in Splunk</h3>
-          <p>I loaded a log set from a compromised network into Splunk Enterprise and traced the attack from start to finish.</p>
-          <ul class="ticks">
-            <li>Identified 25 MITRE ATT&amp;CK techniques, including LSASS credential dumping, DCSync, Kerberoasting, golden tickets and pass the hash</li>
-            <li>Found and verified the attacker's tools (Mimikatz, Rubeus) and three phishing domains</li>
-            <li>Recommended mitigations aligned to the NCSC Cyber Assessment Framework</li>
-          </ul>
-        </article>
 
         <article class="card">
           <p class="card__kicker">MSc · Critical Infrastructure</p>
@@ -577,50 +567,7 @@
           </details>
         </article>
 
-        <article class="card proj">
-          <p class="card__kicker"><span class="tag-live">In active development</span></p>
-          <h3>ScenicRoute</h3>
-          <p class="proj__lede">An Android app for planning scenic drives and driving them as a group. Routes are calculated on the phone from a downloaded routing graph, so it can plan a drive with no signal at all, and it has meetups, convoys and push to talk for driving with other people. I built the app and the server behind it.</p>
-          <ul class="metrics" aria-label="Technology stack">
-            <li>Kotlin / Java</li><li>Android SDK</li><li>MapLibre</li><li>GraphHopper</li><li>Matrix Rust SDK</li><li>Docker</li><li>Linux</li>
-          </ul>
-          <details class="more">
-            <summary><span class="more__label">More info</span></summary>
-            <div class="more__body">
-              <p>It's around 30,000 lines of app code so far, plus the server. It was built by AI coding agents under my direction: I decide how it should work, they write it in small steps, and I test each step in a working build before moving on. I didn't know Kotlin when I started. A demo is available on request.</p>
-              <ul class="ticks ticks--cols">
-                <li><strong>Offline routing:</strong> GraphHopper runs on the phone, so routes are planned without a connection. Getting it to run on Android's runtime meant designing a custom weighting system, then testing and reworking it until it held up</li>
-                <li><strong>Vector maps:</strong> moved from raster tiles to MapLibre vector maps hosted on my own server. The whole app shares one map, with a focused Drive Mode for use at the wheel</li>
-                <li><strong>Group driving:</strong> meetups, convoys and push to talk voice between drivers, tested on real devices</li>
-                <li><strong>Encrypted messaging:</strong> chat built on Matrix, with read receipts, grouped notifications, video and recovery key setup during onboarding</li>
-                <li><strong>My own server:</strong> a Docker stack on Linux (Matrix, voice relay and map tile serving) that I deploy and run myself</li>
-              </ul>
-            </div>
-          </details>
-        </article>
 
-        <article class="card proj">
-          <p class="card__kicker"><span class="tag-live">In development · F-Droid, early 2027</span></p>
-          <h3>Open Widget</h3>
-          <p class="proj__lede">A free Android app for building your own home screen widgets from live data, which I'll release as open source. You point it at a web address, feed or API, tap the values you want, and lay them out in an editor. Nothing needs to be coded. It can take most data sources, show them on a widget and update them in near real time.</p>
-          <ul class="metrics" aria-label="Technology stack">
-            <li>Kotlin</li><li>Jetpack Compose</li><li>Glance</li><li>Go</li><li>Tailscale</li><li>WorkManager</li><li>Docker</li>
-          </ul>
-          <details class="more">
-            <summary><span class="more__label">More info</span></summary>
-            <div class="more__body">
-              <p>It's for people who want their car's battery level, a server's status or a feed on their home screen without a dedicated app for each one.</p>
-              <p>It's over 11,000 lines so far, built the same way as ScenicRoute: AI coding agents write it in small steps under my direction, and I test every step on a real phone before moving on. It's aimed at F-Droid, so there's no Google Play Services anywhere.</p>
-              <ul class="ticks ticks--cols">
-                <li><strong>Tap to map editor:</strong> fetch any JSON or RSS source, tap a value to bind it, then style it with layers, formats and colour rules. Widgets resize to fit any launcher grid</li>
-                <li><strong>Live updates:</strong> a background service holds WebSocket, SSE or Traccar connections open, so widgets update within seconds of an event. Data that has gone stale is dimmed and labelled, never shown as current</li>
-                <li><strong>Templates:</strong> prebuilt widgets, like a car battery monitor with lead acid and AGM curves and an optional second battery. Templates can update without overwriting your own edits</li>
-                <li><strong>Private hub:</strong> a small Go server the phone pairs with over a Tailscale connection built into the app, with no VPN app and nothing exposed to the internet. Certificates are pinned, and each device can be revoked</li>
-                <li><strong>Agent control:</strong> AI agents can propose widget changes through the hub using signed change sets. You review them on the phone, deletions always need your approval, and every change can be undone</li>
-              </ul>
-            </div>
-          </details>
-        </article>
       </div>
     </div>
   </section>
@@ -647,22 +594,21 @@
           </ul></div>
         </details>
         <details class="skill">
-          <summary><span class="skill__kicker">Frameworks</span><span class="skill__title">Standards &amp; Frameworks</span><span class="skill__teaser">MITRE ATT&amp;CK, NCSC CAF, NIST, ISO 22301</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <summary><span class="skill__kicker">Frameworks</span><span class="skill__title">Standards &amp; Frameworks</span><span class="skill__teaser">NCSC CAF, NIST, ISO 22301, Cyber Essentials</span><span class="skill__chev" aria-hidden="true"></span></summary>
           <div class="skill__body"><ul class="ticks">
-            <li>MITRE ATT&amp;CK, used to map a full attack in Splunk</li>
-            <li>NCSC CAF, used to shape incident recommendations</li>
-            <li>NIST CSF, critically evaluated against the CAF</li>
+            <li>NCSC CAF &amp; NIST CSF, critically evaluated against each other</li>
             <li>ISO 22301, used to write a business continuity plan</li>
             <li>Mock Cyber Essentials assessment in class</li>
-            <li>Familiar with ISO/IEC 27001</li>
+            <li>Familiar with ISO/IEC 27001 &amp; MITRE ATT&amp;CK</li>
           </ul></div>
         </details>
         <details class="skill">
-          <summary><span class="skill__kicker">Defensive</span><span class="skill__title">Security Operations</span><span class="skill__teaser">Splunk investigations, ATT&amp;CK, IOCs</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <summary><span class="skill__kicker">Defensive</span><span class="skill__title">Security Operations</span><span class="skill__teaser">Incident response, log analysis, playbooks</span><span class="skill__chev" aria-hidden="true"></span></summary>
           <div class="skill__body"><ul class="ticks">
-            <li>Investigating attacks in Splunk Enterprise</li>
-            <li>Mapping attacker behaviour to MITRE ATT&amp;CK</li>
-            <li>Verifying indicators of compromise (tools, domains)</li>
+            <li>Incident response in a live cyber drill</li>
+            <li>Tracing an attack through system logs</li>
+            <li>Checking attacker IPs with VirusTotal</li>
+            <li>Writing incident response playbooks</li>
             <li>Network intrusion detection design</li>
           </ul></div>
         </details>
@@ -697,26 +643,21 @@
           </ul></div>
         </details>
         <details class="skill">
-          <summary><span class="skill__kicker">Tools</span><span class="skill__title">Security Toolkit</span><span class="skill__teaser">Wireshark, Nmap, Metasploit, Burp, Splunk</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <summary><span class="skill__kicker">Tools</span><span class="skill__title">Security Toolkit</span><span class="skill__teaser">Wireshark, Nmap, Metasploit, Burp, Nessus</span><span class="skill__chev" aria-hidden="true"></span></summary>
           <div class="skill__body"><ul class="ticks">
             <li>Wireshark &amp; Nmap</li>
             <li>Ghidra (reverse engineering)</li>
             <li>Metasploit &amp; Burp Suite</li>
             <li>Nessus</li>
             <li>Autopsy (digital forensics)</li>
-            <li>Splunk</li>
             <li>Kali Linux &amp; Cisco Packet Tracer</li>
           </ul></div>
         </details>
         <details class="skill">
-          <summary><span class="skill__kicker">Development</span><span class="skill__title">Programming &amp; Apps</span><span class="skill__teaser">C++, basic Python, AI built Android apps</span><span class="skill__chev" aria-hidden="true"></span></summary>
+          <summary><span class="skill__kicker">Development</span><span class="skill__title">Programming</span><span class="skill__teaser">C++, basic Python, LLM integration</span><span class="skill__chev" aria-hidden="true"></span></summary>
           <div class="skill__body"><ul class="ticks">
             <li>C++ (secure programming module)</li>
             <li>Basic Python (cryptography module)</li>
-            <li>Taking an idea to working software by directing AI coding agents</li>
-            <li>Writing clear requirements &amp; design specs</li>
-            <li>Testing every build &amp; feeding back fixes</li>
-            <li>Android apps (Kotlin, Jetpack Compose)</li>
             <li>Browser extension with LLM integration</li>
           </ul></div>
         </details>
@@ -805,7 +746,7 @@
             </div>
             <div>
               <h4>Driving</h4>
-              <p>I hold IAM Advanced and Masters certificates and am a graduate of the High Performance Course. Club members, friends and family trust me to drive their cars. It's also why I'm building <a href="#projects">ScenicRoute</a>.</p>
+              <p>I hold IAM Advanced and Masters certificates and am a graduate of the High Performance Course. Club members, friends and family trust me to drive their cars.</p>
             </div>
             <div>
               <h4>Detailing</h4>
