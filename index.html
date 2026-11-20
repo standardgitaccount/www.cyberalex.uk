@@ -185,6 +185,12 @@
     transform:translateY(-2px) rotate(45deg);transition:transform .25s var(--ease)}
   .more[open] summary::after{transform:translateY(2px) rotate(-135deg)}
   .more__body{padding-top:1.4rem}
+  .more-row{position:relative}
+  .more-row .more summary{box-sizing:border-box;width:8.25rem;justify-content:center}
+  .site-btn{position:absolute;top:calc(1.4rem + 1px + 1.1rem);left:calc(8.25rem + .75rem);display:inline-flex;align-items:center;gap:.5rem;
+    font-size:.88rem;color:var(--paper);text-decoration:none;border:1px solid var(--hair-strong);border-radius:3px;padding:.55rem .95rem;transition:border-color .2s,background .2s}
+  .site-btn:hover{border-color:var(--paper);background:rgba(236,232,225,.05)}
+  .site-btn svg{width:.8rem;height:.8rem}
   .more__body > p{max-width:72ch}
   .more__title{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--paper)!important}
   .ticks--cols{columns:2;column-gap:clamp(1.5rem,4vw,3rem)}
@@ -568,6 +574,33 @@
           </details>
         </article>
 
+        <article class="card proj">
+          <p class="card__kicker">Personal project · Android app · private beta</p>
+          <h3>The Scenic Route</h3>
+          <p class="proj__lede">A sat nav finds the quickest way. I wanted one that finds the best way to drive, and still works with no signal in the hills. So I built one: an Android app that plans and guides routes entirely offline, finds great roads near your trip, and keeps a group of cars together with live positions, push to talk and encrypted chat.</p>
+          <ul class="metrics" aria-label="Methods and technology">
+            <li>Android</li><li>Offline routing</li><li>Self hosted server</li><li>End to end encryption</li><li>AI coding agents</li>
+          </ul>
+          <div class="more-row">
+          <details class="more">
+            <summary><span class="more__label">More info</span></summary>
+            <div class="more__body">
+              <ul class="ticks ticks--cols">
+                <li><strong>What it does:</strong> offline maps and routing for Great Britain, three route styles from efficient to purely for the drive, round trips planned from a chosen time, and Convoy and Meet-up for driving as a group</li>
+                <li><strong>How it was built:</strong> I direct Claude Code, an AI coding agent. I decide what to build, often from something I noticed on a real drive, it researches, writes and tests the code, and I test every build on real roads</li>
+                <li><strong>Scale:</strong> around 80,000 lines and 390 builds in six months of my spare time</li>
+                <li><strong>Private routing:</strong> the open source routing engine it uses compiles its routing rules while it runs, which Android can't do. I had them rewritten for the phone, then checked against the originals on hundreds of thousands of road sections. They matched every time</li>
+                <li><strong>Infrastructure:</strong> runs on my own server, with no ports open to the internet: the relay for accounts and live positions, chat on the Matrix protocol, map tiles and updates</li>
+                <li><strong>Privacy by design:</strong> no ads or tracking and no AI inside the app. Your location is shared only in a session you join, and you can export or erase everything</li>
+                <li><strong>Now:</strong> in a private beta with friends and family, with updates delivered inside the app</li>
+              </ul>
+              <p class="hobby-link">More at <a href="https://thescenicroute.app" target="_blank" rel="noopener">thescenicroute.app</a></p>
+            </div>
+          </details>
+            <a class="site-btn" href="https://thescenicroute.app" target="_blank" rel="noopener">Website
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </div>
+        </article>
 
       </div>
     </div>
@@ -748,6 +781,7 @@
             <div>
               <h4>Driving</h4>
               <p>I hold IAM Advanced and Masters certificates and am a graduate of the High Performance Course. Club members, friends and family trust me to drive their cars.</p>
+              <p class="hobby-link">I also built a sat nav for people who love driving: <a href="https://thescenicroute.app" target="_blank" rel="noopener">thescenicroute.app</a></p>
             </div>
             <div>
               <h4>Detailing</h4>
